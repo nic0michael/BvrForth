@@ -18,10 +18,6 @@ public class VariableAndConstantProcessor extends AbstractProcessor {
 
     boolean definitionIsNotComplete = true;
 
-    @Override
-    public String preProcess(String line) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public String process(String line) throws Exception {
@@ -35,13 +31,9 @@ public class VariableAndConstantProcessor extends AbstractProcessor {
         for (String word : words) {
             if (Utilities.isNumeric(word)) {
                 stack.push(word);
-            } else if (word.equals("VARIABLE")) {
+            } else if (word.toUpperCase().equals("VARIABLE")) {
                 variableType = "VARIABLE";
-            } else if (word.equals("variable")) {
-                variableType = "VARIABLE";
-            } else if (word.equals("CONSTANT")) {
-                variableType = "CONSTANT";
-            } else if (word.equals("constant")) {
+            }  else if (word.toUpperCase().equals("CONSTANT")) {
                 variableType = "CONSTANT";
             } else if (!variableNameFound) {
                 variableName = word;
@@ -81,4 +73,7 @@ public class VariableAndConstantProcessor extends AbstractProcessor {
         return definitionIsNotComplete;
     }
 
+    @Override
+    public String preProcess(String line) throws Exception { throw new UnsupportedOperationException("Not supported yet.");  }
+    
 }

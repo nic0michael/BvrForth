@@ -2,6 +2,7 @@ package za.co.bvr.forth.processor.implemented;
 
 import za.co.bvr.forth.dictionary.ForthDictionary;
 import za.co.bvr.forth.processor.AbstractProcessor;
+import za.co.bvr.forth.stack.ForthStack;
 import za.co.bvr.forth.utils.Utilities;
 
 /**
@@ -11,14 +12,8 @@ import za.co.bvr.forth.utils.Utilities;
 class LineProcessor extends AbstractProcessor {
 
     ForthDictionary dictionary = ForthDictionary.INSTANCE;
+    ForthStack stack =ForthStack.INSTANCE;
 
-    public LineProcessor() {
-    }
-
-    @Override
-    public String preProcess(String line) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public String process(String line) throws Exception {
@@ -27,7 +22,7 @@ class LineProcessor extends AbstractProcessor {
         String[] verbs = line.split(" ");
         for (String verb : verbs) {
             if (Utilities.isNumeric(verb)) {
-                result.append(verbProcessor.process(verb));
+                stack.push(verb);
             } else {
                 String def = dictionary.getCompiledDefinition(verb);
                 String[] definitions = def.split(" ");
@@ -41,14 +36,14 @@ class LineProcessor extends AbstractProcessor {
         return result.toString();
     }
 
+    
     @Override
-    public String postProcess(String line) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public String preProcess(String line) throws Exception {throw new UnsupportedOperationException("Not supported yet.");}
+    
+    @Override
+    public String postProcess(String line) throws Exception {throw new UnsupportedOperationException("Not supported yet."); }
 
     @Override
-    public boolean getDefinitionIsNotComplete() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public boolean getDefinitionIsNotComplete() throws Exception {throw new UnsupportedOperationException("Not supported yet.");}
 
 }

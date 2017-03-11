@@ -17,7 +17,5 @@ public abstract class AbstractLoopProcessor extends AbstractProcessor{
     public abstract void setLineAfterLoop(String line);
     public abstract void setLineOfTheLoop(String line);
     
-    public abstract String processLineBeforeLoop() throws Exception;
     public abstract String processLineOfTheLoop() throws Exception;
-    public abstract String processLineAfterLoop() throws Exception;
 }

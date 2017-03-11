@@ -20,11 +20,11 @@ public class Inputprocessor extends AbstractProcessor {
         String line = Utilities.removeUnwantedSpaces(input);
         if (line.contains(":")) {
             definingNewVerb = true;
-        } else if (line.contains("DO")) {
+        } else if (line.toUpperCase().contains("DO")) {
             definingLoop = true;
-        } else if (line.contains("VARIABLE")) {
+        } else if (line.toUpperCase().contains("VARIABLE")) {
             definingVariable = true;
-        } else if (line.contains("CONSTANT")) {
+        } else if (line.toUpperCase().contains("CONSTANT")) {
             definingVariable = true;
         }
 
@@ -50,18 +50,12 @@ public class Inputprocessor extends AbstractProcessor {
     }
 
     @Override
-    public String preProcess(String line) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public String preProcess(String line) throws Exception {throw new UnsupportedOperationException("Not supported yet.");}
 
     @Override
-    public String postProcess(String line) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public String postProcess(String line) throws Exception {throw new UnsupportedOperationException("Not supported yet."); }
 
     @Override
-    public boolean getDefinitionIsNotComplete() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public boolean getDefinitionIsNotComplete() throws Exception {throw new UnsupportedOperationException("Not supported yet.");}
 
 }

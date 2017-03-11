@@ -18,7 +18,7 @@ import za.co.bvr.forth.exceptions.VerbNotInDictionaryException;
 public class InputprocessorTest {
     Inputprocessor processor =new Inputprocessor();
     ForthDictionary dictionary = ForthDictionary.INSTANCE;
-   /* 
+  
     @Test
     public void processTest() throws Exception {
         String result1=processor.process("1 2 + .");
@@ -31,7 +31,7 @@ public class InputprocessorTest {
         assertThat(result3, is("8"));
         assertThat(result4, is("3"));
     }  
-    */
+  
     
     @Test
     public void addAndGetVerbFromDictionaryTest() throws VerbNotInDictionaryException, Exception {
@@ -49,4 +49,12 @@ public class InputprocessorTest {
         
     }
     
+    @Test
+    public void processDoLoopTest2() throws Exception {
+        String result1=processor.process("1 1 do 1 2 + . loop .");
+        String result2=processor.process("1 2 do 1 2 + . loop .");
+        
+        assertThat(result1, is("31"));
+        assertThat(result2, is("331"));
+    }   
 }

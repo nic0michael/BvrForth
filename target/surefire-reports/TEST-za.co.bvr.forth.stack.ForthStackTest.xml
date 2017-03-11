@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.002" errors="0" skipped="0" tests="7" name="za.co.bvr.forth.stack.ForthStackTest">
+<testsuite failures="0" time="0" errors="0" skipped="0" tests="7" name="za.co.bvr.forth.stack.ForthStackTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\SDKS\Java\jdk1.7.0_67\jre\bin"/>

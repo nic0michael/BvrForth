@@ -19,10 +19,6 @@ public class DefineVerbProcessor extends AbstractProcessor {
     String compiledDefinition;
     int iterationCount = 0;
 
-    @Override
-    public String preProcess(String line) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public String process(String line) throws Exception {
@@ -61,13 +57,15 @@ public class DefineVerbProcessor extends AbstractProcessor {
     }
 
     @Override
-    public String postProcess(String line) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public boolean getDefinitionIsNotComplete() throws Exception {
         return definitionIsNotComplete;
     }
+    
+    @Override
+    public String preProcess(String line) throws Exception {throw new UnsupportedOperationException("Not supported yet."); }
+    
+    @Override
+    public String postProcess(String line) throws Exception {throw new UnsupportedOperationException("Not supported yet.");}
+
 
 }
