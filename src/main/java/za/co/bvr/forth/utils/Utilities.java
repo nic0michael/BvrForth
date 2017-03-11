@@ -9,7 +9,7 @@ import za.co.bvr.forth.exceptions.LineIsEmptyException;
 
 /**
  *
- * @author nickm
+ * @author nickm 
  */
 public class Utilities {
 

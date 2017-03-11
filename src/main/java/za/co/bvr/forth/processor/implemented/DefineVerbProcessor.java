@@ -7,7 +7,7 @@ import za.co.bvr.forth.processor.AbstractProcessor;
 
 /**
  *
- * @author nickm
+ * @author nickm 
  */
 public class DefineVerbProcessor extends AbstractProcessor {
 

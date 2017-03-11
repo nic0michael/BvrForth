@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  *
- * @author nickm
+ * @author nickm 
  */
 public class Variables {
     Map<String,Integer>variableStore=new HashMap<String,Integer>();

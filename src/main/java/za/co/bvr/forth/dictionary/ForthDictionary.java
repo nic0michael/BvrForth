@@ -7,7 +7,7 @@ import java.util.List;
 import za.co.bvr.forth.exceptions.VerbNotInDictionaryException;
 import za.co.bvr.forth.utils.Utilities;
 
-/**
+/** 
  *
  * @author nickm
  */

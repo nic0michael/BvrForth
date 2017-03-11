@@ -8,7 +8,7 @@ import za.co.bvr.forth.variables.Variables;
 
 /**
  *
- * @author nickm
+ * @author nickm 
  */
 public class VariableAndConstantProcessor extends AbstractProcessor {
 

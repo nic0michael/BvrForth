@@ -4,7 +4,7 @@ import java.util.UUID;
 
 /**
  *
- * @author nickm
+ * @author nickm 
  */
 public class Verb {
     private final String name;

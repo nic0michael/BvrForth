@@ -6,7 +6,7 @@ import za.co.bvr.forth.utils.Utilities;
 
 /**
  *
- * @author nickm
+ * @author nickm 
  */
 public class ForthStack {
 
