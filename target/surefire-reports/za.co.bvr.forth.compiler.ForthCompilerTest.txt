@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: za.co.bvr.forth.compiler.ForthCompilerTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.201 sec
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.217 sec

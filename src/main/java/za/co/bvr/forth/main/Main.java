@@ -22,6 +22,9 @@ public class Main {
         do {
             String line = keyboard.nextLine();
             aborted = line.equalsIgnoreCase("BYE");
+            if(! aborted ){
+                aborted = line.equalsIgnoreCase("EXIT");
+            }
             try {
                 if (!aborted) {
                     System.out.println(forth.processInput(line));

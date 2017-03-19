@@ -13,6 +13,70 @@ import za.co.bvr.forth.exceptions.StackIsEmptyException;
 public class ForthStackTest {
     ForthStack stack =ForthStack.INSTANCE;
 
+    
+    
+    @Test
+    public void excersizeTest() throws LineIsEmptyException,StackIsEmptyException,NumberFormatException {
+        int expected =10;
+        int poppedValue;
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        stack.push(3);
+        stack.add();
+        stack.pop();
+        int second=stack.popInt();
+        int first=stack.popInt();       
+        assertThat(second, is(2));     
+        assertThat(first, is(1));
+    }
+    
+    
+    @Test
+    public void addTest() throws LineIsEmptyException,StackIsEmptyException,NumberFormatException {
+        int expectedValue =3;
+        int poppedValue;
+        stack.push(1);
+        stack.push(2);
+        stack.add();
+        poppedValue=stack.popInt();    
+        assertThat(poppedValue, is(expectedValue));  
+    }
+    
+    @Test
+    public void subtractTest() throws LineIsEmptyException,StackIsEmptyException,NumberFormatException {
+        int expectedValue =2;
+        int poppedValue;
+        stack.push(3);
+        stack.push(1);
+        stack.subtract();
+        poppedValue=stack.popInt();    
+        assertThat(poppedValue, is(expectedValue));  
+    }
+    
+    @Test
+    public void multiplyTest() throws LineIsEmptyException,StackIsEmptyException,NumberFormatException {
+        int expectedValue =6;
+        int poppedValue;
+        stack.push(3);
+        stack.push(2);
+        stack.multiply();
+        poppedValue=stack.popInt();    
+        assertThat(poppedValue, is(expectedValue));  
+    }
+    
+    @Test
+    public void divideTest() throws LineIsEmptyException,StackIsEmptyException,NumberFormatException {
+        int expectedValue =3;
+        int poppedValue;
+        stack.push(6);
+        stack.push(2);
+        stack.divide();
+        poppedValue=stack.popInt();    
+        assertThat(poppedValue, is(expectedValue));  
+    }
+    
+    
     @Test
     public void pushPopTest() throws LineIsEmptyException,StackIsEmptyException,NumberFormatException {
         int expected =10;

@@ -1,5 +1,10 @@
 package za.co.bvr.forth.processor.implemented;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import za.co.bvr.forth.processor.AbstractLoopProcessor;
 import za.co.bvr.forth.stack.ForthStack;
 
@@ -8,8 +13,14 @@ import za.co.bvr.forth.stack.ForthStack;
  * @author nickm
  */
 public class DoLoopProcessor extends AbstractLoopProcessor {
-    boolean definitionIsNotComplete = true;
+
+    List<String> loopNames = new LinkedList<String>();
+    Map<String, String> loopDefinitions = new HashMap<String, String>();
+    Map<String, Integer> loopIterations = new HashMap<String, Integer>();
+
+    boolean definitionIsNotComplete = false;
     ForthStack stack = ForthStack.INSTANCE;
+    final String FIRST_LOOP_NAME = "LOOP_0";
 
     StringBuilder lineOfTheLoop = new StringBuilder();
     StringBuilder preProcessLine = new StringBuilder();
@@ -18,18 +29,29 @@ public class DoLoopProcessor extends AbstractLoopProcessor {
     @Override
     public String process(String line) throws Exception {
         StringBuilder result = new StringBuilder();
-        
+
+        String preResult;
+        String proResult;
+        String postResult;
+        String stackValues;
+
         setLineBeforeLoop(line);
+        stackValues = stack.show();
+        preResult = preProcess(preProcessLine.toString());
+        stackValues = stack.show();
+
         setLineAfterLoop(line);
+        stackValues = stack.show();
         setLineOfTheLoop(line);
-        
-        String preResult=preProcess(preProcessLine.toString());
-        String proResult=processLineOfTheLoop();
-        String postResult=postProcess(postProcessLine.toString());
-        
-        result.append(preResult);
+        stackValues = stack.show();
+
+        proResult = processLineOfTheLoop();
+        postResult = postProcess(postProcessLine.toString());
+
         result.append(proResult);
+        stackValues = stack.show();
         result.append(postResult);
+        stackValues = stack.show();
 
         return result.toString();
     }
@@ -54,14 +76,14 @@ public class DoLoopProcessor extends AbstractLoopProcessor {
     @Override
     public void setLineBeforeLoop(String line) {
         String[] lineItems = line.split(" ");
-        
+
         boolean doFound = false;
-        int count=0;        
+        int count = 0;
 
         for (String lineItem : lineItems) {
             if (lineItem.equalsIgnoreCase("Do")) {
                 doFound = true;
-            }  else if (!doFound) {
+            } else if (!doFound) {
                 if (count > 0) {
                     preProcessLine.append(" ");
                 }
@@ -74,13 +96,12 @@ public class DoLoopProcessor extends AbstractLoopProcessor {
     @Override
     public void setLineAfterLoop(String line) {
         String[] lineItems = line.split(" ");
-        
         boolean doFound = false;
         boolean loopFound = false;
         int nrOfDoFound = 0;
         int nrOfLoopFound = 0;
-        
-        int count=0;
+
+        int count = 0;
 
         for (String lineItem : lineItems) {
             if (lineItem.equalsIgnoreCase("Do")) {
@@ -98,54 +119,118 @@ public class DoLoopProcessor extends AbstractLoopProcessor {
                 }
                 count++;
                 postProcessLine.append(lineItem);
-            } 
+            }
         }
     }
 
     @Override
-    public void setLineOfTheLoop(String line) {
+    public void setLineOfTheLoop(String line) throws Exception{
         String[] lineItems = line.split(" ");
-        
+        List<String> loopsFound = new ArrayList<>();
+        StringBuilder currentDoLoopName = new StringBuilder();
+        StringBuilder currentDoLoopDefinition = new StringBuilder();
+        int currentDoLoop = 0;
         boolean doFound = false;
         boolean loopFound = false;
         int nrOfDoFound = 0;
-        int nrOfLoopFound = 0;
-        
-        int count=0;
+        int nrOfLoopsFound = 0;
+        int count = 0;
 
         for (String lineItem : lineItems) {
             if (lineItem.equalsIgnoreCase("Do")) {
+                if (currentDoLoop > 0) {
+                    currentDoLoopDefinition.append(" ");
+                    currentDoLoopDefinition.append("LOOP_");
+                    currentDoLoopDefinition.append(currentDoLoop);
+                    loopDefinitions.remove(currentDoLoopName);
+                    loopDefinitions.put(currentDoLoopName.toString(), currentDoLoopDefinition.toString());
+                }
+                currentDoLoopDefinition = new StringBuilder();
+                currentDoLoopName = new StringBuilder("LOOP_");
+                currentDoLoopName.append(currentDoLoop);
+                String stackValues = stack.show();
+                int nrOfIterations = stack.popInt();
+                if (loopIterations.get(currentDoLoopName.toString()) == null) {
+                    loopIterations.put(currentDoLoopName.toString(), nrOfIterations);
+                    loopNames.add(currentDoLoopName.toString());
+                }
+
+                if (loopDefinitions.get(currentDoLoopName) != null) {
+                    loopDefinitions.remove(currentDoLoopName);
+                }
+                loopDefinitions.put(currentDoLoopName.toString(), " " + currentDoLoopDefinition.toString());
                 doFound = true;
+                currentDoLoop++;
                 nrOfDoFound++;
+                count = 0;
             } else if (lineItem.equalsIgnoreCase("loop")) {
-                nrOfLoopFound++;
-                if (nrOfDoFound == nrOfLoopFound) {
+                nrOfLoopsFound++;
+                currentDoLoop--;
+                loopDefinitions.remove(currentDoLoopName);
+                loopDefinitions.put(currentDoLoopName.toString(), currentDoLoopDefinition.toString());
+
+                if (currentDoLoop > 0) {
+                    currentDoLoopName = new StringBuilder("LOOP_");
+                    currentDoLoopName.append(currentDoLoop - 1);
+                    currentDoLoopDefinition = new StringBuilder(loopDefinitions.get(currentDoLoopName.toString()));
+                }
+                if (nrOfDoFound == nrOfLoopsFound) {
                     loopFound = true;
+                    definitionIsNotComplete = true;
+                } else {
                     definitionIsNotComplete = false;
                 }
+
             } else if (doFound && !loopFound) {
                 if (count > 0) {
-                    lineOfTheLoop.append(" ");
+                    currentDoLoopDefinition.append(" ");
                 }
-                lineOfTheLoop.append(lineItem);
+                currentDoLoopDefinition.append(lineItem);
                 count++;
             }
         }
     }
 
-
     @Override
     public String processLineOfTheLoop() throws Exception {
-        LineProcessor processor = new LineProcessor();
-         
         StringBuilder result = new StringBuilder();
-        int nrOfLoopIterations=stack.popInt();
-        
-        for(int i=0;i<nrOfLoopIterations;i++){
-            result.append(processor.process(lineOfTheLoop.toString()));
-        }
+
+        int nrOfIterations = loopIterations.get(FIRST_LOOP_NAME);
+        String loopRunResult = runLoop(FIRST_LOOP_NAME, nrOfIterations);
+        result.append(loopRunResult);
+
         return result.toString();
     }
 
+    String runLoop(String loopName, int nrOfIterations) throws Exception {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < nrOfIterations; i++) {
+            result.append(runLoopOnce(loopName));
+        }
+
+        return result.toString();
+    }
+
+    String runLoopOnce(String loopName) throws Exception {
+        String stackValues = stack.show();
+        LineProcessor processor = new LineProcessor();
+        StringBuilder result = new StringBuilder();
+        String loopDef = loopDefinitions.get(loopName);
+        String[] verbs = loopDef.split(" ");
+
+        for (String verb : verbs) {
+            if (!verb.toUpperCase().contains("LOOP_")) {
+                result.append(processor.process(verb));
+            } else {
+                String innerLoopName = verb;
+                int nrOfIterations = loopIterations.get(innerLoopName);
+                result.append(runLoop(innerLoopName, nrOfIterations));
+            }
+        }
+        stackValues = stack.show();
+
+        return result.toString();
+
+    }
 
 }

@@ -104,7 +104,34 @@ public class ForthStack {
             push(get());
         }
     }
+    
+    public void add() throws StackIsEmptyException{
+        int second=popInt();
+        int first=popInt();
+        push(first+second);
+    }
+    
+    public void subtract() throws StackIsEmptyException{
+        int second=popInt();
+        int first=popInt();
+        push(first-second);
+    }
 
+    
+    public void multiply() throws StackIsEmptyException{
+        int second=popInt();
+        int first=popInt();
+        push(first*second);
+    }
+    
+    
+    
+    public void divide() throws StackIsEmptyException{
+        int second=popInt();
+        int first=popInt();
+        push(first/second);
+    }
+    
     public String get() {
         if (stackStore.size() > 0) {
             return (String) stackStore.get(topOfStack);

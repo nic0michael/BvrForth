@@ -54,27 +54,19 @@ public class VerbProcessor extends AbstractProcessor {
                 break;
 
             case "+":
-                int second = stack.popInt();
-                int first = stack.popInt();
-                stack.push(first + second);
+                stack.add();
                 break;
 
             case "-":
-                second = stack.popInt();
-                first = stack.popInt();
-                stack.push(first - second);
+                stack.subtract();
                 break;
 
             case "*":
-                second = stack.popInt();
-                first = stack.popInt();
-                stack.push(first * second);
+                stack.multiply();
                 break;
 
             case "/":
-                second = stack.popInt();
-                first = stack.popInt();
-                stack.push(first / second);
+                stack.divide();
                 break;
 
             case "DROP":

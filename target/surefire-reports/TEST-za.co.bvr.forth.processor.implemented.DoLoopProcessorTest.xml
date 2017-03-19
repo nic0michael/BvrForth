@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="1.185" errors="0" skipped="0" tests="1" name="za.co.bvr.forth.processor.implemented.DefineVerbProcessorTest">
+<testsuite failures="0" time="1.03" errors="0" skipped="0" tests="5" name="za.co.bvr.forth.processor.implemented.DoLoopProcessorTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\SDKS\Java\jdk1.7.0_67\jre\bin"/>
@@ -14,7 +14,7 @@
     <property name="user.country" value="ZA"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value="Service Pack 1"/>
-    <property name="test" value="za.co.bvr.forth.processor.implemented.DefineVerbProcessorTest"/>
+    <property name="test" value="za.co.bvr.forth.processor.implemented.DoLoopProcessorTest"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="user.dir" value="C:\Nickm\PROJECTS\NetBeansProjects\BvrForth"/>
     <property name="java.runtime.version" value="1.7.0_67-b01"/>
@@ -45,7 +45,7 @@
     <property name="java.vm.specification.version" value="1.7"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="C:\SDKS\Java\jdk1.7.0_67\jre"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dtest=za.co.bvr.forth.processor.implemented.DefineVerbProcessorTest -Dmaven.ext.class.path=C:\Program Files\NetBeans 8.1\java\maven-nblib\netbeans-eventspy.jar -Dfile.encoding=UTF-8 surefire:test"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dtest=za.co.bvr.forth.processor.implemented.DoLoopProcessorTest -Dmaven.ext.class.path=C:\Program Files\NetBeans 8.1\java\maven-nblib\netbeans-eventspy.jar -Dfile.encoding=UTF-8 surefire:test"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="en"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -62,5 +62,9 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase time="0.015" classname="za.co.bvr.forth.processor.implemented.DefineVerbProcessorTest" name="addAndGetVerbFromDictionaryTest"/>
+  <testcase time="0.951" classname="za.co.bvr.forth.processor.implemented.DoLoopProcessorTest" name="processDoOneLoopTest"/>
+  <testcase time="0" classname="za.co.bvr.forth.processor.implemented.DoLoopProcessorTest" name="processDoWithNestedLoopAndTwoAndThreeIterationsEachTest"/>
+  <testcase time="0" classname="za.co.bvr.forth.processor.implemented.DoLoopProcessorTest" name="processDoWithNestedLoopTest"/>
+  <testcase time="0" classname="za.co.bvr.forth.processor.implemented.DoLoopProcessorTest" name="processDoTwoLoopsTest"/>
+  <testcase time="0" classname="za.co.bvr.forth.processor.implemented.DoLoopProcessorTest" name="processDoWithNestedLoopAndTwoIterationsEachTest"/>
 </testsuite>

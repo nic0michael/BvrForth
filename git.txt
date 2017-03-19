@@ -1,2 +1,2 @@
-cd /C:/Nickm/PROJECTS/NetBeansProjects/BvrForth/target
+cd /C/Nickm/PROJECTS/NetBeansProjects/BvrForth/
 git clone https://github.com/nic0michael/BvrForth.git
