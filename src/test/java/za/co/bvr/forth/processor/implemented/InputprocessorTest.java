@@ -10,14 +10,33 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import za.co.bvr.forth.dictionary.ForthDictionary;
 import za.co.bvr.forth.exceptions.VerbNotInDictionaryException;
+import za.co.bvr.forth.stack.ForthStack;
 
 /**
  *
  * @author nickm
  */
 public class InputprocessorTest {
+    final String QUOTE = "" + '"';
     Inputprocessor processor =new Inputprocessor();
     ForthDictionary dictionary = ForthDictionary.INSTANCE;
+    ForthStack stack = ForthStack.INSTANCE;
+    
+    @Test
+    public void lineTestQuote() throws Exception{
+        String input="."+QUOTE+"Hello there"+QUOTE;
+        String result1=processor.process(input);
+        
+        assertThat(result1, is("Hello there"));
+    }
+ 
+    @Test
+    public void lineTestQuoteDot() throws Exception{
+        String input=QUOTE+"Hello there"+QUOTE+".";
+        String result1=processor.process(input);
+        
+        assertThat(result1, is("Hello there"));
+    }
   
     @Test
     public void processTest() throws Exception {
@@ -57,4 +76,5 @@ public class InputprocessorTest {
         assertThat(result1, is("31"));
         assertThat(result2, is("331"));
     }   
+
 }

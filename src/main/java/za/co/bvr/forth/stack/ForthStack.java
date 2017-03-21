@@ -25,8 +25,10 @@ public class ForthStack {
     }
 
     public void push(String value) {
-        stackStore.add(value);
-        topOfStack++;
+        if (!Utilities.stringIsEmpty(value)) {
+            stackStore.add(value);
+            topOfStack++;
+        }
     }
 
     public void push(byte[] value) {
@@ -214,35 +216,37 @@ public class ForthStack {
 
         return stackString.toString();
     }
-    
-    public void setModeToDecimal(){
+
+    public void setModeToDecimal() {
         currentMode = mode.DECIMAL;
     }
-    
-    public void setModeToHex(){
+
+    public void setModeToHex() {
         currentMode = mode.HEX;
     }
-    
-    public void setModeToOctal(){
+
+    public void setModeToOctal() {
         currentMode = mode.OCTAL;
     }
-    
-    public void setModeToBinary(){
+
+    public void setModeToBinary() {
         currentMode = mode.BINARY;
     }
 
     String convertToCurrentMode(String value) {
+        System.out.println(">" + value + "<");
         String retValue = "";
         String displayMode = currentMode.getValue();
 
-        if (!Utilities.isNumeric(value)) {
+        if (Utilities.stringIsEmpty(value) || !Utilities.isNumeric(value)) {
             return value;
         }
+        System.out.println(">IS NUMERIC<");
         int numericValue = Integer.parseInt(value);
 
         switch (displayMode) {
             case "DECIMAL":
-                retValue=value;
+                retValue = value;
                 break;
 
             case "HEX":
