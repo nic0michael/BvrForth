@@ -13,7 +13,34 @@ import za.co.bvr.forth.exceptions.StackIsEmptyException;
 public class ForthStackTest {
     ForthStack stack =ForthStack.INSTANCE;
 
-    
+    @Test
+    public void hexTest() throws StackIsEmptyException{
+        stack.setModeToHex();
+        stack.push(28);
+        stack.push(27);
+        stack.push(26);        
+        String third=stack.pop(); 
+        String second=stack.pop(); 
+        String first=stack.pop(); 
+        stack.setModeToDecimal();
+        assertThat(first, is("1C"));
+        assertThat(second, is("1B"));     
+        assertThat(third, is("1A"));
+    }
+   
+    @Test
+    public void decTest() throws StackIsEmptyException{
+        stack.push(1);
+        stack.push(10);
+        stack.push(100);
+        String third=stack.pop(); 
+        String second=stack.pop(); 
+        String first=stack.pop(); 
+                  
+        assertThat(first, is("1"));
+        assertThat(second, is("10"));     
+        assertThat(third, is("100"));
+    }
     
     @Test
     public void excersizeTest() throws LineIsEmptyException,StackIsEmptyException,NumberFormatException {
@@ -177,4 +204,5 @@ public class ForthStackTest {
         String found=stack.show();    
         assertThat(found, is(expected));
     }
+
 }

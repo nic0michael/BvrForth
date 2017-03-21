@@ -9,7 +9,7 @@ import za.co.bvr.forth.utils.Utilities;
 
 /**
  *
- * @author nickm 
+ * @author nickm
  */
 public class VerbProcessor extends AbstractProcessor {
 
@@ -45,63 +45,111 @@ public class VerbProcessor extends AbstractProcessor {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private Object executeVerb(String lineItem) throws  VerbNotInDictionaryException {
+    private Object executeVerb(String lineItem) throws VerbNotInDictionaryException {
         StringBuilder result = new StringBuilder();
-        try{
-        switch (lineItem) {
-            case ".":
-                result.append(stack.pop());
-                break;
+        try {
+            switch (lineItem) {
+                case ".":
+                    result.append(stack.pop());
+                    break;
 
-            case "+":
-                stack.add();
-                break;
+                case "+":
+                    stack.add();
+                    break;
 
-            case "-":
-                stack.subtract();
-                break;
+                case "-":
+                    stack.subtract();
+                    break;
 
-            case "*":
-                stack.multiply();
-                break;
+                case "*":
+                    stack.multiply();
+                    break;
 
-            case "/":
-                stack.divide();
-                break;
+                case "/":
+                    stack.divide();
+                    break;
 
-            case "DROP":
-                stack.drop();
-                break;
+                case "DEC":
+                    stack.setModeToDecimal();
+                    break;
 
-            case "DUP":
-                stack.dup();
-                break;
+                case "HEX":
+                    stack.setModeToHex();
+                    break;
 
-            case "OVER":
-                stack.over();
-                break;
+                case "BIN":
+                    stack.setModeToBinary();
+                    break;
 
-            case "ROT":
-                stack.rot();
-                break;
+                case "OCT":
+                    stack.setModeToOctal();
+                    break;
 
-            case "SWAP":
-                stack.swap();
-                break;
+                case "BASE64ENCODE":
+                    stack.base64Encode();
+                    break;
 
-            case ".STACK":
-                result.append(stack.show());
-                break;
+                case "BASE64DECODE":
+                    stack.base64Decode();
+                    break;
 
-            case ".HELP":
-                result.append("The following verbs have been defined:\n");
-                result.append(dictionary.showVerbs());
-                break;
+                case "DECTOBINARY":
+                    stack.convertToBinary();
+                    break;
 
-            default:
-                throw new VerbNotInDictionaryException(lineItem);
-        }
-        } catch (StackIsEmptyException e){
+                case "DECTOHEX":
+                    stack.convertToHex();
+                    break;
+
+                case "DECTOOCTAL":
+                    stack.convertToOctal();
+                    break;
+
+                case "HEXTODEC":
+                    stack.convertHexToDecimal();
+                    break;
+
+                case "OCTALTODEC":
+                    stack.convertOctalToDecimal();
+                    break;
+
+                case "BINARYTODEC":
+                    stack.convertBinaryToDecimal();
+                    break;
+
+                case "DROP":
+                    stack.drop();
+                    break;
+
+                case "DUP":
+                    stack.dup();
+                    break;
+
+                case "OVER":
+                    stack.over();
+                    break;
+
+                case "ROT":
+                    stack.rot();
+                    break;
+
+                case "SWAP":
+                    stack.swap();
+                    break;
+
+                case ".STACK":
+                    result.append(stack.show());
+                    break;
+
+                case ".HELP":
+                    result.append("The following verbs have been defined:\n");
+                    result.append(dictionary.showVerbs());
+                    break;
+
+                default:
+                    throw new VerbNotInDictionaryException(lineItem);
+            }
+        } catch (StackIsEmptyException e) {
             result.append("\nThe Stack is empty");
         }
         return result.toString();

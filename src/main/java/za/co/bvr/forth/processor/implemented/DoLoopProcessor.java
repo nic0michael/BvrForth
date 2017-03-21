@@ -14,12 +14,13 @@ import za.co.bvr.forth.stack.ForthStack;
  */
 public class DoLoopProcessor extends AbstractLoopProcessor {
 
+    ForthStack stack = ForthStack.INSTANCE;
     List<String> loopNames = new LinkedList<String>();
     Map<String, String> loopDefinitions = new HashMap<String, String>();
     Map<String, Integer> loopIterations = new HashMap<String, Integer>();
 
     boolean definitionIsNotComplete = false;
-    ForthStack stack = ForthStack.INSTANCE;
+
     final String FIRST_LOOP_NAME = "LOOP_0";
 
     StringBuilder lineOfTheLoop = new StringBuilder();
@@ -124,7 +125,7 @@ public class DoLoopProcessor extends AbstractLoopProcessor {
     }
 
     @Override
-    public void setLineOfTheLoop(String line) throws Exception{
+    public void setLineOfTheLoop(String line) throws Exception {
         String[] lineItems = line.split(" ");
         List<String> loopsFound = new ArrayList<>();
         StringBuilder currentDoLoopName = new StringBuilder();
