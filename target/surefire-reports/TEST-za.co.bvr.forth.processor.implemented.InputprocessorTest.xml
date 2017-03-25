@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.015" errors="0" skipped="0" tests="5" name="za.co.bvr.forth.processor.implemented.InputprocessorTest">
+<testsuite failures="0" time="0" errors="0" skipped="0" tests="5" name="za.co.bvr.forth.processor.implemented.InputprocessorTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\SDKS\Java\jdk1.7.0_67\jre\bin"/>
@@ -62,7 +62,7 @@
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
   <testcase time="0" classname="za.co.bvr.forth.processor.implemented.InputprocessorTest" name="addAndGetVerbFromDictionaryTest"/>
-  <testcase time="0.015" classname="za.co.bvr.forth.processor.implemented.InputprocessorTest" name="processTest"/>
+  <testcase time="0" classname="za.co.bvr.forth.processor.implemented.InputprocessorTest" name="processTest"/>
   <testcase time="0" classname="za.co.bvr.forth.processor.implemented.InputprocessorTest" name="lineTestQuoteDot"/>
   <testcase time="0" classname="za.co.bvr.forth.processor.implemented.InputprocessorTest" name="lineTestQuote"/>
   <testcase time="0" classname="za.co.bvr.forth.processor.implemented.InputprocessorTest" name="processDoLoopTest2"/>

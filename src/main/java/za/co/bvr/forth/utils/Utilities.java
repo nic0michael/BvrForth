@@ -1,20 +1,14 @@
 package za.co.bvr.forth.utils;
 
-import com.sun.xml.internal.fastinfoset.stax.events.Util;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.Collection;
 import java.util.TreeMap;
 
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -35,7 +29,7 @@ public class Utilities {
 
 
     public static String removeUnwantedSpaces(String line) throws LineIsEmptyException {
-        if(Util.isEmptyString(line)){
+        if(isEmptyString(line)){
             throw new za.co.bvr.forth.exceptions.LineIsEmptyException();
         }
         String str = line;
@@ -45,7 +39,7 @@ public class Utilities {
     }
 
     private static String removeDuplicateSpaces(String line) throws LineIsEmptyException {
-        if(Util.isEmptyString(line)){
+        if(isEmptyString(line)){
             throw new za.co.bvr.forth.exceptions.LineIsEmptyException();
         }
         String str = line.replaceAll("\\s+", " ");
@@ -55,7 +49,7 @@ public class Utilities {
     }
 
     private static String removeFirstAndLastSpace(String line) throws LineIsEmptyException {
-        if(Util.isEmptyString(line)){
+        if(isEmptyString(line)){
             throw new za.co.bvr.forth.exceptions.LineIsEmptyException();
         }
         String str = line;
@@ -103,7 +97,7 @@ public class Utilities {
         return str==null || str.length()==0;
     }
     
-    public boolean isEmptyString(String str){
+    public static boolean isEmptyString(String str){
         return str==null || str.length()==0;
     }
     

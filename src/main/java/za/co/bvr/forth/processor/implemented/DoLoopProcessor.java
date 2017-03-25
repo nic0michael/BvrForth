@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import za.co.bvr.forth.processor.AbstractLoopProcessor;
 import za.co.bvr.forth.stack.ForthStack;
+import za.co.bvr.forth.utils.Utilities;
 
 /**
  *
@@ -19,7 +20,7 @@ public class DoLoopProcessor extends AbstractLoopProcessor {
     Map<String, String> loopDefinitions = new HashMap<String, String>();
     Map<String, Integer> loopIterations = new HashMap<String, Integer>();
 
-    boolean definitionIsNotComplete = false;
+    boolean definitionIsNotComplete = true;
 
     final String FIRST_LOOP_NAME = "LOOP_0";
 
@@ -59,12 +60,20 @@ public class DoLoopProcessor extends AbstractLoopProcessor {
 
     @Override
     public String preProcess(String line) throws Exception {
+        
+        if(Utilities.isEmptyString(line)){
+            return "";
+        }
         LineProcessor processor = new LineProcessor();
         return processor.process(line);
     }
 
     @Override
     public String postProcess(String line) throws Exception {
+        
+        if(Utilities.isEmptyString(line)){
+            return "";
+        }
         LineProcessor processor = new LineProcessor();
         return processor.process(line);
     }
@@ -177,9 +186,9 @@ public class DoLoopProcessor extends AbstractLoopProcessor {
                 }
                 if (nrOfDoFound == nrOfLoopsFound) {
                     loopFound = true;
-                    definitionIsNotComplete = true;
-                } else {
                     definitionIsNotComplete = false;
+                } else {
+                    definitionIsNotComplete = true;
                 }
 
             } else if (doFound && !loopFound) {

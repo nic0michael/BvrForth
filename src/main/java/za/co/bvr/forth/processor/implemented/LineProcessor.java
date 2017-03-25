@@ -17,6 +17,9 @@ class LineProcessor extends AbstractProcessor {
 
     @Override
     public String process(String line) throws Exception {
+        if(Utilities.isEmptyString(line)){
+            return "";
+        }
         VerbProcessor verbProcessor = new VerbProcessor();
         StringBuilder result = new StringBuilder();
         String[] verbs = line.split(" ");

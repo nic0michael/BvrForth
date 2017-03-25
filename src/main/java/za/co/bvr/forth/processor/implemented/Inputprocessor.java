@@ -19,6 +19,7 @@ public class Inputprocessor extends AbstractProcessor {
     boolean definingLoop = false;
     boolean definingVariable = false;
     boolean definingString = false;
+    boolean definingIfStatement=false;
 
     @Override
     public String process(String input) throws UnknownProcessorType, Exception {
@@ -28,6 +29,8 @@ public class Inputprocessor extends AbstractProcessor {
             definingNewVerb = true;
         } else if (line.toUpperCase().contains("DO")) {
             definingLoop = true;
+        }  else if (line.toUpperCase().contains("IF")) {
+            definingIfStatement = true;
         } else if (line.toUpperCase().contains("VARIABLE")) {
             definingVariable = true;
         } else if (line.toUpperCase().contains("CONSTANT")) {
@@ -51,7 +54,12 @@ public class Inputprocessor extends AbstractProcessor {
             String result = loopProcessor.process(line);
             definingLoop = loopProcessor.getDefinitionIsNotComplete();
             return result;
-        } else if (definingString) {
+        }  else if (definingIfStatement) {
+            IfStatementProcessor ifStatementProcessor = new IfStatementProcessor();
+            String result = ifStatementProcessor.process(line);
+            definingIfStatement = ifStatementProcessor.getDefinitionIsNotComplete();
+            return result;
+        }else if (definingString) {
             line = storingString(line);
             AbstractProcessor lineProcessor = new LineProcessor();
             return lineProcessor.process(line);
