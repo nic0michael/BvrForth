@@ -28,6 +28,13 @@ public class ForthDictionary {
         loadDictionary();
     }
 
+    public void clearDictionary() {
+        verbDefinitions = new HashMap<>();
+        verbCompiledDefinitions = new HashMap<>();
+        verbDescriptions = new HashMap<>();
+        verbHistory = new ArrayList<Verb>();
+    }
+
     public void addVerbToDictionary(Verb verb) {
         String name = verb.getName().toUpperCase();
         String description;
@@ -127,20 +134,23 @@ public class ForthDictionary {
         return sortedNames;
     }
 
-    public String showVerbDetails() {
+    public String showVerbDetails() throws VerbNotInDictionaryException {
         StringBuilder result = new StringBuilder();
-        int loop = 0;
+        int count = 0;
+
         for (Map.Entry<String, String> entry : verbDefinitions.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
-            if (loop > 0) {
+            if (count > 0) {
                 result.append("\n");
             }
+            result.append("Verb: ");
             result.append(key);
-            result.append(" : ");
+            result.append(" Definition: ");
             result.append(value);
-            loop++;
+            count++;
         }
+        
         return result.toString();
     }
 
@@ -192,6 +202,8 @@ public class ForthDictionary {
 
     private void loadDictionary() {
 
+        addSystemVerbs(": ;");
+        addSystemVerbs("+ - * /");
         addSystemVerbs("=");
         addSystemVerbs("0=");
         addSystemVerbs("0<");
@@ -212,7 +224,7 @@ public class ForthDictionary {
         addSystemVerbs("D0<");
 
         addSystemVerbs(".");// POP AND PRINT TOS
-        addSystemVerbs("+ - * /");
+        
 
         addSystemVerbs("1+");
         addSystemVerbs("1-");
@@ -231,16 +243,21 @@ public class ForthDictionary {
         addSystemVerbs("$L");// START OF STRING (THE STRING ENDS WITH A ")
         addSystemVerbs("@");// FETCH FROM NUMERIC VARIABLE
         addSystemVerbs("?");// PRINT NUMERIC VARIABLE  
+        
+        addSystemVerbs(".COMPUTERNAME");//Utilities.getComputerIpAddress()
+        addSystemVerbs(".CNAME");//Utilities.getComputerIpAddress()
+        addSystemVerbs(".COMPUTERIP");//Utilities.getComputerName()
+        addSystemVerbs(".CIP");//Utilities.getComputerName()
 
+        addSystemVerbs(".D");//ADVANCED FEATURE : LIST THE DICTIONARY
         addSystemVerbs(".DATE");// ADVANCED FEATURE : PRINT DATE IN Y2K BANKING FORMAT (Y2K COMPLIANT DATE)
-        addSystemVerbs(".DATEUSA");//ADVANCED FEATURE :  PRINT DATE USA FORMAT  (Y2K COMPLIANT DATE)
         addSystemVerbs(".DATEBRITISH");//ADVANCED FEATURE :  PRINT DATE BRITISH FORMAT  (Y2K COMPLIANT DATE)
         addSystemVerbs(".DATESF");// ADVANCED FEATURE : PRINT Y2K COMPLIANT DATE USING FORMAT STRING ON STACK TOP
         addSystemVerbs(".DATESIMPLEFORMAT");// ADVANCED FEATURE : PRINT Y2K COMPLIANT DATE USING FORMAT STRING ON STACK TOP YYYY-MM-DD HH:MM:SS
         addSystemVerbs(".DATETIME");//ADVANCED FEATURE :  PRINT DATE AND TIME  (Y2K COMPLIANT DATE)
+        addSystemVerbs(".DATEUSA");//ADVANCED FEATURE :  PRINT DATE USA FORMAT  (Y2K COMPLIANT DATE)
         addSystemVerbs(".DAY");// PRINTS THE DAY
         addSystemVerbs(".DICT");//ADVANCED FEATURE : LIST THE DICTIONARY
-        addSystemVerbs(".D");//ADVANCED FEATURE : LIST THE DICTIONARY
         addSystemVerbs(".DICTDEF");//ADVANCED FEATURE : LIST ALL THE DEFINITIONS OF ALL THE VERBS
         addSystemVerbs(".ERRORLOG");// PRINT ERROR LOG
         addSystemVerbs(".H");// HELP
@@ -249,23 +266,27 @@ public class ForthDictionary {
         addSystemVerbs(".INETADDRESS");// PRINTS THE IP ADDRESS OF A SERVER 
         addSystemVerbs(".LISTVARIABLES");//ADVANCED FEATURE : LISTS THE NAMES OF ALL THE LIST VARIABLES
         addSystemVerbs(".L");//ADVANCED FEATURE : LISTS THE NAMES OF ALL THE LIST VARIABLES
+        addSystemVerbs(".MODE");
         addSystemVerbs(".MONTH");// PRINTS THE MONTH
         addSystemVerbs(".MTH");// PRINTS THE MONTH
         addSystemVerbs(".OS");// PRINT OPERATING SYSTEM COMPATIBILITY
         addSystemVerbs(".RSSFEEDMESSAGE");// PRINTS A MESSAGE WHERE THE INDEX IS THE TOS 
+        
+        addSystemVerbs(".SERVERIP");//Utilities.getIpAddressOfHosst()        
+        addSystemVerbs(".SIP");//Utilities.getIpAddressOfHosst()
         addSystemVerbs(".STACK");// ADVANCED FEATURE : LIST THE STACK
         addSystemVerbs(".STATUS");
         addSystemVerbs(".S");// ADVANCED FEATURE : LIST THE STACK
         addSystemVerbs(".TIME");// ADVANCED FEATURE : PRINT TIME
         addSystemVerbs(".TIMESTAMP");// PRINT DATE
         addSystemVerbs(".VARIABLES");//ADVANCED FEATURE : LIST THE VARIABLES AND THEIR CONTENT
-        addSystemVerbs(".V");//ADVANCED FEATURE : LIST THE VARIABLES AND THEIR CONTENT
+        addSystemVerbs(".V");//ADVANCED FEATURE : LIST THE VARIABLES AND THEIR CONTENT //showVariables()
         addSystemVerbs(".YEAR");// PRINTS THE YEAR
         addSystemVerbs(".YR");// PRINTS THE YEAR          
         addSystemVerbs(".STACK");
         addSystemVerbs(".HELP");
-        addSystemVerbs("$@");//PUST THE VALUE OF A STRING VARIABLE TO TOS
 
+        addSystemVerbs("$@");//PUST THE VALUE OF A STRING VARIABLE TO TOS
         addSystemVerbs("$CONSTANT");//ADVANCED FEATURE :  DEFINE STRING CONSTANT WE ALSO HAVE STRING CONSTANTS
         addSystemVerbs("$VARIABLE");// DEFINE STRING VARIABLE
         addSystemVerbs("?DUP");// QDUP
@@ -310,11 +331,12 @@ public class ForthDictionary {
         addSystemVerbs("DELAY");//ADVANCED FEATURE :  100MS DELAY
         addSystemVerbs("DEC");// DECIMAL MODE BASE 10 (SEE BIN)  
 
-        addSystemVerbs("EXECWRITE");
+        addSystemVerbs("ELSE");
         addSystemVerbs("EMIT");// SEND SPACES NR OF SPACES IS TOS
         addSystemVerbs("EXEC");// EXECUTE AN O/S COMMAND
         addSystemVerbs("EXECNANO");// EDIT FILE WITH NANO  FIRST PUSH PATH TO FILE TO EDIT AS A STRING
         addSystemVerbs("EXECKATE");// EDIT FILE WITH KATE FIRST PUSH PATH TO FILE TO EDIT AS A STRING
+        addSystemVerbs("EXECWRITE");
         addSystemVerbs("EXECKWRITE");//EDIT FILE WITH KWRITE FIRST PUSH PATH TO FILE TO EDIT AS A STRING
         addSystemVerbs("EXECVI");// EDIT FILE WITH VI FIRST PUSH PATH TO FILE TO EDIT AS A STRING
         addSystemVerbs("EXECVIM");// EDIT FILE WITH VIM FIRST PUSH PATH TO FILE TO EDIT AS A STRING
@@ -327,74 +349,71 @@ public class ForthDictionary {
         addSystemVerbs("FILE@");//READ A FILE FROM DISK WHOSE FILESPECK(FILENAME AND PATH) IN ON TOS SAVE STRING READ TO TOS
         addSystemVerbs("FORGET");// REMOVES A VERB FROM THE DICTIONARY (DICTIONARYINDEXMAP)
 
-        addSystemVerbs("HEX");
-        addSystemVerbs("HEXTODEC");
-        addSystemVerbs("HMAPVARIABLE");// DEFINE HASHMAP VARIABLE
         addSystemVerbs("HELP");// DISPLAY THIS LIST OF VERBS
         addSystemVerbs("HEX");// HEXADECIMAL MODE BASE 16 (SEE BIN) 
+        addSystemVerbs("HEXTODEC");
+        addSystemVerbs("HMAPVARIABLE");// DEFINE HASHMAP VARIABLE
         addSystemVerbs("HTMLLIST@");//DEPRICATED// LIST THE TAGS OF HTML PAGE WHOSE URL IS ON THE STACK TOP SAVE THIS ON THE STACK TOP
         addSystemVerbs("HTMLREAD@"); //  TEXT READ THE HTML PAGE WHOSE URL IS ON THE STACK TOP SAVE THIS ON THE STACK TOP
 
+        addSystemVerbs("IF");
         addSystemVerbs("INETADDRESS@");// PUSHES THE IP ADDRESS OF A SERVER ON THESTACK
 
         addSystemVerbs("LATEST"); //     WILL CONNECT TO THE WEBSERVER AND DISPLAY LATEST VERSION AVAILABLE FOR DOWNOLOAD
         addSystemVerbs("LFS"); // SEND A NUMBER OF LF'S TO PRINT NUMBER IS TOS
-        addSystemVerbs("LOAD"); // LOAD BLOCK FROM DISK N WHERE N IS TOS
-        addSystemVerbs("LOOP");
         addSystemVerbs("LIST"); // LIST BLOCK N WHERE N IS TOS
+        addSystemVerbs("LISTVARIABLE");// DEFINE LIST VARIABLE
+        addSystemVerbs("LOAD"); // LOAD BLOCK FROM DISK N WHERE N IS TOS
         addSystemVerbs("LOG");
         addSystemVerbs("LOGBASE10");
-        addSystemVerbs("LISTVARIABLE");// DEFINE LIST VARIABLE
+        addSystemVerbs("LOOP");
 
         addSystemVerbs("MAX"); // KEEP THE MAXIMUN OF TWO NUMBERS ON THE STACK DROP THE OTHER
         addSystemVerbs("MIN");// KEEP THE MINIMUM OF TWO NUMBERS ON THE STACK DROP THE OTHER
         addSystemVerbs("MOD");// POP AND DIVIDE THE TOP TWO MUMBERS ON STACK AND PUSH THE MODULUS
 
-        addSystemVerbs("NEGATE");// CHANGE THE SIGN OF THE NUMBER AT TOS NGATIVE/POSITIVE
+        addSystemVerbs("NEGATE");// CHANGE THE SIGN OF THE NUMBER AT TOS NGATIVE/POSITIVE        
+        addSystemVerbs("NOP");
 
-        addSystemVerbs("OR");// LOGICAL OR
         addSystemVerbs("OCT");// OCTAL MODE BASE 16 (SEE BIN) 
-        addSystemVerbs("OVER");
+        addSystemVerbs("OCTALTODEC");
+        addSystemVerbs("OR");// LOGICAL OR
         addSystemVerbs("OSSETLINUX"); // SET O/S COMPATIBILITY  TO LINUX
         addSystemVerbs("OSSETMAC"); // SET O/S COMPATIBILITY  TO MAC OS
         addSystemVerbs("OSSETSWING"); // SET O/S COMPATIBILITY  FOR SWING CLIENT
         addSystemVerbs("OSSETUNITTEST"); // SET O/S COMPATIBILITY  FOR UNIT TESTING
         addSystemVerbs("OSSETWEBSERVER"); // SET O/S COMPATIBILITY  FOR WEB SERVER
         addSystemVerbs("OSSETWINDOWS"); // SET O/S COMPATIBILITY  TO WINDOWS
-
-        addSystemVerbs("OCT");
-        addSystemVerbs("OCTALTODEC");
         addSystemVerbs("OVER");
 
+        addSystemVerbs("POP");// POP FROM STACK // INTERNAL OPERATION
         addSystemVerbs("PUSH");// PUSH ONTO STACK // INTERNAL OPERATION
         addSystemVerbs("PWR");
-        addSystemVerbs("POP");// POP FROM STACK // INTERNAL OPERATION
 
+        addSystemVerbs("RADTODEG");
+        addSystemVerbs("RANDOM");
+        addSystemVerbs("RND");// POPS SMALEST AND LARGEST NUMBERS AND PUSHES A RANDOM NUMBER  TO STACK
         addSystemVerbs("ROT");
-        addSystemVerbs("RND");// PUSH A RANDOM NUMBER RND(10) TO STACK
+        addSystemVerbs("ROUND");
         addSystemVerbs("RSSFEEDREAD"); // READS ALL MESSAGES FROM RSS STREAM WHERE URL IS ONTO THE STACK TOP
         addSystemVerbs("RSSFEEDMESSAGE@");// READS A MESSAGE WHERE THE INDEX IS THE TOS AND PUSHES THIS MESSAGE TO STACK
         addSystemVerbs("RSSFEEDSIZE@");// PUSHES THE NUMBER OF MESSAGES TO TOS
         addSystemVerbs("RSSJ2EEREAD");// READS ALL MESSAGES FROM RSS STREAM FOR THIS PROJECT  ONTO THE STACK TOP
-        addSystemVerbs("RND");
-        addSystemVerbs("ROUND");
-        addSystemVerbs("RADTODEG");
-        addSystemVerbs("RANDOM");
-        addSystemVerbs("ROT");
 
+        addSystemVerbs("SIN");
         addSystemVerbs("SPACE");// PRINT ONE SPACE
         addSystemVerbs("SPACES");// PRINT N SPACES WHERE N IS TOS
-        addSystemVerbs("SQR");
+        addSystemVerbs("SQR");// PUSH THE SQUARE THE TOS
+        addSystemVerbs("SQRT");// PUSH THE SQUARE ROOT OF TOS
         addSystemVerbs("SWAP");
         addSystemVerbs("SYSTEM!");// ADVANCED FEATURE : STORE SYSTEM VARIABLES TO PROPERTIES FILE ON HARD DISK
         addSystemVerbs("SYSTEM@");// ADVANCED FEATURE : RETRIEVE SYSTEM VARIABLES FROM PROPERTIES FILE ON HARD DISK
-        addSystemVerbs("SQRT");
-        addSystemVerbs("SIN");
-        addSystemVerbs("SWAP");
 
         addSystemVerbs("TAN");
         addSystemVerbs("TIME@");// ADVANCED FEATURE : PUSH DATE TO STACK
         addSystemVerbs("TIMESTAMP@");//ADVANCED FEATURE :  PUSH DATE TIME STAMP TO STACK
+        addSystemVerbs("?TIME");// ADVANCED FEATURE : PRINT DATE TO STACK
+        addSystemVerbs("?TIMESTAMP");//ADVANCED FEATURE :  PRINT DATE TIME STAMP TO STACK
 
         addSystemVerbs("VARIABLE");// DEFINE  VARIABLE
 
@@ -404,8 +423,6 @@ public class ForthDictionary {
         addSystemVerbs("XMLMAKE");//ADVANCED FEATURE :  PARSE VARIABLES INTO VARIABLE XML TO GENERATE XML
         addSystemVerbs("XML!");// ADVANCED FEATURE : SAVE XML TAGS TO VARIABLES XML
         addSystemVerbs("XML@");// ADVANCED FEATURE : PUSH XML TAGS TO STACK
-
-        addSystemVerbs("NOP : ;");
 
     }
 

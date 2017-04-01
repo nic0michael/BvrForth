@@ -3,17 +3,14 @@ package za.co.bvr.forth.processor.implemented;
 import za.co.bvr.forth.processor.AbstractProcessor;
 import za.co.bvr.forth.stack.ForthStack;
 import za.co.bvr.forth.utils.Utilities;
-import za.co.bvr.forth.variables.Constants;
-import za.co.bvr.forth.variables.Variables;
+import za.co.bvr.forth.variables.VariablesStore;
 
 /**
  *
  * @author nickm 
  */
-public class VariableAndConstantProcessor extends AbstractProcessor {
-
-    Constants constants = Constants.INSTANCE;
-    Variables variables = Variables.INSTANCE;
+public class VariableAndConstantProcessor extends AbstractProcessor {    
+    VariablesStore variables = VariablesStore.INSTANCE;
     ForthStack stack = ForthStack.INSTANCE;
 
     boolean definitionIsNotComplete = true;
@@ -39,15 +36,15 @@ public class VariableAndConstantProcessor extends AbstractProcessor {
                 variableName = word;
                 variableNameFound = true;
                 if (variableType.equals("VARIABLE")) {
-                    variables.addVariable(variableName, 0);
+                    variables.addVariable(variableName);
                 }
             } else if (variableNameFound) {
                 if (word.equals("!")) {
-                    int valueToStoreInVariable = stack.popInt();
+                    String valueToStoreInVariable = stack.pop();
                     if (variableType.equals("VARIABLE")) {
                         variables.updateVariable(variableName, valueToStoreInVariable);
                     } else if (variableType.equals("CONSTANT")) {
-                        constants.addConstant(variableName, valueToStoreInVariable);
+                        variables.addConstant(variableName, valueToStoreInVariable);
                     }
                 } else {
                     if (count > 0) {

@@ -15,6 +15,20 @@ import org.junit.runners.MethodSorters;
 public class ForthDictionaryTest {
 
     ForthDictionary dictionary = ForthDictionary.INSTANCE;
+    
+    @Test
+    public void showVerbDetailsTest()throws VerbNotInDictionaryException {
+        dictionary.clearDictionary();
+        String expected="Verb: +. Definition: + .";
+        String name="+.";
+        String definition="+ .";
+        String compiledDefinition="+ .";
+        Verb verb=new Verb(name, definition, compiledDefinition);
+        dictionary.addVerbToDictionary(verb);
+        String found=dictionary.showVerbDetails();
+        assertThat(found , is(expected));
+    }
+    
  
     @Test
     public void addAndGetVerbFromDictionaryTest() throws VerbNotInDictionaryException {

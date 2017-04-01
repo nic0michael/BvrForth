@@ -9,7 +9,10 @@ import java.util.TreeMap;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.InputStream;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -133,6 +136,23 @@ public class Utilities {
 
         return retval;
     }
+    
+    public static String getComputerIpAddress() throws UnknownHostException{
+        String ip = InetAddress.getLocalHost().getHostAddress();
+        return ip;
+    }
+    
+    public static String getComputerName() throws UnknownHostException{
+        String computerName = InetAddress.getLocalHost().getHostName();
+        return computerName;
+    }
+    
+    public static String getIpAddressOfHosst(String hostUrl) throws UnknownHostException{
+        String ip = InetAddress.getByName(hostUrl).getHostAddress();
+        return ip;
+    }
+    
+    
     
     public static String now(String s) {
         SimpleDateFormat simpledateformat = new SimpleDateFormat(s);

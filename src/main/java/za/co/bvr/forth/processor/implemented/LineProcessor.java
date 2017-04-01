@@ -4,6 +4,7 @@ import za.co.bvr.forth.dictionary.ForthDictionary;
 import za.co.bvr.forth.processor.AbstractProcessor;
 import za.co.bvr.forth.stack.ForthStack;
 import za.co.bvr.forth.utils.Utilities;
+import za.co.bvr.forth.variables.VariablesStore;
 
 /**
  *
@@ -13,6 +14,7 @@ class LineProcessor extends AbstractProcessor {
 
     ForthDictionary dictionary = ForthDictionary.INSTANCE;
     ForthStack stack =ForthStack.INSTANCE;
+    VariablesStore variables = VariablesStore.INSTANCE;
 
 
     @Override
@@ -26,7 +28,9 @@ class LineProcessor extends AbstractProcessor {
         for (String verb : verbs) {
             if (Utilities.isNumeric(verb)) {
                 stack.push(verb);
-            } else {
+            }else if (variables.isVariable(verb.toUpperCase())) {
+                result.append(verbProcessor.process(verb));
+            }else{
                 String def = dictionary.getCompiledDefinition(verb);
                 String[] definitions = def.split(" ");
                 for (String definition : definitions) {

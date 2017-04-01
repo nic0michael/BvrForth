@@ -60,7 +60,11 @@ public class ForthStack {
             topOfStack--;
         }
 
-        return convertToCurrentMode(retString);
+        if (currentModeIsDecimal()) {
+            return retString;
+        } else {
+            return convertToCurrentMode(retString);
+        }
     }
 
     public int popInt() throws StackIsEmptyException, NumberFormatException {
@@ -69,20 +73,18 @@ public class ForthStack {
         retValue = Integer.parseInt(retString);
         return retValue;
     }
-    
-    public double popDouble()throws StackIsEmptyException, NumberFormatException {
-        String retString= pop();
+
+    public double popDouble() throws StackIsEmptyException, NumberFormatException {
+        String retString = pop();
         double retValue;
-        retValue =Double.parseDouble(retString);
-        return retValue;        
+        retValue = Double.parseDouble(retString);
+        return retValue;
     }
 
     public void clear() {
         stackStore = new Stack<String>();
         topOfStack = -1;
     }
-    
-    
 
     public void drop() throws StackIsEmptyException {
         pop();
@@ -148,20 +150,14 @@ public class ForthStack {
         int first = popInt();
         push(first / second);
     }
-   
-    
 
     public void modulus() throws StackIsEmptyException {
         int second = popInt();
         int first = popInt();
         push(first % second);
     }
-    
-    
-    
-            /////////////////
-            
-            
+
+    /////////////////
     public void addDoubles() throws StackIsEmptyException {
         double second = popDouble();
         double first = popDouble();
@@ -185,8 +181,6 @@ public class ForthStack {
         double first = popDouble();
         push(first / second);
     }
-   
-    
 
     public void modulusDoubles() throws StackIsEmptyException {
         double second = popDouble();
@@ -198,21 +192,18 @@ public class ForthStack {
         double first = popDouble();
         push(first * first);
     }
-    
 
     public void and() throws StackIsEmptyException {
         int second = popInt();
         int first = popInt();
         push(first & second);
     }
-    
 
     public void or() throws StackIsEmptyException {
         int second = popInt();
         int first = popInt();
         push(first | second);
     }
-    
 
     public void exor() throws StackIsEmptyException {
         int second = popInt();
@@ -222,87 +213,88 @@ public class ForthStack {
 
     public void square() throws StackIsEmptyException {
         int first = popInt();
-        push(first ^2);
+        push(first ^ 2);
     }
-    
+
     public void power() throws StackIsEmptyException {
         int second = popInt();
         int first = popInt();
         push(first ^ second);
     }
+
     public void max() throws StackIsEmptyException {
         int second = popInt();
         int first = popInt();
         push(Math.max(first, first));
     }
+
     public void min() throws StackIsEmptyException {
         int second = popInt();
         int first = popInt();
         push(Math.min(first, first));
     }
-    
-    public void sqrt() throws StackIsEmptyException{
-        double value=popDouble();
+
+    public void sqrt() throws StackIsEmptyException {
+        double value = popDouble();
         push(Math.sqrt(value));
     }
-    
-    public void round() throws StackIsEmptyException{
-        double value=popDouble();
+
+    public void round() throws StackIsEmptyException {
+        double value = popDouble();
         push(Math.round(value));
     }
-    
-    public void floor() throws StackIsEmptyException{
-        double value=popDouble();
+
+    public void floor() throws StackIsEmptyException {
+        double value = popDouble();
         push(Math.floor(value));
     }
-    
-    public void ceil() throws StackIsEmptyException{
-        double value=popDouble();
+
+    public void ceil() throws StackIsEmptyException {
+        double value = popDouble();
         push(Math.ceil(value));
     }
-    
-    public void radiansToDegrees() throws StackIsEmptyException{
-        double value=popDouble();
+
+    public void radiansToDegrees() throws StackIsEmptyException {
+        double value = popDouble();
         push(Math.toDegrees(value));
     }
-    
-    public void degreesToRadians() throws StackIsEmptyException{
-        double value=popDouble();
+
+    public void degreesToRadians() throws StackIsEmptyException {
+        double value = popDouble();
         push(Math.toRadians(value));
     }
-    
-    public void sin() throws StackIsEmptyException{
-        double value=popDouble();
+
+    public void sin() throws StackIsEmptyException {
+        double value = popDouble();
         push(Math.sin(value));
     }
-    
-    public void cos() throws StackIsEmptyException{
-        double value=popDouble();
-        push(Math.cos(value));        
+
+    public void cos() throws StackIsEmptyException {
+        double value = popDouble();
+        push(Math.cos(value));
     }
-    
-    public void tan() throws StackIsEmptyException{
-        double value=popDouble();
-        push(Math.tan(value));        
+
+    public void tan() throws StackIsEmptyException {
+        double value = popDouble();
+        push(Math.tan(value));
     }
-    
-    public void log() throws StackIsEmptyException{
-        double value=popDouble();
-        push(Math.log(value));        
+
+    public void log() throws StackIsEmptyException {
+        double value = popDouble();
+        push(Math.log(value));
     }
-    
-    public void logBase10() throws StackIsEmptyException{
-        double value=popDouble();
-        push(Math.log10(value));        
+
+    public void logBase10() throws StackIsEmptyException {
+        double value = popDouble();
+        push(Math.log10(value));
     }
-    
-    
-    
-    public void random() throws StackIsEmptyException{
+
+    public void random() throws StackIsEmptyException {
         int secondAndMax = popInt();
         int firstAndMin = popInt();
-        int randomNum = ThreadLocalRandom.current().nextInt(firstAndMin, secondAndMax+1);
-    }    
+        int randomNum = ThreadLocalRandom.current().nextInt(firstAndMin, secondAndMax + 1);
+        push(randomNum); 
+    }
 
     public void base64Encode() throws StackIsEmptyException {
         String StringOnStack = pop();
@@ -402,6 +394,14 @@ public class ForthStack {
     public void setModeToBinary() {
         currentMode = mode.BINARY;
     }
+    
+    public String getCurrentMode(){
+        return currentMode.value;
+    }
+    
+    public boolean currentModeIsDecimal(){
+        return currentMode.value.equalsIgnoreCase(mode.DECIMAL.value);
+    }
 
     String convertToCurrentMode(String value) {
         System.out.println(">" + value + "<");
@@ -436,110 +436,111 @@ public class ForthStack {
     }
 
     public void StringtoAscii() throws StackIsEmptyException {
-        String topString=pop();
+        String topString = pop();
         char character = topString.charAt(0); // This gives the character 'a'
         int ascii = (int) character;
         push(ascii);
     }
-    public void intToChar() throws StackIsEmptyException{
+
+    public void intToChar() throws StackIsEmptyException {
         int topValue = popInt();
-        char ch= (char) topValue;
+        char ch = (char) topValue;
         String character = new StringBuilder().append(ch).toString();
-        push(character); 
+        push(character);
     }
 
-    public void equals() throws StackIsEmptyException {        
+    public void equals() throws StackIsEmptyException {
         int second = popInt();
         int first = popInt();
-        if(first==second){
+        if (first == second) {
             push(1);
-        } else{
-            push(0);
-        }
-    }
-    
-    public void equalsZero() throws StackIsEmptyException {   
-        int first = popInt();
-        if(first==0){
-            push(1);
-        } else{
+        } else {
             push(0);
         }
     }
 
-    public void smallerThanZero() throws StackIsEmptyException { 
+    public void equalsZero() throws StackIsEmptyException {
         int first = popInt();
-        if(first<0){
+        if (first == 0) {
             push(1);
-        } else{
+        } else {
             push(0);
         }
     }
 
-    public void greaterThan() throws StackIsEmptyException {              
+    public void smallerThanZero() throws StackIsEmptyException {
+        int first = popInt();
+        if (first < 0) {
+            push(1);
+        } else {
+            push(0);
+        }
+    }
+
+    public void greaterThan() throws StackIsEmptyException {
         int second = popInt();
         int first = popInt();
-        if(first>second){
+        if (first > second) {
             push(1);
-        } else{
+        } else {
             push(0);
         }
     }
 
-    public void smallerThan() throws StackIsEmptyException {             
+    public void smallerThan() throws StackIsEmptyException {
         int second = popInt();
         int first = popInt();
-        if(first<second){
+        if (first < second) {
             push(1);
-        } else{
+        } else {
             push(0);
         }
     }
 
-    public void equalsDoubles() throws StackIsEmptyException {       
+    public void equalsDoubles() throws StackIsEmptyException {
         double second = popDouble();
         double first = popDouble();
-        if(first==second){
+        if (first == second) {
             push(1);
-        } else{
+        } else {
             push(0);
         }
     }
-    
+
     public void equalsZeroDoubles() throws StackIsEmptyException {
         double first = popDouble();
-        if(first==0){
+        if (first == 0) {
             push(1);
-        } else{
+        } else {
             push(0);
         }
     }
-    
+
     public void smallerThanZeroDoubles() throws StackIsEmptyException {
         double first = popDouble();
-        if(first<0){
+        if (first < 0) {
             push(1);
-        } else{
+        } else {
             push(0);
         }
     }
 
-    public void greaterThanDoubles() throws StackIsEmptyException {             
+    public void greaterThanDoubles() throws StackIsEmptyException {
         double second = popDouble();
         double first = popDouble();
-        if(first>second){
+        if (first > second) {
             push(1);
-        } else{
+        } else {
             push(0);
         }
     }
 
-    public void smallerThanDoubles() throws StackIsEmptyException {             
+    public void smallerThanDoubles() throws StackIsEmptyException {
         double second = popDouble();
         double first = popDouble();
-        if(first<second){
+        if (first < second) {
             push(1);
-        } else{
+        } else {
             push(0);
         }
     }

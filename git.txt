@@ -1,7 +1,7 @@
 cd /C/Nickm/PROJECTS/NetBeansProjects/BvrForth/
 git clone https://github.com/nic0michael/BvrForth.git
 
-git add .
-git commit -m "message"
+git add . 
+git commit -m "message" .
 git push -u origin master
 
