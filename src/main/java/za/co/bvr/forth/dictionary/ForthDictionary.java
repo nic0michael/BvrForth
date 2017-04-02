@@ -293,6 +293,7 @@ public class ForthDictionary {
 
         addSystemVerbs("AND");// LOGICAL AND
         addSystemVerbs("ALLOT");// STORE TOS TO NUMERIC VARIABLE
+        addSystemVerbs("ASC");
 
         addSystemVerbs("BIN");
         addSystemVerbs("BASE64ENCODE");
@@ -311,26 +312,29 @@ public class ForthDictionary {
         addSystemVerbs("CONSTANT");// DEFINE CONSTANT
         addSystemVerbs("COPY");//BLOCK TO BLOCK COPY
         addSystemVerbs("COUNTER");//PUSH NR OF CLOCK TICKS TO TOS // IT RETURNS MILLSECONDS FROM JAN 1, 1970.
-        addSystemVerbs("CR");// SENDS CR OR \N           
+        addSystemVerbs("CR");// SENDS CR OR \N    
+        addSystemVerbs("CHR$");
 
-        addSystemVerbs("DMOD");
-        addSystemVerbs("DSQR");
-        addSystemVerbs("DEC");
-        addSystemVerbs("DEGTORAD");
-        addSystemVerbs("DECTOBINARY");
-        addSystemVerbs("DECTOHEX");
-        addSystemVerbs("DECTOOCTAL");
-        addSystemVerbs("DROP");
-        addSystemVerbs("DUP");
-        addSystemVerbs("DO DROP DUP");
+        
         addSystemVerbs("DATE@");//ADVANCED FEATURE :  PUSH DATE TO STACK
         addSystemVerbs("DATEUSA@");//ADVANCED FEATURE :  PUSH DATE TO STACK         
         addSystemVerbs("DATEBRITISH@");//ADVANCED FEATURE :  PUSH DATE TO STACK                   
         addSystemVerbs("DATESIMPLEFORMAT@");//ADVANCED FEATURE :  PUSH DATE TO STACK WHERE FORMAT STRING IS ON TOS YYYY-MM-DD HH:MM:SS
         addSystemVerbs("DATETIME@");//ADVANCED FEATURE :  PUSH DATE TO STACK
         addSystemVerbs("DELAY");//ADVANCED FEATURE :  100MS DELAY
-        addSystemVerbs("DEC");// DECIMAL MODE BASE 10 (SEE BIN)  
+        addSystemVerbs("DEC");// DECIMAL MODE BASE 10 (SEE BIN)
+        addSystemVerbs("DEGTORAD");
+        addSystemVerbs("DECTOBINARY");
+        addSystemVerbs("DECTOHEX");
+        addSystemVerbs("DECTOOCTAL");
+        addSystemVerbs("DMOD");
+        addSystemVerbs("DO");
+        addSystemVerbs("DROP");        
+        addSystemVerbs("DSQR");
+        addSystemVerbs("DUP");
+          
 
+        addSystemVerbs("EDIT");// MULTIPLE TEXT EDITOR PUSH (1 TO 7) TO SELECT EDITOR THE PUSH PATH TO FILE TO EDIT AS A STRING 
         addSystemVerbs("ELSE");
         addSystemVerbs("EMIT");// SEND SPACES NR OF SPACES IS TOS
         addSystemVerbs("EXEC");// EXECUTE AN O/S COMMAND
@@ -342,7 +346,6 @@ public class ForthDictionary {
         addSystemVerbs("EXECVIM");// EDIT FILE WITH VIM FIRST PUSH PATH TO FILE TO EDIT AS A STRING
         addSystemVerbs("EXECWORDPAD");// EDIT FILE WITH WORDPAD FIRST PUSH PATH TO FILE TO EDIT AS A STRING
         addSystemVerbs("EXECNOTEPAD");// EDIT FILE WITH NOTEPAD FIRST PUSH PATH TO FILE TO EDIT AS A STRING
-        addSystemVerbs("EDIT");// MULTIPLE TEXT EDITOR PUSH (1 TO 7) TO SELECT EDITOR THE PUSH PATH TO FILE TO EDIT AS A STRING 
 
         addSystemVerbs("FLOOR");
         addSystemVerbs("FLUSH");//FLUSHES CHANGED BLOCKS TO DISK                   

@@ -12,6 +12,8 @@ public class VariablesStore {
     Map<String, String> valueStore = new HashMap<>();
     Map<String, String> variableNames = new HashMap<>();
     Map<String, String> constantNames = new HashMap<>();
+    Map<String, String> stringVariableNames = new HashMap<>();
+    Map<String, String> stringConstantNames = new HashMap<>();
 
     public static final VariablesStore INSTANCE = new VariablesStore();
     
@@ -39,6 +41,18 @@ public class VariablesStore {
         System.out.println("Created constant "+variableName.toUpperCase());
     }
 
+    public void addStringConstant(String variableName, String value) {
+        valueStore.put(variableName.toUpperCase(), value);
+        stringConstantNames.put(variableName.toUpperCase(), value);
+        System.out.println("Created constant "+variableName.toUpperCase());
+    }
+ 
+    public void addStringVariable(String variableName,String value) {
+        valueStore.put(variableName.toUpperCase(), value);
+        stringVariableNames.put(variableName.toUpperCase(), variableName.toUpperCase());
+        System.out.println("Created String variable "+variableName.toUpperCase());
+    }
+    
     public void updateVariable(String variableName, String value) {
         if (variableNames.get(variableName.toUpperCase()) != null) {
             valueStore.remove(variableName.toUpperCase());
@@ -59,6 +73,13 @@ public class VariablesStore {
             valueStore.put(variableName.toUpperCase(),new Double(value).toString());
         }
     }
+    
+    public void updateStringVariable(String variableName, String value) {
+        if (stringVariableNames.get(variableName.toUpperCase()) != null) {
+            valueStore.remove(variableName.toUpperCase());
+            valueStore.put(variableName.toUpperCase(), value);
+        }
+    }
 
     public int getIntValueOfVariable( String variableName) {
         String value = valueStore.get(variableName.toUpperCase());
@@ -73,7 +94,10 @@ public class VariablesStore {
     }
 
     public boolean isVariable(String variableName) {
-        return variableNames.get(variableName.toUpperCase()) != null || constantNames.get(variableName.toUpperCase()) != null;
+        return variableNames.get(variableName.toUpperCase()) != null || 
+                constantNames.get(variableName.toUpperCase()) != null ||
+                stringVariableNames.get(variableName.toUpperCase()) != null || 
+                stringConstantNames.get(variableName.toUpperCase()) != null ;
     }
 
     public String getCurrentvariableValue() {
