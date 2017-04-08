@@ -496,6 +496,35 @@ public class ForthStack {
             push(0);
         }
     }
+    
+    public void equalsOrGreaterThan() throws StackIsEmptyException {   
+        int second = popInt();
+        int first = popInt();
+        if (first > second || first==second ) {
+            push(1);
+        } else {
+            push(0);
+        }     
+    }
+
+    public void smallerThanOrEquals() throws StackIsEmptyException {
+        int second = popInt();
+        int first = popInt();
+        if (first < second|| first==second ) {
+            push(1);
+        } else {
+            push(0);
+        }
+    }
+
+    public void not() throws StackIsEmptyException {
+        int first = popInt();
+        if (first ==0  ) {
+            push(1);
+        } else {
+            push(0);
+        }
+    }
 
     public void equalsDoubles() throws StackIsEmptyException {
         double second = popDouble();
@@ -539,6 +568,36 @@ public class ForthStack {
         double second = popDouble();
         double first = popDouble();
         if (first < second) {
+            push(1);
+        } else {
+            push(0);
+        }
+    }
+
+    
+    public void equalsOrGreaterThanDoubles() throws StackIsEmptyException { 
+        double second = popDouble();
+        double first = popDouble();
+        if (first > second || first==second ) {
+            push(1);
+        } else {
+            push(0);
+        }     
+    }
+
+    public void smallerThanOrEqualsDoubles() throws StackIsEmptyException {
+        double second = popDouble();
+        double first = popDouble();
+        if (first < second|| first==second ) {
+            push(1);
+        } else {
+            push(0);
+        }
+    }
+
+    public void notDoubles() throws StackIsEmptyException {
+        double first = popDouble();
+        if (first ==0  ) {
             push(1);
         } else {
             push(0);

@@ -209,6 +209,10 @@ public class ForthDictionary {
         addSystemVerbs("0<");
         addSystemVerbs(">");
         addSystemVerbs("<");
+        addSystemVerbs("<>");
+        addSystemVerbs("=>");
+        addSystemVerbs("<=");
+        addSystemVerbs("NOT");
         addSystemVerbs("+");
         addSystemVerbs("-");
         addSystemVerbs("*");
@@ -394,7 +398,6 @@ public class ForthDictionary {
         addSystemVerbs("PWR");
 
         addSystemVerbs("RADTODEG");
-        addSystemVerbs("RANDOM");
         addSystemVerbs("RND");// POPS SMALEST AND LARGEST NUMBERS AND PUSHES A RANDOM NUMBER  TO STACK
         addSystemVerbs("ROT");
         addSystemVerbs("ROUND");
@@ -406,8 +409,8 @@ public class ForthDictionary {
         addSystemVerbs("SIN");
         addSystemVerbs("SPACE");// PRINT ONE SPACE
         addSystemVerbs("SPACES");// PRINT N SPACES WHERE N IS TOS
-        addSystemVerbs("SQR");// PUSH THE SQUARE THE TOS
-        addSystemVerbs("SQRT");// PUSH THE SQUARE ROOT OF TOS
+        addSystemVerbs("SQARE");// PUSH THE SQUARE THE TOS
+        addSystemVerbs("SQR");// PUSH THE SQUARE ROOT OF TOS
         addSystemVerbs("SWAP");
         addSystemVerbs("SYSTEM!");// ADVANCED FEATURE : STORE SYSTEM VARIABLES TO PROPERTIES FILE ON HARD DISK
         addSystemVerbs("SYSTEM@");// ADVANCED FEATURE : RETRIEVE SYSTEM VARIABLES FROM PROPERTIES FILE ON HARD DISK

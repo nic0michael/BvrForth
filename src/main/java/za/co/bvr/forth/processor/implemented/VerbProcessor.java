@@ -98,7 +98,16 @@ public class VerbProcessor extends AbstractProcessor {
                     case "<":
                         stack.smallerThan();
                         break;
-
+                        
+                    case "=>":
+                        stack.equalsOrGreaterThan();
+                        break;
+                    case "<=":
+                        stack.smallerThanOrEquals();
+                        break;
+                    case "NOT":
+                        stack.not();
+                        break;
                     case "+":
                         stack.add();
                         break;
@@ -117,10 +126,6 @@ public class VerbProcessor extends AbstractProcessor {
 
                     case "MOD":
                         stack.modulus();
-                        break;
-
-                    case "SQR":
-                        stack.square();
                         break;
 
                     case "D+":
@@ -167,7 +172,11 @@ public class VerbProcessor extends AbstractProcessor {
                         stack.squareDoubles();
                         break;
 
-                    case "SQRT":
+                    case "SQARE":
+                        stack.square();
+                        break;                        
+
+                    case "SQR":
                         stack.sqrt();
                         break;
 
