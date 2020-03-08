@@ -1,0 +1,11 @@
+/system/projects_folder/NetbeansProjects/BvrForth/src/test/java/za/co/bvr/forth/dictionary/ForthDictionaryTest.java
+/system/projects_folder/NetbeansProjects/BvrForth/src/test/java/za/co/bvr/forth/compiler/ForthCompilerTest.java
+/system/projects_folder/NetbeansProjects/BvrForth/src/test/java/za/co/bvr/forth/stack/ForthStackTest.java
+/system/projects_folder/NetbeansProjects/BvrForth/src/test/java/za/co/bvr/forth/processor/implemented/IfStatementProcessorTest.java
+/system/projects_folder/NetbeansProjects/BvrForth/src/test/java/za/co/bvr/forth/processor/implemented/InputprocessorTest.java
+/system/projects_folder/NetbeansProjects/BvrForth/src/test/java/za/co/bvr/forth/processor/implemented/VariableAndConstantProcessorTest.java
+/system/projects_folder/NetbeansProjects/BvrForth/src/test/java/za/co/bvr/forth/processor/implemented/LineProcessorTest.java
+/system/projects_folder/NetbeansProjects/BvrForth/src/test/java/za/co/bvr/forth/processor/implemented/DefineVerbProcessorTest.java
+/system/projects_folder/NetbeansProjects/BvrForth/src/test/java/za/co/bvr/forth/processor/implemented/DoLoopProcessorTest.java
+/system/projects_folder/NetbeansProjects/BvrForth/src/test/java/za/co/bvr/forth/variables/VariablesTest.java
+/system/projects_folder/NetbeansProjects/BvrForth/src/test/java/za/co/bvr/forth/utils/UtilitiesTest.java
