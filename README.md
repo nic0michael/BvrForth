@@ -2,6 +2,7 @@
 An Open Source Forth Compiler that will run on all platforms which was written in Java
 <<<<<<< HEAD
 This project replaces JEE8Forth and is written using "Clean Code"
+It is now built using OpenJdk 11
 
 Preequisites :
 You need Java 7 installed on your computer
