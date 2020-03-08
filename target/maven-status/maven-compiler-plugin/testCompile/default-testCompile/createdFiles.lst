@@ -1,0 +1,11 @@
+za/co/bvr/forth/compiler/ForthCompilerTest.class
+za/co/bvr/forth/dictionary/ForthDictionaryTest.class
+za/co/bvr/forth/processor/implemented/LineProcessorTest.class
+za/co/bvr/forth/processor/implemented/DefineVerbProcessorTest.class
+za/co/bvr/forth/stack/ForthStackTest.class
+za/co/bvr/forth/processor/implemented/VariableAndConstantProcessorTest.class
+za/co/bvr/forth/processor/implemented/IfStatementProcessorTest.class
+za/co/bvr/forth/processor/implemented/InputprocessorTest.class
+za/co/bvr/forth/variables/VariablesTest.class
+za/co/bvr/forth/processor/implemented/DoLoopProcessorTest.class
+za/co/bvr/forth/utils/UtilitiesTest.class
