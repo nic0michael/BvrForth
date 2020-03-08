@@ -1,5 +1,6 @@
 package za.co.bvr.forth.processor.implemented;
 
+import lombok.extern.java.Log;
 import za.co.bvr.forth.utils.Utilities;
 import za.co.bvr.forth.exceptions.UnknownProcessorType;
 import za.co.bvr.forth.processor.AbstractLoopProcessor;
@@ -10,6 +11,7 @@ import za.co.bvr.forth.stack.ForthStack;
  *
  * @author nickm
  */
+@Log
 public class Inputprocessor extends AbstractProcessor {
 
     ForthStack stack = ForthStack.INSTANCE;

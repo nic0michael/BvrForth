@@ -1,5 +1,6 @@
 package za.co.bvr.forth.processor.implemented;
 
+import lombok.extern.java.Log;
 import za.co.bvr.forth.dictionary.ForthDictionary;
 import za.co.bvr.forth.processor.AbstractProcessor;
 import za.co.bvr.forth.stack.ForthStack;
@@ -10,6 +11,7 @@ import za.co.bvr.forth.variables.VariablesStore;
  *
  * @author nickm 
  */
+@Log
 class LineProcessor extends AbstractProcessor {
 
     ForthDictionary dictionary = ForthDictionary.INSTANCE;
@@ -19,10 +21,12 @@ class LineProcessor extends AbstractProcessor {
 
     @Override
     public String process(String line) throws Exception {
-        if(Utilities.isEmptyString(line)){
+        
+//        log.info("LineProcessor processing line : "+line+"\n\n");
+        if(Utilities.isEmpty(line)){
             return "";
         }
-        VerbProcessor verbProcessor = new VerbProcessor();
+        VerbPreProcessor verbProcessor = new VerbPreProcessor();
         StringBuilder result = new StringBuilder();
         String[] verbs = line.split(" ");
         for (String verb : verbs) {
@@ -31,9 +35,11 @@ class LineProcessor extends AbstractProcessor {
             }else if (variables.isVariable(verb.toUpperCase())) {
                 result.append(verbProcessor.process(verb));
             }else{
+//                log.info("LineProcessor verb : "+verb);
                 String def = dictionary.getCompiledDefinition(verb);
                 String[] definitions = def.split(" ");
                 for (String definition : definitions) {
+//                    log.info("LineProcessor definition : "+definition+"\n\n");
                     result.append(verbProcessor.process(definition));
                 }
             }

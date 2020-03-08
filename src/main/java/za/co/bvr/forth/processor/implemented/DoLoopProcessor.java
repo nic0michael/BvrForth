@@ -61,7 +61,7 @@ public class DoLoopProcessor extends AbstractLoopProcessor {
     @Override
     public String preProcess(String line) throws Exception {
         
-        if(Utilities.isEmptyString(line)){
+        if(Utilities.isEmpty(line)){
             return "";
         }
         LineProcessor processor = new LineProcessor();
@@ -71,7 +71,7 @@ public class DoLoopProcessor extends AbstractLoopProcessor {
     @Override
     public String postProcess(String line) throws Exception {
         
-        if(Utilities.isEmptyString(line)){
+        if(Utilities.isEmpty(line)){
             return "";
         }
         LineProcessor processor = new LineProcessor();

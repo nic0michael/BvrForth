@@ -10,9 +10,10 @@ import za.co.bvr.forth.utils.Utilities;
 
 /**
  *
- * @author nickm
+ * @author nicm
  */
 public class Main {
+    
 
     public static void main(String[] args) {
         Forth forth = new Forth();
@@ -43,10 +44,10 @@ public class Main {
                 
             } catch (Exception ex) {
                 String reason="";
-                if(!Utilities.isEmptyString(ex.getMessage())){
+                if(!Utilities.isEmpty(ex.getMessage())){
                     reason+=ex.getMessage()+ " ";
                 }
-                if(!Utilities.isEmptyString(""+ex.getCause())){
+                if(!Utilities.isEmpty(""+ex.getCause())){
                     reason+=ex.getCause();
                 }
                 System.out.println("The folowing error occured : "+ex.getClass() + " " + reason);
@@ -56,15 +57,15 @@ public class Main {
         } while (!aborted);
         System.out.println("Bye bye");
     }
-
+    
+    
     static String logo = "             _,--\"\"--,_\n"
             + "        _,,-\"          \\\n"
             + "    ,-e\"                ;\n"
-            + "   (*             \\     |\n"
+            + "   (*             \\     |   BVR FORTH\n"
             + "    \\o\\     __,-\"  )    |\n"
             + "     `,_   (((__,-\"     L___,,--,,__\n"
-            + "        ) ,---\\  /\\    / -- '' -'-' )\n"
+            + "        ) ,---\\  /\\    / -- '' -'-' ) \n"
             + "      _/ /     )_||   /---,,___  __/\n"
             + "     \"\"\"\"     \"\"\"\"|_ /  ";
-
 }

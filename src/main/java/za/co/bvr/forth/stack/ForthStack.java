@@ -27,7 +27,7 @@ public class ForthStack {
     }
 
     public void push(String value) {
-        if (!Utilities.stringIsEmpty(value)) {
+        if (!Utilities.isEmpty(value)) {
             stackStore.add(value);
             topOfStack++;
         }
@@ -367,7 +367,7 @@ public class ForthStack {
         StringBuilder stackString = new StringBuilder();
         int count = 0;
         for (String item : stackStore) {
-            if (!Utilities.stringIsEmpty(item)) {
+            if (!Utilities.isEmpty(item)) {
                 if (count > 0) {
                     stackString.append(" ");
                 }
@@ -408,7 +408,7 @@ public class ForthStack {
         String retValue = "";
         String displayMode = currentMode.getValue();
 
-        if (Utilities.stringIsEmpty(value) || !Utilities.isNumeric(value)) {
+        if (Utilities.isEmpty(value) || !Utilities.isNumeric(value)) {
             return value;
         }
         System.out.println(">IS NUMERIC<");

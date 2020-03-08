@@ -28,7 +28,7 @@ public class IfStatementProcessor extends AbstractProcessor {
 
     @Override
     public String preProcess(String line) throws Exception {
-        if (Utilities.isEmptyString(line)) {
+        if (Utilities.isEmpty(line)) {
             return "";
         }
         LineProcessor processor = new LineProcessor();
@@ -37,7 +37,7 @@ public class IfStatementProcessor extends AbstractProcessor {
 
     @Override
     public String postProcess(String line) throws Exception {
-        if (Utilities.isEmptyString(line)) {
+        if (Utilities.isEmpty(line)) {
             return "";
         }
         LineProcessor processor = new LineProcessor();
@@ -176,7 +176,7 @@ public class IfStatementProcessor extends AbstractProcessor {
 
     private String processLineOfTheIfStatement() throws Exception {
 
-        if (Utilities.isEmptyString(lineOfTheIfStatement.toString())) {
+        if (Utilities.isEmpty(lineOfTheIfStatement.toString())) {
             return "";
         }
         LineProcessor processor = new LineProcessor();
@@ -184,7 +184,7 @@ public class IfStatementProcessor extends AbstractProcessor {
     }
 
     private String processLineOfTheElseStatement() throws Exception {//
-        if (Utilities.isEmptyString(lineOfTheElseStatement.toString())) {
+        if (Utilities.isEmpty(lineOfTheElseStatement.toString())) {
             return "";
         }
         LineProcessor processor = new LineProcessor();

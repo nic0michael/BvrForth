@@ -1,58 +1,38 @@
 package za.co.bvr.forth.processor.implemented;
 
 import java.net.UnknownHostException;
+import lombok.extern.java.Log;
 import za.co.bvr.forth.dictionary.ForthDictionary;
 import za.co.bvr.forth.exceptions.StackIsEmptyException;
 import za.co.bvr.forth.exceptions.VerbNotInDictionaryException;
 import za.co.bvr.forth.processor.AbstractProcessor;
 import za.co.bvr.forth.stack.ForthStack;
 import za.co.bvr.forth.utils.Utilities;
+import za.co.bvr.forth.utils.DateUtilities;
 import za.co.bvr.forth.variables.VariablesStore;
 
 /**
  *
- * @author nickm
+ * @author nicm
  */
+@Log
 public class VerbProcessor extends AbstractProcessor {
+    
+    
+    public static final VerbProcessor INSTANCE = new VerbProcessor();
+
+    private VerbProcessor() { }
 
     ForthStack stack = ForthStack.INSTANCE;
     ForthDictionary dictionary = ForthDictionary.INSTANCE;
     VariablesStore variables = VariablesStore.INSTANCE;
 
-    @Override
-    public String preProcess(String line) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
-    @Override
-    public String process(String line) throws Exception {
+    public String executeVerb(String lineItem) throws VerbNotInDictionaryException, StackIsEmptyException, UnknownHostException {
         StringBuilder result = new StringBuilder();
-        String[] lineItems = line.split(" ");
-        for (String lineItem : lineItems) {
-            if (Utilities.isNumeric(lineItem)) {
-                stack.push(lineItem);
-            } else if (variables.isVariable(lineItem.toUpperCase())) {
-                variables.setCurrentvariableName(lineItem);
-            } else {
-                result.append(executeVerb(lineItem));
-            }
-        }
-        return result.toString();
-    }
-
-    @Override
-    public String postProcess(String line) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean getDefinitionIsNotComplete() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private Object executeVerb(String lineItem) throws VerbNotInDictionaryException, StackIsEmptyException, UnknownHostException {
-        StringBuilder result = new StringBuilder();
-        if (variables.isVariable(lineItem.toUpperCase())) {
+        lineItem=lineItem.toUpperCase();
+//        log.info("VerbProcessor executeVerb lineItem : "+lineItem);
+        if (variables.isVariable(lineItem)) {
             variables.setCurrentvariableName(lineItem);
 
         } else {
@@ -310,19 +290,19 @@ public class VerbProcessor extends AbstractProcessor {
                         break;
 
                     case "TIME@":
-                        stack.push(Utilities.dateY2k());
+                        stack.push(DateUtilities.dateY2k());
                         break;
 
                     case "TIMESTAMP@":
-                        stack.push(Utilities.timeStamp());
+                        stack.push(DateUtilities.timeStamp());
                         break;
 
                     case "?TIME":
-                        result.append(Utilities.dateY2k());
+                        result.append(DateUtilities.dateY2k());
                         break;
 
                     case "?TIMESTAMP":
-                        result.append(Utilities.timeStamp());
+                        result.append(DateUtilities.timeStamp());
                         break;
 
                     case ".STACK":
@@ -334,53 +314,53 @@ public class VerbProcessor extends AbstractProcessor {
                         break;
 
                     case ".DAY":
-                        result.append(Utilities.day());
+                        result.append(DateUtilities.day());
                         break;
 
                     case ".MONTH":
-                        result.append(Utilities.month());
+                        result.append(DateUtilities.month());
                         break;
 
                     case ".MTH":
-                        result.append(Utilities.month());
+                        result.append(DateUtilities.month());
                         break;
 
                     case ".YEAR":
-                        result.append(Utilities.year());
+                        result.append(DateUtilities.year());
                         break;
 
                     case ".YR":
-                        result.append(Utilities.year());
+                        result.append(DateUtilities.year());
                         break;
 
                     case ".DATE":
-                        result.append(Utilities.dateY2k());
+                        result.append(DateUtilities.dateY2k());
                         break;
 
                     case ".DATESF":
-                        result.append(Utilities.dateY2k());
+                        result.append(DateUtilities.dateY2k());
                         break;
 
                     case ".DATESIMPLEFORMAT":
-                        result.append(Utilities.dateY2k());
+                        result.append(DateUtilities.dateY2k());
                         break;
 
                     case ".DATETIME":
-                        result.append(Utilities.now());
+                        result.append(DateUtilities.now());
                         break;
 
                     case ".DATEBRITISH":
-                        result.append(Utilities.dateBritish());
+                        result.append(DateUtilities.dateBritish());
                         break;
                     case ".DATEUSA":
-                        result.append(Utilities.dateUSA());
+                        result.append(DateUtilities.dateUSA());
                         break;
 
                     case ".TIME":
-                        result.append(Utilities.time());
+                        result.append(DateUtilities.time());
                         break;
                     case ".TIMESTAMP":
-                        result.append(Utilities.timeStamp());
+                        result.append(DateUtilities.timeStamp());
                         break;
 
                     case ".D":
@@ -427,6 +407,18 @@ public class VerbProcessor extends AbstractProcessor {
                         variables.setCurrentvariableValue(value);
                         break;
 
+                    case "XML!":
+                        break;
+
+                    case "XML@":
+                        break;
+
+                    case "JSON!":
+                        break;
+
+                    case "JSON@":
+                        break;
+                        
                     case "@":
                         String currentvariableValue = variables.getCurrentvariableValue();
                         stack.push(currentvariableValue);
@@ -457,6 +449,27 @@ public class VerbProcessor extends AbstractProcessor {
                 result.append("\nThe Stack is empty");
             }
         }
+//        log.info("VerbProcessor result : "+result);
         return result.toString();
+    }
+    
+    @Override
+    public String preProcess(String line) throws Exception {
+        return null;
+    }
+
+    @Override
+    public String process(String line) throws Exception {
+        return null;
+    }
+
+    @Override
+    public String postProcess(String line) throws Exception {
+        return null;
+    }
+
+    @Override
+    public boolean getDefinitionIsNotComplete() throws Exception {
+        return false;
     }
 }

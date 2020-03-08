@@ -22,6 +22,7 @@ public class ForthDictionary {
     private static Map<String, String> systemVerbDescriptions = new HashMap<String, String>();
 
     private static List<Verb> verbHistory = new ArrayList<Verb>();
+    
     public static final ForthDictionary INSTANCE = new ForthDictionary();
 
     private ForthDictionary() {
@@ -263,7 +264,7 @@ public class ForthDictionary {
         addSystemVerbs(".DAY");// PRINTS THE DAY
         addSystemVerbs(".DICT");//ADVANCED FEATURE : LIST THE DICTIONARY
         addSystemVerbs(".DICTDEF");//ADVANCED FEATURE : LIST ALL THE DEFINITIONS OF ALL THE VERBS
-        addSystemVerbs(".ERRORLOG");// PRINT ERROR LOG
+        addSystemVerbs(".HELP");// PRINT ERROR LOG
         addSystemVerbs(".H");// HELP
         addSystemVerbs(".HASHMAPVARIABLES");//ADVANCED FEATURE : LISTS THE NAMES OF ALL THE HASHMAP VARIABLES
         addSystemVerbs(".HM");//ADVANCED FEATURE : LISTS THE NAMES OF ALL THE HASHMAP VARIABLES
@@ -288,7 +289,6 @@ public class ForthDictionary {
         addSystemVerbs(".YEAR");// PRINTS THE YEAR
         addSystemVerbs(".YR");// PRINTS THE YEAR          
         addSystemVerbs(".STACK");
-        addSystemVerbs(".HELP");
 
         addSystemVerbs("$@");//PUST THE VALUE OF A STRING VARIABLE TO TOS
         addSystemVerbs("$CONSTANT");//ADVANCED FEATURE :  DEFINE STRING CONSTANT WE ALSO HAVE STRING CONSTANTS
@@ -427,9 +427,10 @@ public class ForthDictionary {
 
         addSystemVerbs("XOR");// LOGICAL EXCLUSIVE OR
         addSystemVerbs("XMLMAKE");//ADVANCED FEATURE :  PARSE VARIABLES INTO VARIABLE XML TO GENERATE XML
-        addSystemVerbs("XML!");// ADVANCED FEATURE : SAVE XML TAGS TO VARIABLES XML
+        addSystemVerbs("XML!");// ADVANCED FEATURE : SAVE XML TAGS TO VARIABLE XML
         addSystemVerbs("XML@");// ADVANCED FEATURE : PUSH XML TAGS TO STACK
-
+        addSystemVerbs("JSON!");// ADVANCED FEATURE : SAVE JSON TO VARIABLE JSON
+        addSystemVerbs("JSON@");// ADVANCED FEATURE : PUSH JSON TO STACK
     }
 
 }
