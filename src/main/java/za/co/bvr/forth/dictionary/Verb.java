@@ -1,11 +1,13 @@
 package za.co.bvr.forth.dictionary;
 
 import java.util.UUID;
+import lombok.Data;
 
 /**
  *
  * @author nickm 
  */
+@Data
 public class Verb {
     private final String name;
     private final String definition;

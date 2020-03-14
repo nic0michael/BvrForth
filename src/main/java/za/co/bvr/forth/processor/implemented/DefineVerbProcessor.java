@@ -1,5 +1,6 @@
 package za.co.bvr.forth.processor.implemented;
 
+import lombok.extern.java.Log;
 import za.co.bvr.forth.compiler.ForthCompiler;
 import za.co.bvr.forth.dictionary.ForthDictionary;
 import za.co.bvr.forth.dictionary.Verb;
@@ -9,6 +10,7 @@ import za.co.bvr.forth.processor.AbstractProcessor;
  *
  * @author nickm 
  */
+@Log
 public class DefineVerbProcessor extends AbstractProcessor {
 
     ForthDictionary dictionary = ForthDictionary.INSTANCE;
@@ -22,9 +24,11 @@ public class DefineVerbProcessor extends AbstractProcessor {
 
     @Override
     public String process(String line) throws Exception {
+//        log.info("DefineVerbProcessor process: line: "+line);
         ForthCompiler compiler = new ForthCompiler();
         String returnString = "";
         String[] words = line.split(" ");
+        Verb verb=null;
 
         for (String word : words) {
             if (word.equals(":")) {
@@ -37,7 +41,7 @@ public class DefineVerbProcessor extends AbstractProcessor {
                 returnString = "Ok";
                 String definition = verbDefinition.toString();
                 String compiledDefinition = compiler.compile(definition);
-                Verb verb = new Verb(verbName, verbDefinition.toString(), compiledDefinition);
+                verb = new Verb(verbName, verbDefinition.toString(), compiledDefinition);
                 verb.setDescription("USER DEFINED VERB");
                 dictionary.addVerbToDictionary(verb);
             } else if (iterationCount > 0) {
@@ -52,6 +56,7 @@ public class DefineVerbProcessor extends AbstractProcessor {
             }
             iterationCount++;
         }
+//        log.info("DefineVerbProcessor process: verb: "+verb);
         return returnString;
 
     }

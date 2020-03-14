@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
+import lombok.extern.java.Log;
 import za.co.bvr.forth.exceptions.VerbNotInDictionaryException;
 import za.co.bvr.forth.utils.Utilities;
 
@@ -11,6 +12,7 @@ import za.co.bvr.forth.utils.Utilities;
  *
  * @author nickm
  */
+@Log
 public class ForthDictionary {
 
     private static Map<String, String> verbDefinitions = new HashMap<String, String>();
@@ -102,6 +104,7 @@ public class ForthDictionary {
         if (compiledDefinition == null) {
             throw new VerbNotInDictionaryException(verbName);
         }
+//        log.info("ForthDictionary verbName : "+verbName+ " compiledDefinition : "+compiledDefinition);
         return compiledDefinition;
     }
 
