@@ -5,9 +5,11 @@
  */
 package za.co.bvr.forth.processor.implemented;
 
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import za.co.bvr.forth.dtos.ExecutionPojo;
 import za.co.bvr.forth.processor.AbstractProcessor;
 import za.co.bvr.forth.stack.ForthStack;
-import za.co.bvr.forth.utils.Utilities;
 
 /**
  *
@@ -26,23 +28,6 @@ public class IfStatementProcessor extends AbstractProcessor {
 
     boolean definitionIsNotComplete = true;
 
-    @Override
-    public String preProcess(String line) throws Exception {
-        if (Utilities.isEmpty(line)) {
-            return "";
-        }
-        LineProcessor processor = new LineProcessor();
-        return processor.process(line);
-    }
-
-    @Override
-    public String postProcess(String line) throws Exception {
-        if (Utilities.isEmpty(line)) {
-            return "";
-        }
-        LineProcessor processor = new LineProcessor();
-        return processor.process(line);
-    }
 
     @Override
     public String process(String line) throws Exception {
@@ -56,8 +41,15 @@ public class IfStatementProcessor extends AbstractProcessor {
         elseStatementFound = line.toUpperCase().contains("ELSE");
 
         setLineBeforeIfStatement(line);
-        stackValues = stack.show();
-        preResult = preProcess(preProcessLine.toString());
+        stackValues = stack.show();        
+        
+        if (StringUtils.isEmpty(preProcessLine.toString())) {
+            preResult = "";
+        } else{
+            LineProcessor processor = new LineProcessor();
+            preResult = processor.process(line);
+        }
+        
         stackValues = stack.show();
 
         setLineAfterThenStatement(line);
@@ -69,8 +61,14 @@ public class IfStatementProcessor extends AbstractProcessor {
             proResult = processLineOfTheIfStatement();
         } else {
             proResult = processLineOfTheElseStatement();
+        }        
+        
+        if (StringUtils.isEmpty(postProcessLine.toString())) {
+            postResult = "";
+        } else {
+            LineProcessor processor = new LineProcessor();
+            postResult = processor.process(line);
         }
-        postResult = postProcess(postProcessLine.toString());
 
         result.append(proResult);
         stackValues = stack.show();
@@ -169,14 +167,11 @@ public class IfStatementProcessor extends AbstractProcessor {
         }
     }
 
-    @Override
-    public boolean getDefinitionIsNotComplete() throws Exception {
-        return definitionIsNotComplete;
-    }
+
 
     private String processLineOfTheIfStatement() throws Exception {
 
-        if (Utilities.isEmpty(lineOfTheIfStatement.toString())) {
+        if (StringUtils.isEmpty(lineOfTheIfStatement.toString())) {
             return "";
         }
         LineProcessor processor = new LineProcessor();
@@ -184,11 +179,26 @@ public class IfStatementProcessor extends AbstractProcessor {
     }
 
     private String processLineOfTheElseStatement() throws Exception {//
-        if (Utilities.isEmpty(lineOfTheElseStatement.toString())) {
+        if (StringUtils.isEmpty(lineOfTheElseStatement.toString())) {
             return "";
         }
         LineProcessor processor = new LineProcessor();
         return processor.process(lineOfTheElseStatement.toString());
+    }
+
+    @Override
+    public List<ExecutionPojo> preProcess(String line) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String postProcess(List<ExecutionPojo> executions) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean getDefinitionIsNotComplete() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

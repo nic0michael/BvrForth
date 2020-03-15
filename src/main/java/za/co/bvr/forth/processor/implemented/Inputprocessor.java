@@ -1,6 +1,8 @@
 package za.co.bvr.forth.processor.implemented;
 
+import java.util.List;
 import lombok.extern.java.Log;
+import za.co.bvr.forth.dtos.ExecutionPojo;
 import za.co.bvr.forth.utils.Utilities;
 import za.co.bvr.forth.exceptions.UnknownProcessorType;
 import za.co.bvr.forth.processor.AbstractLoopProcessor;
@@ -95,18 +97,19 @@ public class Inputprocessor extends AbstractProcessor {
     }
 
     @Override
-    public String preProcess(String line) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public List<ExecutionPojo> preProcess(String line) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String postProcess(String line) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public String postProcess(List<ExecutionPojo> executions) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean getDefinitionIsNotComplete() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public boolean getDefinitionIsNotComplete() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 
 }

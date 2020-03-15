@@ -6,7 +6,6 @@ import java.util.TreeMap;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.logging.Logger;
 import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
 
@@ -23,7 +22,7 @@ public class Utilities {
 
 
     public static String removeUnwantedSpaces(String line) throws LineIsEmptyException {
-        if(isEmpty(line)){
+        if(StringUtils.isEmpty(line)){
             throw new za.co.bvr.forth.exceptions.LineIsEmptyException();
         }
         String str = line;
@@ -33,7 +32,7 @@ public class Utilities {
     }
 
     private static String removeDuplicateSpaces(String line) throws LineIsEmptyException {
-        if(isEmpty(line)){
+        if(StringUtils.isEmpty(line)){
             throw new za.co.bvr.forth.exceptions.LineIsEmptyException();
         }
         String str = line.replaceAll("\\s+", " ");
@@ -43,7 +42,7 @@ public class Utilities {
     }
 
     private static String removeFirstAndLastSpace(String line) throws LineIsEmptyException {
-        if(isEmpty(line)){
+        if(StringUtils.isEmpty(line)){
             throw new za.co.bvr.forth.exceptions.LineIsEmptyException();
         }
         String str = line;
@@ -86,14 +85,6 @@ public class Utilities {
         return result.toString();
     }
 
-    
-    public static boolean isEmpty(String str){
-        return StringUtils.isEmpty(str);
-    }
-    
-    public static boolean isNumeric(String verb) {
-        return StringUtils.isNumeric(verb);
-    }
     
     public static boolean isInteger(String val) {
         boolean retval = false;

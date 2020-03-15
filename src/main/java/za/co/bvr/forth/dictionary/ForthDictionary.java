@@ -97,6 +97,7 @@ public class ForthDictionary {
     }
 
     public String getCompiledDefinition(String verbName) throws VerbNotInDictionaryException {
+//        log.info("ForthDictionary getCompiledDefinition verbName: "+verbName);
         String compiledDefinition = verbCompiledDefinitions.get(verbName.toUpperCase());
         if (compiledDefinition == null) {
             compiledDefinition = systemVerbCompiledDefinitions.get(verbName.toUpperCase());

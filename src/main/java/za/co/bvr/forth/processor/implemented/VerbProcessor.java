@@ -1,8 +1,10 @@
 package za.co.bvr.forth.processor.implemented;
 
 import java.net.UnknownHostException;
+import java.util.List;
 import lombok.extern.java.Log;
 import za.co.bvr.forth.dictionary.ForthDictionary;
+import za.co.bvr.forth.dtos.ExecutionPojo;
 import za.co.bvr.forth.exceptions.StackIsEmptyException;
 import za.co.bvr.forth.exceptions.VerbNotInDictionaryException;
 import za.co.bvr.forth.processor.AbstractProcessor;
@@ -452,11 +454,6 @@ public class VerbProcessor extends AbstractProcessor {
 //        log.info("VerbProcessor result : "+result);
         return result.toString();
     }
-    
-    @Override
-    public String preProcess(String line) throws Exception {
-        return null;
-    }
 
     @Override
     public String process(String line) throws Exception {
@@ -464,12 +461,18 @@ public class VerbProcessor extends AbstractProcessor {
     }
 
     @Override
-    public String postProcess(String line) throws Exception {
+    public List<ExecutionPojo> preProcess(String line) throws Exception {
         return null;
     }
 
     @Override
-    public boolean getDefinitionIsNotComplete() throws Exception {
+    public String postProcess(List<ExecutionPojo> executions) throws Exception {
+        return null;
+    }
+
+    @Override
+    public boolean getDefinitionIsNotComplete() {
         return false;
     }
+    
 }

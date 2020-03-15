@@ -1,12 +1,11 @@
 package za.co.bvr.forth.main;
 
+import java.io.Console;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.commons.lang3.StringUtils;
 import za.co.bvr.forth.Forth;
 import za.co.bvr.forth.exceptions.LineIsEmptyException;
 import za.co.bvr.forth.exceptions.VerbNotInDictionaryException;
-import za.co.bvr.forth.utils.Utilities;
 
 /**
  *
@@ -20,12 +19,15 @@ public class Main {
         Scanner keyboard = new Scanner(System.in);
         System.out.println("BVR Forth       version 1.0.0\n");
         System.out.println(logo);
-        System.out.println("\nType .help for help\n");
-        System.out.print(">");
+        System.out.println("\nType .help for help");
+        System.out.print("\n>");
         boolean aborted = false;
+        String line ="";
         do {
-            String line = keyboard.nextLine();
-            aborted = line.equalsIgnoreCase("BYE");
+            
+        
+            line = keyboard.nextLine();
+            aborted = "BYE".equalsIgnoreCase(line);
             if (!aborted) {
                 aborted = line.equalsIgnoreCase("EXIT");
             }
@@ -44,10 +46,10 @@ public class Main {
                 
             } catch (Exception ex) {
                 String reason="";
-                if(!Utilities.isEmpty(ex.getMessage())){
+                if(StringUtils.isNotEmpty(ex.getMessage())){
                     reason+=ex.getMessage()+ " ";
                 }
-                if(!Utilities.isEmpty(""+ex.getCause())){
+                if(StringUtils.isEmpty(""+ex.getCause())){
                     reason+=ex.getCause();
                 }
                 System.out.println("The folowing error occured : "+ex.getClass() + " " + reason);

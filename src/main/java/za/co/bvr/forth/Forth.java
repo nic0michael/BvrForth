@@ -1,7 +1,7 @@
 package za.co.bvr.forth;
 
 
-import za.co.bvr.forth.processor.implemented.Inputprocessor;
+import za.co.bvr.forth.processor.implemented.Processor;
 
 /** 
  *
@@ -10,7 +10,8 @@ import za.co.bvr.forth.processor.implemented.Inputprocessor;
 public class Forth {    
     
     public String processInput(String input) throws Exception{
-        Inputprocessor processor =new Inputprocessor();
+//        Inputprocessor processor =new Inputprocessor();
+        Processor processor =new Processor();
         return processor.process(input);
     }
 }
