@@ -2,12 +2,14 @@ package za.co.bvr.forth.dictionary;
 
 import java.util.UUID;
 import lombok.Data;
+import lombok.ToString;
 
 /**
  *
  * @author nickm 
  */
 @Data
+@ToString
 public class Verb {
     private final String name;
     private final String definition;
@@ -15,16 +17,18 @@ public class Verb {
     private String description;
     private String uuid;
 
-    public Verb(String name, String definition, String compiledDefinition) {
+    public Verb(String name, String definition, String compiledDefinition,String description) {
         this.compiledDefinition = compiledDefinition;
         this.definition = definition;
+        this.description=description;
         this.name = name;
         uuid = UUID.randomUUID().toString();
     }
     
-    public Verb(String name, String definition, String compiledDefinition,String uuid) {
+    public Verb(String name, String definition, String compiledDefinition,String uuid,String description) {
         this.compiledDefinition = compiledDefinition;
         this.definition = definition;
+        this.description=description;
         this.name = name;
         this.uuid=uuid;
     }

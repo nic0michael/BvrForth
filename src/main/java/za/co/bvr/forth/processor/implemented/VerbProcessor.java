@@ -43,6 +43,9 @@ public class VerbProcessor extends AbstractProcessor {
                         result.append(stack.pop());
                         break;
 
+                    case "FORGET":
+                        result.append(dictionary.forget(stack.pop()));
+                        
                     case "SPACE":
                         result.append(" ");
                         break;
@@ -51,6 +54,13 @@ public class VerbProcessor extends AbstractProcessor {
                         int topValue = stack.popInt();
                         for (int i = 0; i < topValue; i++) {
                             result.append(" ");
+                        }
+                        break;
+                        
+                    case "LFS":
+                        topValue = stack.popInt();
+                        for (int i = 0; i < topValue; i++) {
+                            result.append("\n");
                         }
                         break;
 
@@ -206,13 +216,22 @@ public class VerbProcessor extends AbstractProcessor {
                         stack.degreesToRadians();
                         break;
                     case "SIN":
+                        stack.degreesToRadians();
                         stack.sin();
+                        stack.push(0.00000000000000006);
+                        stack.addDoubles();
                         break;
                     case "COS":
+                        stack.degreesToRadians();
                         stack.cos();
+                        stack.push(0.0000000000000001);
+                        stack.subtractDoubles();
                         break;
                     case "TAN":
+                        stack.degreesToRadians();
                         stack.tan();
+                        stack.push(0.0000000000000001);
+                        stack.addDoubles();
                         break;
                     case "LOG":
                         stack.log();
@@ -310,7 +329,7 @@ public class VerbProcessor extends AbstractProcessor {
                         break;
 
                     case "CR":
-                        result.append("\n");
+                        result.append("\r\n");
                         break;
 
                     case ".DAY":
@@ -424,7 +443,7 @@ public class VerbProcessor extends AbstractProcessor {
                         stack.push(currentvariableValue);
                         break;
 
-                    case ".VARIASBLES":
+                    case ".VARIABLES":
                         result.append(variables.showVariables());
                         break;
 

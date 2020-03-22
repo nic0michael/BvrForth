@@ -1,15 +1,18 @@
 package za.co.bvr.forth.dictionary;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 import lombok.extern.java.Log;
+import org.apache.commons.lang3.StringUtils;
 import za.co.bvr.forth.exceptions.VerbNotInDictionaryException;
 import za.co.bvr.forth.utils.Utilities;
 
 /**
- *
+ *  
+ *  
  * @author nickm
  */
 @Log
@@ -54,7 +57,7 @@ public class ForthDictionary {
             verbDescriptions.put(name, description);
         } else {
             if (verbIsNotSystemVerb(name)) {
-                Verb previousVerb = new Verb(name, definition, compiledDefinition);
+                Verb previousVerb = new Verb(name, definition, compiledDefinition,"User defined verb");
                 verbHistory.add(previousVerb);
             }
 
@@ -111,31 +114,44 @@ public class ForthDictionary {
     public int size() {
         return verbDefinitions.size();
     }
-
+ 
+    /**
+     *   verbDescriptions systemVerbDescriptions
+     *   verbDefinitions systemVerbDefinitions
+     * 
+     * @return 
+     */
     public String showVerbs() {
         StringBuilder result = new StringBuilder();
-        int loop = 0;
-        for (Map.Entry<String, String> entry : systemVerbDefinitions.entrySet()) {
+        List<String> SystemVerbNames =new ArrayList<>();
+        result.append("\nSystem Verbs :\n");
+        result.append("============\n");
+        for (Map.Entry<String, String> entry : systemVerbDescriptions.entrySet()) {
             String key = entry.getKey();
+            SystemVerbNames.add(key);
             String value = entry.getValue();
-            if (loop > 0) {
-                result.append(" ");
-            }
-            result.append(key);
-            loop++;
         }
+        
+         Collections.sort(SystemVerbNames);
+        
+        for(String SystemVerbName : SystemVerbNames){
+            String value = systemVerbDescriptions.get(SystemVerbName);            
+            result.append(SystemVerbName);
+            result.append(" ");
+            result.append(value);
+            result.append("\n");
+        }
+        result.append("\nUser Defined Verbs :\n");
+        result.append("==================\n");
         for (Map.Entry<String, String> entry : verbDefinitions.entrySet()) {
             String key = entry.getKey();
-            String value = entry.getValue();
-            if (loop > 0) {
-                result.append(" ");
-            }
+            String value = entry.getValue();            
             result.append(key);
-            loop++;
+            result.append(" defined as: ");
+            result.append(value);
+            result.append("\n");
         }
-        String verbs = result.toString();
-        String sortedNames = Utilities.sortVerbNamesInString(verbs);
-        return sortedNames;
+        return result.toString();
     }
 
     public String showVerbDetails() throws VerbNotInDictionaryException {
@@ -158,12 +174,20 @@ public class ForthDictionary {
         return result.toString();
     }
 
-    public void addSystemVerbs(String systemVerbNames) {
-        String[] verbNames = systemVerbNames.split(" ");
-        for (String verbName : verbNames) {
-            Verb verb = new Verb(verbName, verbName, verbName);
-            addSystemVerbToSystemDictionary(verb);
+    
+    public void addSystemVerb(String name,String description) {
+//        log.info("addSystemVerb "+name+" "+description);
+        String tab;
+        if(name.length()<7){
+            tab="\t\t\t";
+        } else if(name.length()>14){
+            tab="\t";
+        } else{
+            tab="\t\t";
         }
+        Verb verb = new Verb(name.toUpperCase(), name.toUpperCase(), name.toUpperCase(),tab+"SYSTEM VERB:\t"+description);
+//        log.info("Verb "+verb);
+        addSystemVerbToSystemDictionary(verb);
     }
 
     private Verb findPreviousVerb(Verb verbToFind) {
@@ -197,243 +221,257 @@ public class ForthDictionary {
     }
 
     public void addSystemVerbToSystemDictionary(Verb verb) {
+//        log.info("Verb "+verb);
         String name = verb.getName().toUpperCase();
-        String description = "SYSTEM VERB";
         systemVerbDefinitions.put(name, verb.getDefinition());
         systemVerbCompiledDefinitions.put(name, verb.getCompiledDefinition());
-        systemVerbDescriptions.put(name, description);
+        systemVerbDescriptions.put(name, verb.getDescription());
+    }
+       /**
+     * "REMOVES A VERB FROM THE DICTIONARY (DICTIONARYINDEXMAP)");
+     * @return 
+     */
+    public String forget(String verb) {
+        String def = verbDefinitions.get(verb);
+        String def2 = verbCompiledDefinitions.get(verb);
+        String def3 = verbDescriptions.get(verb);
+        
+        if(StringUtils.isNotEmpty(def) && !" ".equals(def) &&
+              StringUtils.isNotEmpty(def2) && !" ".equals(def2) && 
+                StringUtils.isNotEmpty(def3) && !" ".equals(def3) ){
+            verbDefinitions.remove(verb);
+            verbCompiledDefinitions.remove(verb);
+            verbDescriptions.remove(verb);
+            return "User verb "+verb+ " removed from dictionary";
+        }
+
+        return "User verb "+verb+ " not removed from dictionary !!";
     }
 
     private void loadDictionary() {
 
-        addSystemVerbs(": ;");
-        addSystemVerbs("+ - * /");
-        addSystemVerbs("=");
-        addSystemVerbs("0=");
-        addSystemVerbs("0<");
-        addSystemVerbs(">");
-        addSystemVerbs("<");
-        addSystemVerbs("<>");
-        addSystemVerbs("=>");
-        addSystemVerbs("<=");
-        addSystemVerbs("NOT");
-        addSystemVerbs("+");
-        addSystemVerbs("-");
-        addSystemVerbs("*");
-        addSystemVerbs("/");
-        addSystemVerbs("D+");
-        addSystemVerbs("D-");
-        addSystemVerbs("D*");
-        addSystemVerbs("D/");
-        addSystemVerbs("D>");
-        addSystemVerbs("D<");
-        addSystemVerbs("D=");
-        addSystemVerbs("D0=");
-        addSystemVerbs("D0<");
+        addSystemVerb(":","Start defining a new verb");
+        addSystemVerb("=","Is equal ");
+        addSystemVerb("0=","Is equal to 0");
+        addSystemVerb("0<","Is smaller than 0");
+        addSystemVerb(">","Is greater than");
+        addSystemVerb("<","Is smaller than");
+        addSystemVerb("<>","Is not equal ");
+        addSystemVerb("=>","Is greater equal");
+        addSystemVerb("<=","Is smaller equal");
+        addSystemVerb("NOT","Logical invert");
+        addSystemVerb("+","Add");
+        addSystemVerb("-","Subtract");
+        addSystemVerb("*","Multiply");
+        addSystemVerb("/","Divide");
+        addSystemVerb("D+","Floating point addition using Doubles");// Floating point addition using Doubles
+        addSystemVerb("D-","Floating point subtraction using Doubles");// floating point arithmetic using Doubles
+        addSystemVerb("D*","Floating point multiplication using Doubles"); // floating point arithmetic using Doubles
+        addSystemVerb("D/,","Floating point divisuion using Doubles"); // floating point arithmetic using Doubles
+        addSystemVerb("D>","Floating point multiplication using Doubles");// floating point arithmetic using Doubles
+        addSystemVerb("D<","Floating point is smaller than using Doubles");// floating point arithmetic using Doubles
+        addSystemVerb("D=","Floating point is equals using Doubles");// floating point arithmetic using Doubles
+        addSystemVerb("D0=","Floating point is equal to zero using Doubles");
+        addSystemVerb("D0<","Floating point is smaller than zero using Doubles");
 
-        addSystemVerbs(".");// POP AND PRINT TOS
+        addSystemVerb(".","Pop and print Stack top");// POP AND PRINT TOS
         
 
-        addSystemVerbs("1+");
-        addSystemVerbs("1-");
-        addSystemVerbs("2+");
-        addSystemVerbs("2*");//SHIFT LEFT
-        addSystemVerbs("2/");//SHIFT RIGHT
-        addSystemVerbs("2-");
-        addSystemVerbs("2+");
-        addSystemVerbs(">>");//ADVANCED FEATURE :  BORROWED FROM JAVA BIT SHIFT
-        addSystemVerbs(">>>");//ADVANCED FEATURE :  BORROWED FROM JAVA BIT SHIFT
-        addSystemVerbs("<<");//ADVANCED FEATURE :  BORROWEWD FROM JAVA BIT SHIFT
-        addSystemVerbs("!");// STORE     TO VARIABLE
-        addSystemVerbs("+!");// APPEND TO VARIABLE
-        addSystemVerbs("-!");// APPEND TO VARIABLE
-        addSystemVerbs("$!");// STORE TO STRING VARIABLE
-        addSystemVerbs("$L");// START OF STRING (THE STRING ENDS WITH A ")
-        addSystemVerbs("@");// FETCH FROM NUMERIC VARIABLE
-        addSystemVerbs("?");// PRINT NUMERIC VARIABLE  
+        addSystemVerb("1+","Increase stack top by 1");
+        addSystemVerb("1-","Decrease stack top by 1");
+        addSystemVerb("2+","Increase stack top by 2");
+        addSystemVerb("2*","Multiply stack top by 2");
+        addSystemVerb("2/","Divide stack top by 2 SHIFT RIGHT");//SHIFT RIGHT
+        addSystemVerb("2-","Decrease stack top by 1");
+        addSystemVerb(">>","ADVANCED FEATURE :  BORROWED FROM JAVA BIT SHIFT");
+        addSystemVerb(">>>","ADVANCED FEATURE :  BORROWED FROM JAVA BIT SHIFT");
+        addSystemVerb("<<","ADVANCED FEATURE :  BORROWEWD FROM JAVA BIT SHIFT");
+        addSystemVerb("!","STORE     TO VARIABLE");
+        addSystemVerb("+!","APPEND TO VARIABLE");
+        addSystemVerb("-!","APPEND TO VARIABLE");
+        addSystemVerb("$!","STORE TO STRING VARIABLE");
+        addSystemVerb("$L","START OF STRING (THE STRING ENDS WITH A \" ");
+        addSystemVerb("\"","START OF STRING (THE STRING ENDS WITH A \" ");
+        addSystemVerb("@","FETCH FROM NUMERIC VARIABLE");
+        addSystemVerb("?","PRINT NUMERIC VARIABLE");  
         
-        addSystemVerbs(".COMPUTERNAME");//Utilities.getComputerIpAddress()
-        addSystemVerbs(".CNAME");//Utilities.getComputerIpAddress()
-        addSystemVerbs(".COMPUTERIP");//Utilities.getComputerName()
-        addSystemVerbs(".CIP");//Utilities.getComputerName()
+        addSystemVerb(".COMPUTERNAME","Get Computer name");//Utilities.getComputerIpAddress()
+        addSystemVerb(".CNAME","Get Computer name");//Utilities.getComputerIpAddress()
+        addSystemVerb(".COMPUTERIP","Get Computer IP");//Utilities.getComputerName()
+        addSystemVerb(".CIP","Get Computer IP");//Utilities.getComputerName()
 
-        addSystemVerbs(".D");//ADVANCED FEATURE : LIST THE DICTIONARY
-        addSystemVerbs(".DATE");// ADVANCED FEATURE : PRINT DATE IN Y2K BANKING FORMAT (Y2K COMPLIANT DATE)
-        addSystemVerbs(".DATEBRITISH");//ADVANCED FEATURE :  PRINT DATE BRITISH FORMAT  (Y2K COMPLIANT DATE)
-        addSystemVerbs(".DATESF");// ADVANCED FEATURE : PRINT Y2K COMPLIANT DATE USING FORMAT STRING ON STACK TOP
-        addSystemVerbs(".DATESIMPLEFORMAT");// ADVANCED FEATURE : PRINT Y2K COMPLIANT DATE USING FORMAT STRING ON STACK TOP YYYY-MM-DD HH:MM:SS
-        addSystemVerbs(".DATETIME");//ADVANCED FEATURE :  PRINT DATE AND TIME  (Y2K COMPLIANT DATE)
-        addSystemVerbs(".DATEUSA");//ADVANCED FEATURE :  PRINT DATE USA FORMAT  (Y2K COMPLIANT DATE)
-        addSystemVerbs(".DAY");// PRINTS THE DAY
-        addSystemVerbs(".DICT");//ADVANCED FEATURE : LIST THE DICTIONARY
-        addSystemVerbs(".DICTDEF");//ADVANCED FEATURE : LIST ALL THE DEFINITIONS OF ALL THE VERBS
-        addSystemVerbs(".HELP");// PRINT ERROR LOG
-        addSystemVerbs(".H");// HELP
-        addSystemVerbs(".HASHMAPVARIABLES");//ADVANCED FEATURE : LISTS THE NAMES OF ALL THE HASHMAP VARIABLES
-        addSystemVerbs(".HM");//ADVANCED FEATURE : LISTS THE NAMES OF ALL THE HASHMAP VARIABLES
-        addSystemVerbs(".INETADDRESS");// PRINTS THE IP ADDRESS OF A SERVER 
-        addSystemVerbs(".LISTVARIABLES");//ADVANCED FEATURE : LISTS THE NAMES OF ALL THE LIST VARIABLES
-        addSystemVerbs(".L");//ADVANCED FEATURE : LISTS THE NAMES OF ALL THE LIST VARIABLES
-        addSystemVerbs(".MODE");
-        addSystemVerbs(".MONTH");// PRINTS THE MONTH
-        addSystemVerbs(".MTH");// PRINTS THE MONTH
-        addSystemVerbs(".OS");// PRINT OPERATING SYSTEM COMPATIBILITY
-        addSystemVerbs(".RSSFEEDMESSAGE");// PRINTS A MESSAGE WHERE THE INDEX IS THE TOS 
+        addSystemVerb(".D","LIST THE DICTIONARY");
+        addSystemVerb(".DATE","PRINT DATE IN Y2K BANKING FORMAT (Y2K COMPLIANT DATE)");
+        addSystemVerb(".DATEBRITISH","PRINT DATE BRITISH FORMAT  (Y2K COMPLIANT DATE)");
+        addSystemVerb(".DATESF","PRINT Y2K COMPLIANT DATE USING FORMAT STRING ON STACK TOP");
+        addSystemVerb(".DATESIMPLEFORMAT","PRINT Y2K COMPLIANT DATE USING FORMAT STRING ON STACK TOP YYYY-MM-DD HH:MM:SS");
+        addSystemVerb(".DATETIME","PRINT DATE AND TIME  (Y2K COMPLIANT DATE)");
+        addSystemVerb(".DATEUSA","PRINT DATE USA FORMAT  (Y2K COMPLIANT DATE)");
+        addSystemVerb(".DAY","PRINTS THE DAY");
+        addSystemVerb(".DICT","LIST THE DICTIONARY");
+        addSystemVerb(".DICTDEF","LIST ALL THE DEFINITIONS OF ALL THE VERBS");
+        addSystemVerb(".HELP","Print Help Function");
+        addSystemVerb(".H","Print Help Function");
+        addSystemVerb(".HASHMAPVARIABLES","LISTS THE NAMES OF ALL THE HASHMAP VARIABLES");
+        addSystemVerb(".HM","LISTS THE NAMES OF ALL THE HASHMAP VARIABLES");
+        addSystemVerb(".INETADDRESS","PRINTS THE IP ADDRESS OF A SERVER ");
+//        addSystemVerb(".LISTVARIABLES","LISTS THE NAMES OF ALL THE LIST VARIABLES");
+        addSystemVerb(".L","LISTS THE NAMES OF ALL THE LIST VARIABLES");
+        addSystemVerb(".MODE","Print Mode");
+        addSystemVerb(".MONTH","PRINTS THE MONTH");
+        addSystemVerb(".MTH","PRINTS THE MONTH");
+        addSystemVerb(".OS","PRINT OPERATING SYSTEM COMPATIBILITY");
+        addSystemVerb(".RSSFEEDMESSAGE","PRINTS A MESSAGE WHERE THE INDEX IS THE TOP OF STACK"); 
         
-        addSystemVerbs(".SERVERIP");//Utilities.getIpAddressOfHosst()        
-        addSystemVerbs(".SIP");//Utilities.getIpAddressOfHosst()
-        addSystemVerbs(".STACK");// ADVANCED FEATURE : LIST THE STACK
-        addSystemVerbs(".STATUS");
-        addSystemVerbs(".S");// ADVANCED FEATURE : LIST THE STACK
-        addSystemVerbs(".TIME");// ADVANCED FEATURE : PRINT TIME
-        addSystemVerbs(".TIMESTAMP");// PRINT DATE
-        addSystemVerbs(".VARIABLES");//ADVANCED FEATURE : LIST THE VARIABLES AND THEIR CONTENT
-        addSystemVerbs(".V");//ADVANCED FEATURE : LIST THE VARIABLES AND THEIR CONTENT //showVariables()
-        addSystemVerbs(".YEAR");// PRINTS THE YEAR
-        addSystemVerbs(".YR");// PRINTS THE YEAR          
-        addSystemVerbs(".STACK");
+        addSystemVerb(".SERVERIP","Get Ip Address Of Hosst");      
+        addSystemVerb(".SIP","Get Ip Address Of Hosst");    
+        addSystemVerb(".STACK","Non-destructively LIST THE STACK");
+        addSystemVerb(".STATUS","Display Status");
+        addSystemVerb(".S","Non-destructively LIST THE STACK");
+        addSystemVerb(".TIME","PRINT TIME");
+        addSystemVerb(".TIMESTAMP","Print Timestamp");// PRINT DATE
+        addSystemVerb(".VARIABLES","LIST THE VARIABLES AND THEIR CONTENT");
+        addSystemVerb(".V","LIST THE VARIABLES AND THEIR CONTENT");
+        addSystemVerb(".YEAR","PRINTS THE YEAR");
+        addSystemVerb(".YR","PRINTS THE YEAR"); 
 
-        addSystemVerbs("$@");//PUST THE VALUE OF A STRING VARIABLE TO TOS
-        addSystemVerbs("$CONSTANT");//ADVANCED FEATURE :  DEFINE STRING CONSTANT WE ALSO HAVE STRING CONSTANTS
-        addSystemVerbs("$VARIABLE");// DEFINE STRING VARIABLE
-        addSystemVerbs("?DUP");// QDUP
+        addSystemVerb("$@","PUSH THE VALUE OF A STRING VARIABLE TO THE TOP OF STACK"); 
+        addSystemVerb("$CONSTANT","DEFINE STRING CONSTANT WE ALSO HAVE STRING CONSTANTS");
+        addSystemVerb("$VARIABLE","DEFINE STRING VARIABLE");
+        addSystemVerb("?DUP","QDUP");
+//        addSystemVerbs("ASC");
+        addSystemVerb("AND","LOGICAL AND");
+        addSystemVerb("ALLOT","STORE THE TOP OF STACK TO NUMERIC VARIABLE");
 
-        addSystemVerbs("AND");// LOGICAL AND
-        addSystemVerbs("ALLOT");// STORE TOS TO NUMERIC VARIABLE
-        addSystemVerbs("ASC");
+        addSystemVerb("BIN","Set Mode to Binary (Base 2)");
+        addSystemVerb("BASE64ENCODE","BASE64 ENCODE THE TOP OF STACK"); 
+        addSystemVerb("BASE64DECODE","BASE64 DECODE THE TOP OF STACK"); 
+        addSystemVerb("BINARYTODEC","Convert THE TOP OF STACK from BINARY TO DEC");
+        addSystemVerb("BASE32DECODE","BASE32 DECODE THE TOP OF STACK"); 
+        addSystemVerb("BASE32ENCODE","BASE32 DECODE THE TOP OF STACK"); 
+        addSystemVerb("BYE","QUIT PROGRAM");  
 
-        addSystemVerbs("BIN");
-        addSystemVerbs("BASE64ENCODE");
-        addSystemVerbs("BASE64DECODE");
-        addSystemVerbs("BINARYTODEC");
-        addSystemVerbs("BASE32DECODE");//BASE 32 DECODE TEXT ON STACK TOP AND PUSH RESULT TO STACK TOP
-        addSystemVerbs("BASE32ENCODE");//BASE 32 ENCODE TEXT ON STACK TOP AND PUSH RESULT TO STACK TOP
-        addSystemVerbs("BASE64DECODE");//BASE 32 DECODE TEXT ON STACK TOP AND PUSH RESULT TO STACK TOP
-        addSystemVerbs("BASE64ENCODE");//BASE 32 ENCODE TEXT ON STACK TOP AND PUSH RESULT TO STACK TOP   
-        addSystemVerbs("BIN");// BINARY MODE BASE 2 (SEE DEC)
-        addSystemVerbs("BYE");// QUIT PROGRAM  
-
-        addSystemVerbs("CEIL");
-        addSystemVerbs("COS");
-        addSystemVerbs("CR");
-        addSystemVerbs("CONSTANT");// DEFINE CONSTANT
-        addSystemVerbs("COPY");//BLOCK TO BLOCK COPY
-        addSystemVerbs("COUNTER");//PUSH NR OF CLOCK TICKS TO TOS // IT RETURNS MILLSECONDS FROM JAN 1, 1970.
-        addSystemVerbs("CR");// SENDS CR OR \N    
-        addSystemVerbs("CHR$");
+        addSystemVerb("CEIL","Round fraction upwards");
+        addSystemVerb("COS","Trigonometry Function");
+        addSystemVerb("CR","Emit a carrage return");
+        addSystemVerb("CONSTANT","DEFINE CONSTANT");
+        addSystemVerb("COPY","BLOCK TO BLOCK COPY");
+        addSystemVerb("COUNTER","PUSH NR OF CLOCK TICKS TO TOS // IT RETURNS MILLSECONDS FROM JAN 1, 1970.");
+//        addSystemVerbs("CHR$");
 
         
-        addSystemVerbs("DATE@");//ADVANCED FEATURE :  PUSH DATE TO STACK
-        addSystemVerbs("DATEUSA@");//ADVANCED FEATURE :  PUSH DATE TO STACK         
-        addSystemVerbs("DATEBRITISH@");//ADVANCED FEATURE :  PUSH DATE TO STACK                   
-        addSystemVerbs("DATESIMPLEFORMAT@");//ADVANCED FEATURE :  PUSH DATE TO STACK WHERE FORMAT STRING IS ON TOS YYYY-MM-DD HH:MM:SS
-        addSystemVerbs("DATETIME@");//ADVANCED FEATURE :  PUSH DATE TO STACK
-        addSystemVerbs("DELAY");//ADVANCED FEATURE :  100MS DELAY
-        addSystemVerbs("DEC");// DECIMAL MODE BASE 10 (SEE BIN)
-        addSystemVerbs("DEGTORAD");
-        addSystemVerbs("DECTOBINARY");
-        addSystemVerbs("DECTOHEX");
-        addSystemVerbs("DECTOOCTAL");
-        addSystemVerbs("DMOD");
-        addSystemVerbs("DO");
-        addSystemVerbs("DROP");        
-        addSystemVerbs("DSQR");
-        addSystemVerbs("DUP");
+        addSystemVerb("DATE@","PUSH DATE TO STACK");
+        addSystemVerb("DATEUSA@","PUSH DATE (USA Format) TO STACK");         
+        addSystemVerb("DATEBRITISH@","PUSH DATE (British Format) TO STACK");                      
+        addSystemVerb("DATESIMPLEFORMAT@","PUSH DATE TO STACK WHERE FORMAT STRING IS ON TOS YYYY-MM-DD HH:MM:SS");
+        addSystemVerb("DATETIME@","PUSH DATE & Time TO STACK");
+        addSystemVerb("DELAY","100MS DELAY");
+        addSystemVerb("DEC","Set Mode to DECIMAL MODE BASE 10 (SEE BIN)");
+        addSystemVerb("DEGTORAD","Convert Degrees to Radians");
+        addSystemVerb("DECTOBINARY","Convert Decimal to Binary");
+        addSystemVerb("DECTOHEX","Convert Decimal to Hexadecimal");
+        addSystemVerb("DECTOOCTAL","Convert Decimal to Octal");
+        addSystemVerb("DMOD","Modulus of Floating point division");
+        addSystemVerb("DO","Start a DO Loop");
+        addSystemVerb("DROP","Stack Operation drop THE TOP OF STACK");        
+        addSystemVerb("DSQR","square of Floating point Double of THE TOP OF STACK");
+        addSystemVerb("DUP","Stack Operation duplicate THE TOP OF STACK"); 
           
 
-        addSystemVerbs("EDIT");// MULTIPLE TEXT EDITOR PUSH (1 TO 7) TO SELECT EDITOR THE PUSH PATH TO FILE TO EDIT AS A STRING 
-        addSystemVerbs("ELSE");
-        addSystemVerbs("EMIT");// SEND SPACES NR OF SPACES IS TOS
-        addSystemVerbs("EXEC");// EXECUTE AN O/S COMMAND
-        addSystemVerbs("EXECNANO");// EDIT FILE WITH NANO  FIRST PUSH PATH TO FILE TO EDIT AS A STRING
-        addSystemVerbs("EXECKATE");// EDIT FILE WITH KATE FIRST PUSH PATH TO FILE TO EDIT AS A STRING
-        addSystemVerbs("EXECWRITE");
-        addSystemVerbs("EXECKWRITE");//EDIT FILE WITH KWRITE FIRST PUSH PATH TO FILE TO EDIT AS A STRING
-        addSystemVerbs("EXECVI");// EDIT FILE WITH VI FIRST PUSH PATH TO FILE TO EDIT AS A STRING
-        addSystemVerbs("EXECVIM");// EDIT FILE WITH VIM FIRST PUSH PATH TO FILE TO EDIT AS A STRING
-        addSystemVerbs("EXECWORDPAD");// EDIT FILE WITH WORDPAD FIRST PUSH PATH TO FILE TO EDIT AS A STRING
-        addSystemVerbs("EXECNOTEPAD");// EDIT FILE WITH NOTEPAD FIRST PUSH PATH TO FILE TO EDIT AS A STRING
+        addSystemVerb("EDIT","MULTIPLE TEXT EDITOR PUSH (1 TO 7) TO SELECT EDITOR THE PUSH PATH TO FILE TO EDIT AS A STRING"); 
+        addSystemVerb("ELSE","The Else part of an If statement");
+        addSystemVerb("EMIT","Print SPACES The NR OF SPACES IS THE TOP OF STACK"); 
+        addSystemVerb("EXEC","EXECUTE AN O/S COMMAND");
+        addSystemVerb("EXECNANO","EDIT FILE WITH NANO  FIRST PUSH PATH TO FILE TO EDIT AS A STRING");
+        addSystemVerb("EXECKATE","EDIT FILE WITH KATE FIRST PUSH PATH TO FILE TO EDIT AS A STRING");
+//        addSystemVerbs("EXECWRITE");
+//        addSystemVerbs("EXECKWRITE");//EDIT FILE WITH KWRITE FIRST PUSH PATH TO FILE TO EDIT AS A STRING
+//        addSystemVerbs("EXECVI");// EDIT FILE WITH VI FIRST PUSH PATH TO FILE TO EDIT AS A STRING
+//        addSystemVerbs("EXECVIM");// EDIT FILE WITH VIM FIRST PUSH PATH TO FILE TO EDIT AS A STRING
+//        addSystemVerbs("EXECWORDPAD");// EDIT FILE WITH WORDPAD FIRST PUSH PATH TO FILE TO EDIT AS A STRING
+//        addSystemVerbs("EXECNOTEPAD");// EDIT FILE WITH NOTEPAD FIRST PUSH PATH TO FILE TO EDIT AS A STRING
 
-        addSystemVerbs("FLOOR");
-        addSystemVerbs("FLUSH");//FLUSHES CHANGED BLOCKS TO DISK                   
-        addSystemVerbs("FILE@");//READ A FILE FROM DISK WHOSE FILESPECK(FILENAME AND PATH) IN ON TOS SAVE STRING READ TO TOS
-        addSystemVerbs("FORGET");// REMOVES A VERB FROM THE DICTIONARY (DICTIONARYINDEXMAP)
+        addSystemVerb("FLOOR","Math floor function");
+//        addSystemVerbs("FLUSH");//FLUSHES CHANGED BLOCKS TO DISK                   
+//        addSystemVerbs("FILE@");//READ A FILE FROM DISK WHOSE FILESPECK(FILENAME AND PATH) IN ON TOS SAVE STRING READ TO TOS
+        addSystemVerb("FORGET","REMOVES A USER DEFINED VERB FROM THE DICTIONARY");
 
-        addSystemVerbs("HELP");// DISPLAY THIS LIST OF VERBS
-        addSystemVerbs("HEX");// HEXADECIMAL MODE BASE 16 (SEE BIN) 
-        addSystemVerbs("HEXTODEC");
-        addSystemVerbs("HMAPVARIABLE");// DEFINE HASHMAP VARIABLE
-        addSystemVerbs("HTMLLIST@");//DEPRICATED// LIST THE TAGS OF HTML PAGE WHOSE URL IS ON THE STACK TOP SAVE THIS ON THE STACK TOP
-        addSystemVerbs("HTMLREAD@"); //  TEXT READ THE HTML PAGE WHOSE URL IS ON THE STACK TOP SAVE THIS ON THE STACK TOP
+        addSystemVerb("HELP","Print Help Function");
+        addSystemVerb("HEX","Set Mode to HEXADECIMAL MODE BASE 16 (SEE BIN)"); 
+        addSystemVerb("HEXTODEC","Convert from Hexadecimal to Decimal");
+        addSystemVerb("HMAPVARIABLE","DEFINE HASHMAP VARIABLE");
+//        addSystemVerbs("HTMLLIST@");//DEPRICATED// LIST THE TAGS OF HTML PAGE WHOSE URL IS ON THE STACK TOP SAVE THIS ON THE STACK TOP
+//        addSystemVerbs("HTMLREAD@"); //  TEXT READ THE HTML PAGE WHOSE URL IS ON THE STACK TOP SAVE THIS ON THE STACK TOP
 
-        addSystemVerbs("IF");
-        addSystemVerbs("INETADDRESS@");// PUSHES THE IP ADDRESS OF A SERVER ON THESTACK
+        addSystemVerb("IF","Starts an IF statement");
+//        addSystemVerbs("INETADDRESS@");// PUSHES THE IP ADDRESS OF A SERVER ON THESTACK
 
-        addSystemVerbs("LATEST"); //     WILL CONNECT TO THE WEBSERVER AND DISPLAY LATEST VERSION AVAILABLE FOR DOWNOLOAD
-        addSystemVerbs("LFS"); // SEND A NUMBER OF LF'S TO PRINT NUMBER IS TOS
-        addSystemVerbs("LIST"); // LIST BLOCK N WHERE N IS TOS
-        addSystemVerbs("LISTVARIABLE");// DEFINE LIST VARIABLE
-        addSystemVerbs("LOAD"); // LOAD BLOCK FROM DISK N WHERE N IS TOS
-        addSystemVerbs("LOG");
-        addSystemVerbs("LOGBASE10");
-        addSystemVerbs("LOOP");
+//        addSystemVerbs("LATEST"); //     WILL CONNECT TO THE WEBSERVER AND DISPLAY LATEST VERSION AVAILABLE FOR DOWNOLOAD
+        addSystemVerb("LFS","SEND A NUMBER OF LF'S TO PRINT NUMBER IS TOS");
+//        addSystemVerbs("LIST"); // LIST BLOCK N WHERE N IS TOS
+        addSystemVerb("LISTVARIABLE","DEFINE LIST VARIABLE");
+//        addSystemVerbs("LOAD"); // LOAD BLOCK FROM DISK N WHERE N IS TOS
+        addSystemVerb("LOG","Math LOG BASE N function");
+        addSystemVerb("LOGBASE10","Math LOG BASE 10 function");
+        addSystemVerb("LOOP","Define a LOOP");
 
-        addSystemVerbs("MAX"); // KEEP THE MAXIMUN OF TWO NUMBERS ON THE STACK DROP THE OTHER
-        addSystemVerbs("MIN");// KEEP THE MINIMUM OF TWO NUMBERS ON THE STACK DROP THE OTHER
-        addSystemVerbs("MOD");// POP AND DIVIDE THE TOP TWO MUMBERS ON STACK AND PUSH THE MODULUS
+        addSystemVerb("MAX","KEEP THE MAXIMUN OF TWO NUMBERS ON THE STACK DROP THE OTHER");
+        addSystemVerb("MIN","KEEP THE MINIMUM OF TWO NUMBERS ON THE STACK DROP THE OTHER");
+        addSystemVerb("MOD","POP AND DIVIDE THE TOP TWO MUMBERS ON STACK AND PUSH THE MODULUS");
 
-        addSystemVerbs("NEGATE");// CHANGE THE SIGN OF THE NUMBER AT TOS NGATIVE/POSITIVE        
-        addSystemVerbs("NOP");
+        addSystemVerb("NEGATE","CHANGE THE SIGN OF THE NUMBER AT TOS NGATIVE/POSITIVE");       
+        addSystemVerb("NOP","Do Nothing");
 
-        addSystemVerbs("OCT");// OCTAL MODE BASE 16 (SEE BIN) 
-        addSystemVerbs("OCTALTODEC");
-        addSystemVerbs("OR");// LOGICAL OR
-        addSystemVerbs("OSSETLINUX"); // SET O/S COMPATIBILITY  TO LINUX
-        addSystemVerbs("OSSETMAC"); // SET O/S COMPATIBILITY  TO MAC OS
-        addSystemVerbs("OSSETSWING"); // SET O/S COMPATIBILITY  FOR SWING CLIENT
-        addSystemVerbs("OSSETUNITTEST"); // SET O/S COMPATIBILITY  FOR UNIT TESTING
-        addSystemVerbs("OSSETWEBSERVER"); // SET O/S COMPATIBILITY  FOR WEB SERVER
-        addSystemVerbs("OSSETWINDOWS"); // SET O/S COMPATIBILITY  TO WINDOWS
-        addSystemVerbs("OVER");
+        addSystemVerb("OCT","Set Mode to OCTAL MODE BASE 16 (SEE BIN)"); 
+        addSystemVerb("OCTALTODEC","Convert Octal to Decimal");
+        addSystemVerb("OR","LOGICAL OR");
+        addSystemVerb("OSSETLINUX","SET O/S COMPATIBILITY  TO LINUX");
+        addSystemVerb("OSSETMAC","SET O/S COMPATIBILITY  TO MAC OS");
+//        addSystemVerbs("OSSETSWING","SET O/S COMPATIBILITY  FOR SWING CLIENT
+//        addSystemVerbs("OSSETUNITTEST"); // SET O/S COMPATIBILITY  FOR UNIT TESTING
+        addSystemVerb("OSSETWEBSERVER","SET O/S COMPATIBILITY  FOR WEB SERVER");
+        addSystemVerb("OSSETWINDOWS","SET O/S COMPATIBILITY  TO WINDOWS");
+        addSystemVerb("OVER","Stack Operation OVER");
 
-        addSystemVerbs("POP");// POP FROM STACK // INTERNAL OPERATION
-        addSystemVerbs("PUSH");// PUSH ONTO STACK // INTERNAL OPERATION
-        addSystemVerbs("PWR");
+        addSystemVerb("POP","Stack Operation POP FROM STACK");
+        addSystemVerb("PUSH","Stack Operation PUSH ONTO STACK");
+        addSystemVerb("PWR","Math Power function");
 
-        addSystemVerbs("RADTODEG");
-        addSystemVerbs("RND");// POPS SMALEST AND LARGEST NUMBERS AND PUSHES A RANDOM NUMBER  TO STACK
-        addSystemVerbs("ROT");
-        addSystemVerbs("ROUND");
-        addSystemVerbs("RSSFEEDREAD"); // READS ALL MESSAGES FROM RSS STREAM WHERE URL IS ONTO THE STACK TOP
-        addSystemVerbs("RSSFEEDMESSAGE@");// READS A MESSAGE WHERE THE INDEX IS THE TOS AND PUSHES THIS MESSAGE TO STACK
-        addSystemVerbs("RSSFEEDSIZE@");// PUSHES THE NUMBER OF MESSAGES TO TOS
-        addSystemVerbs("RSSJ2EEREAD");// READS ALL MESSAGES FROM RSS STREAM FOR THIS PROJECT  ONTO THE STACK TOP
+        addSystemVerb("RADTODEG","Convert Radians to Degrees");
+        addSystemVerb("RND","Math function which POPS SMALEST AND LARGEST NUMBERS AND PUSHES A RANDOM NUMBER  TO STACK");
+        addSystemVerb("ROT","Stack Operation");
+        addSystemVerb("ROUND","Math Power function");
+//        addSystemVerbs("RSSFEEDREAD"); // READS ALL MESSAGES FROM RSS STREAM WHERE URL IS ONTO THE STACK TOP
+//        addSystemVerbs("RSSFEEDMESSAGE@");// READS A MESSAGE WHERE THE INDEX IS THE TOS AND PUSHES THIS MESSAGE TO STACK
+//        addSystemVerbs("RSSFEEDSIZE@");// PUSHES THE NUMBER OF MESSAGES TO TOS
+//        addSystemVerbs("RSSJ2EEREAD");// READS ALL MESSAGES FROM RSS STREAM FOR THIS PROJECT  ONTO THE STACK TOP
 
-        addSystemVerbs("SIN");
-        addSystemVerbs("SPACE");// PRINT ONE SPACE
-        addSystemVerbs("SPACES");// PRINT N SPACES WHERE N IS TOS
-        addSystemVerbs("SQARE");// PUSH THE SQUARE THE TOS
-        addSystemVerbs("SQR");// PUSH THE SQUARE ROOT OF TOS
-        addSystemVerbs("SWAP");
-        addSystemVerbs("SYSTEM!");// ADVANCED FEATURE : STORE SYSTEM VARIABLES TO PROPERTIES FILE ON HARD DISK
-        addSystemVerbs("SYSTEM@");// ADVANCED FEATURE : RETRIEVE SYSTEM VARIABLES FROM PROPERTIES FILE ON HARD DISK
+        addSystemVerb("SIN","Math Sin function");
+        addSystemVerb("SPACE","PRINT ONE SPACE");
+        addSystemVerb("SPACES","PRINT N SPACES WHERE N IS THE TOP OF STACK"); 
+        addSystemVerb("SQARE","PUSH THE SQUARE THE TOP OF STACK"); 
+        addSystemVerb("SQR","PUSH THE SQUARE ROOT OF THE TOP OF STACK"); 
+        addSystemVerb("SWAP","Stack Operation");
+//        addSystemVerbs("SYSTEM!");// ADVANCED FEATURE : STORE SYSTEM VARIABLES TO PROPERTIES FILE ON HARD DISK
+//        addSystemVerbs("SYSTEM@");// ADVANCED FEATURE : RETRIEVE SYSTEM VARIABLES FROM PROPERTIES FILE ON HARD DISK
 
-        addSystemVerbs("TAN");
-        addSystemVerbs("TIME@");// ADVANCED FEATURE : PUSH DATE TO STACK
-        addSystemVerbs("TIMESTAMP@");//ADVANCED FEATURE :  PUSH DATE TIME STAMP TO STACK
-        addSystemVerbs("?TIME");// ADVANCED FEATURE : PRINT DATE TO STACK
-        addSystemVerbs("?TIMESTAMP");//ADVANCED FEATURE :  PRINT DATE TIME STAMP TO STACK
+        addSystemVerb("TAN","Math Tan function");
+        addSystemVerb("TIME@","PUSH DATE TO STACK");
+        addSystemVerb("TIMESTAMP@","PUSH DATE TIME STAMP TO STACK");
+        addSystemVerb("?TIME","PRINT DATE TO STACK");
+        addSystemVerb("?TIMESTAMP","PRINT DATE TIME STAMP TO STACK");
 
-        addSystemVerbs("VARIABLE");// DEFINE  VARIABLE
+        addSystemVerb("VARIABLE","DEFINE  VARIABLE");
 
-        addSystemVerbs("WEBPAGE@");// READ AND STORE HTML WEBPAGE ONTO STACK TOP
+//        addSystemVerbs("WEBPAGE@");// READ AND STORE HTML WEBPAGE ONTO STACK TOP
 
-        addSystemVerbs("XOR");// LOGICAL EXCLUSIVE OR
-        addSystemVerbs("XMLMAKE");//ADVANCED FEATURE :  PARSE VARIABLES INTO VARIABLE XML TO GENERATE XML
-        addSystemVerbs("XML!");// ADVANCED FEATURE : SAVE XML TAGS TO VARIABLE XML
-        addSystemVerbs("XML@");// ADVANCED FEATURE : PUSH XML TAGS TO STACK
-        addSystemVerbs("JSON!");// ADVANCED FEATURE : SAVE JSON TO VARIABLE JSON
-        addSystemVerbs("JSON@");// ADVANCED FEATURE : PUSH JSON TO STACK
+        addSystemVerb("XOR","LOGICAL EXCLUSIVE OR");
+//        addSystemVerbs("XMLMAKE");//ADVANCED FEATURE :  PARSE VARIABLES INTO VARIABLE XML TO GENERATE XML
+        addSystemVerb("XML!","SAVE XML TAGS TO VARIABLE XML");
+        addSystemVerb("XML@","PUSH XML TAGS TO STACK");
+        addSystemVerb("JSON!","SAVE JSON TO VARIABLE JSON");
+        addSystemVerb("JSON@","PUSH JSON TO STACK");
     }
+
 
 }

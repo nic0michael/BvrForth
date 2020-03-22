@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="3" failures="0" name="za.co.bvr.forth.utils.UtilitiesTest" time="0.007" errors="0" skipped="0">
+<testsuite tests="3" failures="0" name="za.co.bvr.forth.utils.UtilitiesTest" time="0" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="java.vm.version" value="11.0.5+10-post-Ubuntu-0ubuntu1.118.04"/>
@@ -59,7 +59,7 @@
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="za.co.bvr.forth.utils.UtilitiesTest" name="removeUnwantedSpacesTest" time="0.004"/>
-  <testcase classname="za.co.bvr.forth.utils.UtilitiesTest" name="removeUnwantedSpacesTest2" time="0.002"/>
-  <testcase classname="za.co.bvr.forth.utils.UtilitiesTest" name="removeUnwantedSpacesTest3" time="0.001"/>
+  <testcase classname="za.co.bvr.forth.utils.UtilitiesTest" name="removeUnwantedSpacesTest" time="0"/>
+  <testcase classname="za.co.bvr.forth.utils.UtilitiesTest" name="removeUnwantedSpacesTest2" time="0"/>
+  <testcase classname="za.co.bvr.forth.utils.UtilitiesTest" name="removeUnwantedSpacesTest3" time="0"/>
 </testsuite>

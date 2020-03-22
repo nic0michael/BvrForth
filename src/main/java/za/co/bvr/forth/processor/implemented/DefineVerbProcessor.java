@@ -41,8 +41,7 @@ public class DefineVerbProcessor extends AbstractProcessor {
                 returnString = "Ok";
                 String definition = verbDefinition.toString();
                 String compiledDefinition = compiler.compile(definition);
-                verb = new Verb(verbName, verbDefinition.toString(), compiledDefinition);
-                verb.setDescription("USER DEFINED VERB");
+                verb = new Verb(verbName, verbDefinition.toString(), compiledDefinition,"User defined verb");
                 dictionary.addVerbToDictionary(verb);
             } else if (iterationCount > 0) {
                 if (iterationCount == 1) {
