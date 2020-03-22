@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="14" failures="0" name="za.co.bvr.forth.stack.ForthStackTest" time="0.01" errors="0" skipped="0">
+<testsuite tests="14" failures="0" name="za.co.bvr.forth.stack.ForthStackTest" time="0.02" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="java.vm.version" value="11.0.5+10-post-Ubuntu-0ubuntu1.118.04"/>
@@ -68,9 +68,9 @@
   <testcase classname="za.co.bvr.forth.stack.ForthStackTest" name="swapTest" time="0"/>
   <testcase classname="za.co.bvr.forth.stack.ForthStackTest" name="multiplyTest" time="0"/>
   <testcase classname="za.co.bvr.forth.stack.ForthStackTest" name="overTest" time="0"/>
-  <testcase classname="za.co.bvr.forth.stack.ForthStackTest" name="hexTest" time="0.01"/>
-  <testcase classname="za.co.bvr.forth.stack.ForthStackTest" name="subtractTest" time="0"/>
+  <testcase classname="za.co.bvr.forth.stack.ForthStackTest" name="hexTest" time="0.018"/>
+  <testcase classname="za.co.bvr.forth.stack.ForthStackTest" name="subtractTest" time="0.001"/>
   <testcase classname="za.co.bvr.forth.stack.ForthStackTest" name="rotTest" time="0"/>
   <testcase classname="za.co.bvr.forth.stack.ForthStackTest" name="decTest" time="0"/>
-  <testcase classname="za.co.bvr.forth.stack.ForthStackTest" name="dupTest" time="0"/>
+  <testcase classname="za.co.bvr.forth.stack.ForthStackTest" name="dupTest" time="0.001"/>
 </testsuite>
