@@ -37,13 +37,11 @@ class LineProcessor extends AbstractProcessor {
             ExecutionPojo execution =new ExecutionPojo();
             
             if (Utilities.isNumeric(lineItem)) {
-                execution.setLineItem(lineItem);
-                execution.setExecutionType(ExecutionType.NUMBER);
+                execution=makeExecutionPojo(lineItem, ExecutionType.NUMBER);
                 executions.add(execution);
                 
             }else if (variables.isVariable(lineItem.toUpperCase())) {
-                execution.setLineItem(lineItem.toUpperCase());
-                execution.setExecutionType(ExecutionType.VARIABLE);
+                execution=makeExecutionPojo(lineItem.toUpperCase(), ExecutionType.VARIABLE);
                 executions.add(execution);
                 
             }else{
@@ -58,20 +56,17 @@ class LineProcessor extends AbstractProcessor {
                     
                     if (Utilities.isNumeric(definition)) {
 //                        log.info("LineProcessor is numeric : "+definition);
-                        execution.setLineItem(definition);
-                        execution.setExecutionType(ExecutionType.NUMBER);
+                        execution=makeExecutionPojo(definition, ExecutionType.NUMBER);                        
                         executions.add(execution);
 
                     } else if (variables.isVariable(definition.toUpperCase())) {
 //                        log.info("LineProcessor is variable : "+definition);
-                        execution.setLineItem(definition.toUpperCase());
-                        execution.setExecutionType(ExecutionType.VARIABLE);
+                        execution=makeExecutionPojo(definition.toUpperCase(), ExecutionType.VARIABLE);
                         executions.add(execution);
 
                     } else{
 //                        log.info("LineProcessor is verb"+count+" : "+definition);
-                        execution.setLineItem(definition);
-                        execution.setExecutionType(ExecutionType.VERB);
+                        execution=makeExecutionPojo(definition.toUpperCase(), ExecutionType.VERB);
                         executions.add(execution);
                     }                    
                     count++;
@@ -110,7 +105,14 @@ class LineProcessor extends AbstractProcessor {
         }
         
         return results.toString();
-    }   
+    } 
+   
+    private ExecutionPojo makeExecutionPojo(String lineItem,ExecutionType executionType){
+        ExecutionPojo execution =new ExecutionPojo();
+        execution.setLineItem(lineItem);
+        execution.setExecutionType(executionType);
+        return  execution;               
+    }
     
     @Override
     public String preProcess(String line) throws Exception {throw new UnsupportedOperationException("Not supported yet.");}

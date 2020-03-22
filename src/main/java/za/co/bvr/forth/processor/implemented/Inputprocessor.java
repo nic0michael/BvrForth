@@ -16,12 +16,15 @@ public class Inputprocessor extends AbstractProcessor {
 
     ForthStack stack = ForthStack.INSTANCE;
 
-    final String QUOTE = "" + '"';
+    final String QUOTE = "\"";
     boolean definingNewVerb = false;
     boolean definingLoop = false;
     boolean definingVariable = false;
+    boolean definingStringVariable = false;
     boolean definingString = false;
-    boolean definingIfStatement=false;
+    boolean definingIfStatement = false;
+    boolean retrievingVariable=false;
+    boolean retrievingStringVariable=false;
 
     @Override
     public String process(String input) throws UnknownProcessorType, Exception {
@@ -29,27 +32,51 @@ public class Inputprocessor extends AbstractProcessor {
 
         if (line.contains(":")) {
             definingNewVerb = true;
-        } else if(".VARIABLES".equalsIgnoreCase(line)){
-            
-        } else if(".CONSTANTS".equalsIgnoreCase(line)){
-            
+        }else if (line.contains("@")) {
+            retrievingVariable=true;
+        }else if (line.contains("$@")) {
+            retrievingStringVariable=true;
+        } else if (".VARIABLES".equalsIgnoreCase(line)) {
+
+        } else if (".CONSTANTS".equalsIgnoreCase(line)) {
+
         } else if (line.toUpperCase().contains("DO")) {
             definingLoop = true;
-        }  else if (line.toUpperCase().contains("IF")) {
+        } else if (line.toUpperCase().contains("IF")) {
             definingIfStatement = true;
         } else if (line.toUpperCase().contains("VARIABLE")) {
-            definingVariable = true;
+            if (line.toUpperCase().contains("$")) {
+                definingStringVariable = true;
+            } else {
+                definingVariable = true;
+            }
         } else if (line.toUpperCase().contains("CONSTANT")) {
             definingVariable = true;
         } else if (line.toUpperCase().contains(QUOTE)) {
             definingString = true;
         }
+        
+        if (retrievingVariable) {
+            VariableAndConstantProcessor processor = new VariableAndConstantProcessor();
+            String result = processor.process(line);
+            definingStringVariable = processor.getDefinitionIsNotComplete();
+            return result;
 
-        if (definingVariable) {
+        } else if (retrievingStringVariable) {
+            return "";
+
+        }else if (definingVariable) {
             VariableAndConstantProcessor processor = new VariableAndConstantProcessor();
             String result = processor.process(line);
             definingVariable = processor.getDefinitionIsNotComplete();
             return result;
+
+        } else if (definingStringVariable) {
+            VariableAndConstantProcessor processor = new VariableAndConstantProcessor();
+            String result = processor.process(line);
+            definingStringVariable = processor.getDefinitionIsNotComplete();
+            return result;
+
         } else if (definingNewVerb) {
             DefineVerbProcessor defineVerbProcessor = new DefineVerbProcessor();
             String result = defineVerbProcessor.process(line);
@@ -60,12 +87,12 @@ public class Inputprocessor extends AbstractProcessor {
             String result = loopProcessor.process(line);
             definingLoop = loopProcessor.getDefinitionIsNotComplete();
             return result;
-        }  else if (definingIfStatement) {
+        } else if (definingIfStatement) {
             IfStatementProcessor ifStatementProcessor = new IfStatementProcessor();
             String result = ifStatementProcessor.process(line);
             definingIfStatement = ifStatementProcessor.getDefinitionIsNotComplete();
             return result;
-        }else if (definingString) {
+        } else if (definingString) {
             line = storingString(line);
             AbstractProcessor lineProcessor = new LineProcessor();
             return lineProcessor.process(line);
@@ -90,7 +117,7 @@ public class Inputprocessor extends AbstractProcessor {
                 } else {
                     processLine = line;
                     count++;
-                }                
+                }
             }
             index++;
         }

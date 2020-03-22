@@ -22,6 +22,10 @@ public class VariablesStore {
     private VariablesStore() {
     }
 
+    public String getValue(String variableName) {
+        return valueStore.get(variableName);
+    }
+    
     public void addVariable(String variableName, String value) {
         valueStore.put(variableName.toUpperCase(), value);
         variableNames.put(variableName.toUpperCase(), value);
@@ -33,6 +37,13 @@ public class VariablesStore {
         valueStore.put(variableName.toUpperCase(), "");
         variableNames.put(variableName.toUpperCase(), variableName.toUpperCase());
         System.out.println("Created variable "+variableName.toUpperCase());
+    }
+    
+    
+    public void addStringVariable(String variableName) {
+        valueStore.put(variableName.toUpperCase(), "");
+        stringVariableNames.put(variableName.toUpperCase(), variableName.toUpperCase());
+        System.out.println("Created String variable "+variableName.toUpperCase());
     }
 
     public void addConstant(String variableName, String value) {
@@ -59,6 +70,9 @@ public class VariablesStore {
             valueStore.put(variableName.toUpperCase(), value);
         }
     }
+    
+  
+ 
 
     public void updateVariable(String variableName, int value) {
         if (variableNames.get(variableName.toUpperCase()) != null) {
@@ -152,4 +166,5 @@ public class VariablesStore {
         }
         return result.toString();
     }
+
 }

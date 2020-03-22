@@ -59,7 +59,7 @@
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="za.co.bvr.forth.dictionary.ForthDictionaryTest" name="addAddAndGetTest" time="0.007"/>
-  <testcase classname="za.co.bvr.forth.dictionary.ForthDictionaryTest" name="addAndGetVerbFromDictionaryTest" time="0.001"/>
-  <testcase classname="za.co.bvr.forth.dictionary.ForthDictionaryTest" name="showVerbDetailsTest" time="0.001"/>
+  <testcase classname="za.co.bvr.forth.dictionary.ForthDictionaryTest" name="addAddAndGetTest" time="0.009"/>
+  <testcase classname="za.co.bvr.forth.dictionary.ForthDictionaryTest" name="addAndGetVerbFromDictionaryTest" time="0"/>
+  <testcase classname="za.co.bvr.forth.dictionary.ForthDictionaryTest" name="showVerbDetailsTest" time="0"/>
 </testsuite>
