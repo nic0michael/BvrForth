@@ -3,6 +3,8 @@ za/co/bvr/forth/exceptions/StackIsEmptyException.class
 za/co/bvr/forth/exceptions/UnknownProcessorType.class
 za/co/bvr/forth/utils/Utilities.class
 za/co/bvr/forth/stack/ForthStack.class
+za/co/bvr/forth/dtos/ExecutionPojo.class
+za/co/bvr/forth/enums/ExecutionType.class
 za/co/bvr/forth/processor/AbstractProcessor.class
 za/co/bvr/forth/dtos/Dto.class
 za/co/bvr/forth/utils/FileUtils.class
