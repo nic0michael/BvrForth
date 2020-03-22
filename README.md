@@ -5,8 +5,8 @@ This project replaces JEE8Forth and is written using "Clean Code"
 It is now built using OpenJdk 11
 
 Preequisites :
-You need Java OpenJre 11 installed on your computer
-get it here : http://www.oracle.com/technetwork/java/javase/archive-139210.html
+You need Java OpenJdk 11 installed on your computer
+get it here : https://openjdk.java.net/
 
 To run this project copy the Jar File :
 rename file java -jar BvrForth-1.0.0-SNAPSHOT-jar-with-dependencies.jar to : BvrForth.jar
