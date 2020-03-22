@@ -5,7 +5,7 @@ This project replaces JEE8Forth and is written using "Clean Code"
 It is now built using OpenJdk 11
 
 Preequisites :
-You need Java 7 installed on your computer
+You need Java OpenJre 11 installed on your computer
 get it here : http://www.oracle.com/technetwork/java/javase/archive-139210.html
 
 To run this project copy the Jar File :
