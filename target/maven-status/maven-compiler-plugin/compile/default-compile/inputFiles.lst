@@ -6,6 +6,7 @@
 /system/projects_folder/NetbeansProjects/BvrForth/src/main/java/za/co/bvr/forth/processor/AbstractLoopProcessor.java
 /system/projects_folder/NetbeansProjects/BvrForth/src/main/java/za/co/bvr/forth/utils/JsonUtilities.java
 /system/projects_folder/NetbeansProjects/BvrForth/src/main/java/za/co/bvr/forth/processor/implemented/VerbProcessor.java
+/system/projects_folder/NetbeansProjects/BvrForth/src/main/java/za/co/bvr/forth/dtos/ExecutionPojo.java
 /system/projects_folder/NetbeansProjects/BvrForth/src/main/java/za/co/bvr/forth/utils/FileUtils.java
 /system/projects_folder/NetbeansProjects/BvrForth/src/main/java/za/co/bvr/forth/processor/AbstractProcessor.java
 /system/projects_folder/NetbeansProjects/BvrForth/src/main/java/za/co/bvr/forth/processor/implemented/IfStatementProcessor.java
@@ -21,6 +22,7 @@
 /system/projects_folder/NetbeansProjects/BvrForth/src/main/java/za/co/bvr/forth/utils/DateUtilities.java
 /system/projects_folder/NetbeansProjects/BvrForth/src/main/java/za/co/bvr/forth/exceptions/UnknownProcessorType.java
 /system/projects_folder/NetbeansProjects/BvrForth/src/main/java/za/co/bvr/forth/exceptions/VerbNotInDictionaryException.java
+/system/projects_folder/NetbeansProjects/BvrForth/src/main/java/za/co/bvr/forth/enums/ExecutionType.java
 /system/projects_folder/NetbeansProjects/BvrForth/src/main/java/za/co/bvr/forth/dictionary/ForthDictionary.java
 /system/projects_folder/NetbeansProjects/BvrForth/src/main/java/za/co/bvr/forth/dictionary/Verb.java
 /system/projects_folder/NetbeansProjects/BvrForth/src/main/java/za/co/bvr/forth/stack/ForthStack.java

@@ -23,7 +23,7 @@ public class ForthDictionaryTest {
         String name="+.";
         String definition="+ .";
         String compiledDefinition="+ .";
-        Verb verb=new Verb(name, definition, compiledDefinition);
+        Verb verb=new Verb(name, definition, compiledDefinition,"User defined verb");
         dictionary.addVerbToDictionary(verb);
         String found=dictionary.showVerbDetails();
         assertThat(found , is(expected));
@@ -36,7 +36,7 @@ public class ForthDictionaryTest {
         int initialSize =  dictionary.size();
         String definition = ". .";
         String compiledDefinition = ". .";
-        Verb verb = new Verb(name, definition, compiledDefinition);
+        Verb verb = new Verb(name, definition, compiledDefinition,"User defined verb");
         dictionary.addVerbToDictionary(verb);
         String definition2 = dictionary.getDefinition(name);
         String compiledDefinition2 = dictionary.getCompiledDefinition(name);
@@ -55,12 +55,12 @@ public class ForthDictionaryTest {
         String definition = ".";
         String compiledDefinition = ".";
         int initialSize = 1;
-        Verb verb = new Verb(name, definition, compiledDefinition);
+        Verb verb = new Verb(name, definition, compiledDefinition,"User defined verb");
         String uuid=verb.getUuid();
         dictionary.addVerbToDictionary(verb);
         definition = "..";
         compiledDefinition = "..";
-        verb = new Verb(name, definition, compiledDefinition);
+        verb = new Verb(name, definition, compiledDefinition,"User defined verb");
         dictionary.addVerbToDictionary(verb);
         String definition2 = dictionary.getDefinition(name);
         String compiledDefinition2 = dictionary.getCompiledDefinition(name);

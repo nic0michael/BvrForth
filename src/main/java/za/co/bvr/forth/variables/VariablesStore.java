@@ -133,6 +133,10 @@ public class VariablesStore {
         
         StringBuilder result = new StringBuilder();
         int count = 0;
+        if(valueStore.isEmpty()){
+            return "No variables have been defined";
+        }
+    
 
         for (Map.Entry<String, String> entry : valueStore.entrySet()) {
             String key = entry.getKey();

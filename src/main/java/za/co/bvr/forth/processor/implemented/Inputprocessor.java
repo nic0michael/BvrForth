@@ -29,6 +29,10 @@ public class Inputprocessor extends AbstractProcessor {
 
         if (line.contains(":")) {
             definingNewVerb = true;
+        } else if(".VARIABLES".equalsIgnoreCase(line)){
+            
+        } else if(".CONSTANTS".equalsIgnoreCase(line)){
+            
         } else if (line.toUpperCase().contains("DO")) {
             definingLoop = true;
         }  else if (line.toUpperCase().contains("IF")) {
