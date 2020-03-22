@@ -3,12 +3,12 @@ package za.co.bvr.forth.processor.implemented;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.java.Log;
-import org.apache.commons.lang3.StringUtils;
 import za.co.bvr.forth.dictionary.ForthDictionary;
 import za.co.bvr.forth.dtos.ExecutionPojo;
 import za.co.bvr.forth.enums.ExecutionType;
 import za.co.bvr.forth.processor.AbstractProcessor;
 import za.co.bvr.forth.stack.ForthStack;
+import za.co.bvr.forth.utils.Utilities;
 import za.co.bvr.forth.variables.VariablesStore;
 
 /**
@@ -27,8 +27,8 @@ class LineProcessor extends AbstractProcessor {
     public String process(String line) throws Exception {
         List<ExecutionPojo> executions =new ArrayList<>();
         
-        log.info("LineProcessor processing line : "+line+"\n\n");
-        if(StringUtils.isEmpty(line)){
+//        log.info("LineProcessor processing line : "+line+"\n\n");
+        if(Utilities.isEmpty(line)){
             return "";
         }
         StringBuilder result = new StringBuilder();
@@ -36,7 +36,7 @@ class LineProcessor extends AbstractProcessor {
         for (String lineItem : lineItems) {
             ExecutionPojo execution =new ExecutionPojo();
             
-            if (StringUtils.isNumeric(lineItem)) {
+            if (Utilities.isNumeric(lineItem)) {
                 execution.setLineItem(lineItem);
                 execution.setExecutionType(ExecutionType.NUMBER);
                 executions.add(execution);
@@ -56,7 +56,7 @@ class LineProcessor extends AbstractProcessor {
                     execution =new ExecutionPojo();
 //                    log.info("LineProcessor definition"+count+" : "+definition);
                     
-                    if (StringUtils.isNumeric(definition)) {
+                    if (Utilities.isNumeric(definition)) {
 //                        log.info("LineProcessor is numeric : "+definition);
                         execution.setLineItem(definition);
                         execution.setExecutionType(ExecutionType.NUMBER);
@@ -111,15 +111,14 @@ class LineProcessor extends AbstractProcessor {
         
         return results.toString();
     }   
-
-    @Override
-    public List<ExecutionPojo> preProcess(String line) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean getDefinitionIsNotComplete() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
+    @Override
+    public String preProcess(String line) throws Exception {throw new UnsupportedOperationException("Not supported yet.");}
+    
+    @Override
+    public String postProcess(String line) throws Exception {throw new UnsupportedOperationException("Not supported yet."); }
+
+    @Override
+    public boolean getDefinitionIsNotComplete() throws Exception {throw new UnsupportedOperationException("Not supported yet.");}
+
 }

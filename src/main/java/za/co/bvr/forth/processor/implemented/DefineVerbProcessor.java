@@ -1,11 +1,9 @@
 package za.co.bvr.forth.processor.implemented;
 
-import java.util.List;
 import lombok.extern.java.Log;
 import za.co.bvr.forth.compiler.ForthCompiler;
 import za.co.bvr.forth.dictionary.ForthDictionary;
 import za.co.bvr.forth.dictionary.Verb;
-import za.co.bvr.forth.dtos.ExecutionPojo;
 import za.co.bvr.forth.processor.AbstractProcessor;
 
 /**
@@ -64,19 +62,15 @@ public class DefineVerbProcessor extends AbstractProcessor {
     }
 
     @Override
-    public List<ExecutionPojo> preProcess(String line) throws Exception {
-        return null;
+    public boolean getDefinitionIsNotComplete() throws Exception {
+        return definitionIsNotComplete;
     }
-
+    
     @Override
-    public String postProcess(List<ExecutionPojo> executions) throws Exception {
-        return null;
-    }
-
+    public String preProcess(String line) throws Exception {throw new UnsupportedOperationException("Not supported yet."); }
+    
     @Override
-    public boolean getDefinitionIsNotComplete() {
-        return false;
-    }
+    public String postProcess(String line) throws Exception {throw new UnsupportedOperationException("Not supported yet.");}
 
 
 }

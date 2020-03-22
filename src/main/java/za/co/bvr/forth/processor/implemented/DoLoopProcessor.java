@@ -5,10 +5,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.lang3.StringUtils;
-import za.co.bvr.forth.dtos.ExecutionPojo;
 import za.co.bvr.forth.processor.AbstractLoopProcessor;
 import za.co.bvr.forth.stack.ForthStack;
+import za.co.bvr.forth.utils.Utilities;
 
 /**
  *
@@ -40,16 +39,7 @@ public class DoLoopProcessor extends AbstractLoopProcessor {
 
         setLineBeforeLoop(line);
         stackValues = stack.show();
-        
-        
-                
-        if(StringUtils.isEmpty(preProcessLine.toString())){
-            preResult =  "";
-        } else {
-            LineProcessor processor = new LineProcessor();
-            preResult =  processor.process(line);
-        }
-  
+        preResult = preProcess(preProcessLine.toString());
         stackValues = stack.show();
 
         setLineAfterLoop(line);
@@ -58,16 +48,7 @@ public class DoLoopProcessor extends AbstractLoopProcessor {
         stackValues = stack.show();
 
         proResult = processLineOfTheLoop();
-        
-        
-        
-        
-        if(StringUtils.isEmpty(postProcessLine.toString())){
-            postResult = "";
-        } else{
-            LineProcessor processor = new LineProcessor();
-            postResult = processor.process(line);
-        }
+        postResult = postProcess(postProcessLine.toString());
 
         result.append(proResult);
         stackValues = stack.show();
@@ -77,29 +58,30 @@ public class DoLoopProcessor extends AbstractLoopProcessor {
         return result.toString();
     }
 
-//    @Override
-//    public String preProcess(String line) throws Exception {
-//        
-//        if(Utilities.isEmpty(line)){
-//            return "";
-//        } else {
-//            LineProcessor processor = new LineProcessor();
-//            return processor.process(line);
-//        }
-//    }
+    @Override
+    public String preProcess(String line) throws Exception {
+        
+        if(Utilities.isEmpty(line)){
+            return "";
+        }
+        LineProcessor processor = new LineProcessor();
+        return processor.process(line);
+    }
 
-//    @Override
-//    public String postProcess(String line) throws Exception {
-//        
-//        if(Utilities.isEmpty(line)){
-//            return "";
-//        } else{
-//            LineProcessor processor = new LineProcessor();
-//            return processor.process(line);
-//        }
-//    }
+    @Override
+    public String postProcess(String line) throws Exception {
+        
+        if(Utilities.isEmpty(line)){
+            return "";
+        }
+        LineProcessor processor = new LineProcessor();
+        return processor.process(line);
+    }
 
-
+    @Override
+    public boolean getDefinitionIsNotComplete() throws Exception {
+        return definitionIsNotComplete;
+    }
 
     @Override
     public void setLineBeforeLoop(String line) {
@@ -259,16 +241,6 @@ public class DoLoopProcessor extends AbstractLoopProcessor {
 
         return result.toString();
 
-    }
-
-    @Override
-    public List<ExecutionPojo> preProcess(String line) throws Exception {
-        return null;
-    }
-
-    @Override
-    public String postProcess(List<ExecutionPojo> executions) throws Exception {
-        return null;
     }
 
 }

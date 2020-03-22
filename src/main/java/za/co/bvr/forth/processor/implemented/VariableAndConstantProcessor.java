@@ -1,8 +1,5 @@
 package za.co.bvr.forth.processor.implemented;
 
-import java.util.List;
-import org.apache.commons.lang3.StringUtils;
-import za.co.bvr.forth.dtos.ExecutionPojo;
 import za.co.bvr.forth.processor.AbstractProcessor;
 import za.co.bvr.forth.stack.ForthStack;
 import za.co.bvr.forth.utils.Utilities;
@@ -29,7 +26,7 @@ public class VariableAndConstantProcessor extends AbstractProcessor {
         int count = 0;
 
         for (String word : words) {
-            if (StringUtils.isNumeric(word)) {
+            if (Utilities.isNumeric(word)) {
                 stack.push(word);
             } else if (word.toUpperCase().equals("VARIABLE")) {
                 variableType = "VARIABLE";
@@ -58,27 +55,22 @@ public class VariableAndConstantProcessor extends AbstractProcessor {
                 }
             }
         }
-        
 
+        return postProcess(verbsToExecute.toString());
+    }
+
+    @Override
+    public String postProcess(String line) throws Exception {
         LineProcessor lineProcessor = new LineProcessor();
         return lineProcessor.process(line);
     }
 
-
     @Override
-    public List<ExecutionPojo> preProcess(String line) throws Exception {
-        return null;
-    }
-
-    @Override
-    public String postProcess(List<ExecutionPojo> executions) throws Exception {
-        return null;
-    }
-
-    @Override
-    public boolean getDefinitionIsNotComplete() {
+    public boolean getDefinitionIsNotComplete() throws Exception {
         return definitionIsNotComplete;
     }
 
+    @Override
+    public String preProcess(String line) throws Exception { throw new UnsupportedOperationException("Not supported yet.");  }
     
 }

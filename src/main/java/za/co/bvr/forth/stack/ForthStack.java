@@ -1,17 +1,16 @@
 package za.co.bvr.forth.stack;
 
 import java.util.Stack;
+import java.util.concurrent.ThreadLocalRandom;
 import za.co.bvr.forth.exceptions.StackIsEmptyException;
+import za.co.bvr.forth.utils.Utilities;
 import org.apache.commons.codec.binary.Base64;
 import java.util.concurrent.ThreadLocalRandom;
-import lombok.ToString;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author nickm
  */
-@ToString
 public class ForthStack {
 
     Stack<String> stackStore = new Stack<String>();
@@ -28,7 +27,7 @@ public class ForthStack {
     }
 
     public void push(String value) {
-        if (StringUtils.isNotEmpty(value)) {
+        if (!Utilities.isEmpty(value)) {
             stackStore.add(value);
             topOfStack++;
         }
@@ -368,7 +367,7 @@ public class ForthStack {
         StringBuilder stackString = new StringBuilder();
         int count = 0;
         for (String item : stackStore) {
-            if (StringUtils.isNotEmpty(item)) {
+            if (!Utilities.isEmpty(item)) {
                 if (count > 0) {
                     stackString.append(" ");
                 }
@@ -409,7 +408,7 @@ public class ForthStack {
         String retValue = "";
         String displayMode = currentMode.getValue();
 
-        if (StringUtils.isEmpty(value) || !StringUtils.isNumeric(value)) {
+        if (Utilities.isEmpty(value) || !Utilities.isNumeric(value)) {
             return value;
         }
         System.out.println(">IS NUMERIC<");
