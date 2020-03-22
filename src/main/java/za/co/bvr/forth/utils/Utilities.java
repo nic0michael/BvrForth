@@ -7,6 +7,7 @@ import java.util.TreeMap;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
 
@@ -89,10 +90,16 @@ public class Utilities {
     
     public static boolean isEmpty(String str){
         return StringUtils.isEmpty(str);
-    }
+    }    
+
+    public static boolean isNumeric(String strNum) {
+    Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
     
-    public static boolean isNumeric(String verb) {
-        return StringUtils.isNumeric(verb);
+    if(StringUtils.isEmpty(strNum) || " ".equals(strNum)){
+            return false;
+    }
+
+    return pattern.matcher(strNum).matches();
     }
     
     public static boolean isInteger(String val) {
@@ -105,7 +112,7 @@ public class Utilities {
             int i = Integer.parseInt(val);
             retval = true;
         } catch (NumberFormatException e) {
-            // this is not an error but a test
+            retval = false;
         }
         return retval;
     }
@@ -121,7 +128,7 @@ public class Utilities {
             double d = Double.parseDouble(val);
             retval = true;
         } catch (NumberFormatException e) {
-            // this is not an error but a test
+            retval = false;
         }
 
         return retval;
