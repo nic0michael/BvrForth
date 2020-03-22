@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="5" failures="0" name="za.co.bvr.forth.processor.implemented.DoLoopProcessorTest" time="0.032" errors="0" skipped="0">
+<testsuite tests="5" failures="0" name="za.co.bvr.forth.processor.implemented.DoLoopProcessorTest" time="0.026" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="java.vm.version" value="11.0.5+10-post-Ubuntu-0ubuntu1.118.04"/>
@@ -58,9 +58,9 @@
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="za.co.bvr.forth.processor.implemented.DoLoopProcessorTest" name="processDoOneLoopTest" time="0.01"/>
-  <testcase classname="za.co.bvr.forth.processor.implemented.DoLoopProcessorTest" name="processDoWithNestedLoopAndTwoAndThreeIterationsEachTest" time="0.007"/>
-  <testcase classname="za.co.bvr.forth.processor.implemented.DoLoopProcessorTest" name="processDoWithNestedLoopTest" time="0.004"/>
-  <testcase classname="za.co.bvr.forth.processor.implemented.DoLoopProcessorTest" name="processDoTwoLoopsTest" time="0.005"/>
-  <testcase classname="za.co.bvr.forth.processor.implemented.DoLoopProcessorTest" name="processDoWithNestedLoopAndTwoIterationsEachTest" time="0.006"/>
+  <testcase classname="za.co.bvr.forth.processor.implemented.DoLoopProcessorTest" name="processDoOneLoopTest" time="0.008"/>
+  <testcase classname="za.co.bvr.forth.processor.implemented.DoLoopProcessorTest" name="processDoWithNestedLoopAndTwoAndThreeIterationsEachTest" time="0.009"/>
+  <testcase classname="za.co.bvr.forth.processor.implemented.DoLoopProcessorTest" name="processDoWithNestedLoopTest" time="0.003"/>
+  <testcase classname="za.co.bvr.forth.processor.implemented.DoLoopProcessorTest" name="processDoTwoLoopsTest" time="0.002"/>
+  <testcase classname="za.co.bvr.forth.processor.implemented.DoLoopProcessorTest" name="processDoWithNestedLoopAndTwoIterationsEachTest" time="0.004"/>
 </testsuite>
