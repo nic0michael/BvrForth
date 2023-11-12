@@ -2,6 +2,7 @@ package za.co.bvr.forth.processor.implemented;
 
 import lombok.extern.java.Log;
 import za.co.bvr.forth.utils.Utilities;
+
 import za.co.bvr.forth.exceptions.UnknownProcessorType;
 import za.co.bvr.forth.processor.AbstractLoopProcessor;
 import za.co.bvr.forth.processor.AbstractProcessor;
@@ -57,7 +58,7 @@ public class Inputprocessor extends AbstractProcessor {
         }
         
         if (retrievingVariable) {
-            VariableAndConstantProcessor processor = new VariableAndConstantProcessor();
+            za.co.bvr.forth.processor.implemented.VariableAndConstantProcessor processor = new za.co.bvr.forth.processor.implemented.VariableAndConstantProcessor();
             String result = processor.process(line);
             definingStringVariable = processor.getDefinitionIsNotComplete();
             return result;
@@ -66,38 +67,38 @@ public class Inputprocessor extends AbstractProcessor {
             return "";
 
         }else if (definingVariable) {
-            VariableAndConstantProcessor processor = new VariableAndConstantProcessor();
+            za.co.bvr.forth.processor.implemented.VariableAndConstantProcessor processor = new za.co.bvr.forth.processor.implemented.VariableAndConstantProcessor();
             String result = processor.process(line);
             definingVariable = processor.getDefinitionIsNotComplete();
             return result;
 
         } else if (definingStringVariable) {
-            VariableAndConstantProcessor processor = new VariableAndConstantProcessor();
+            za.co.bvr.forth.processor.implemented.VariableAndConstantProcessor processor = new za.co.bvr.forth.processor.implemented.VariableAndConstantProcessor();
             String result = processor.process(line);
             definingStringVariable = processor.getDefinitionIsNotComplete();
             return result;
 
         } else if (definingNewVerb) {
-            DefineVerbProcessor defineVerbProcessor = new DefineVerbProcessor();
+            za.co.bvr.forth.processor.implemented.DefineVerbProcessor defineVerbProcessor = new za.co.bvr.forth.processor.implemented.DefineVerbProcessor();
             String result = defineVerbProcessor.process(line);
             definingNewVerb = defineVerbProcessor.getDefinitionIsNotComplete();
             return result;
         } else if (definingLoop) {
-            AbstractLoopProcessor loopProcessor = new DoLoopProcessor();
+            AbstractLoopProcessor loopProcessor = new za.co.bvr.forth.processor.implemented.DoLoopProcessor();
             String result = loopProcessor.process(line);
             definingLoop = loopProcessor.getDefinitionIsNotComplete();
             return result;
         } else if (definingIfStatement) {
-            IfStatementProcessor ifStatementProcessor = new IfStatementProcessor();
+            za.co.bvr.forth.processor.implemented.IfStatementProcessor ifStatementProcessor = new IfStatementProcessor();
             String result = ifStatementProcessor.process(line);
             definingIfStatement = ifStatementProcessor.getDefinitionIsNotComplete();
             return result;
         } else if (definingString) {
             line = storingString(line);
-            AbstractProcessor lineProcessor = new LineProcessor();
+            AbstractProcessor lineProcessor = new za.co.bvr.forth.processor.implemented.LineProcessor();
             return lineProcessor.process(line);
         } else {
-            AbstractProcessor lineProcessor = new LineProcessor();
+            AbstractProcessor lineProcessor = new za.co.bvr.forth.processor.implemented.LineProcessor();
             return lineProcessor.process(line);
         }
     }

@@ -28,6 +28,8 @@ public class DoLoopProcessor extends AbstractLoopProcessor {
     StringBuilder preProcessLine = new StringBuilder();
     StringBuilder postProcessLine = new StringBuilder();
 
+
+
     @Override
     public String process(String line) throws Exception {
         StringBuilder result = new StringBuilder();
@@ -211,6 +213,7 @@ public class DoLoopProcessor extends AbstractLoopProcessor {
 
         return result.toString();
     }
+
 
     String runLoop(String loopName, int nrOfIterations) throws Exception {
         StringBuilder result = new StringBuilder();

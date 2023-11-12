@@ -18,4 +18,5 @@ public abstract class AbstractLoopProcessor extends AbstractProcessor{
     public abstract void setLineOfTheLoop(String line) throws Exception;
     
     public abstract String processLineOfTheLoop() throws Exception;
+
 }
