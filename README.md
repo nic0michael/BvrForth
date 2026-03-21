@@ -1,5 +1,5 @@
 # BvrForth
-An Open Source Forth Compiler that will run on all platforms which was written in Java
+An Open Source Forth Compiler that will run on all platforms which was written in Java by Nico ZS6BVR
 
 This project replaces JEE8Forth and is written using "Clean Code" and built using OpenJdk 11
 
