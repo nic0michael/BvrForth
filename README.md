@@ -12,12 +12,12 @@ get it here : https://adoptium.net/
 - In the Linux terminal (remember to run chmod 775 to make each shell script executable)
 - In MAC terminal (same as Linux)
 
-**To build :**
+**To build :** \
 ./jar-make.sh
 
-**To copy the jar :**
+**To copy the jar :** \
 ./jar-copy.sh
 
-**To run :**
+**To run :** \
 ./start.sh
 
