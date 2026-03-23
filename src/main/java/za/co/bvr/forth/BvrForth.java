@@ -10,6 +10,7 @@ public class BvrForth {
   public static void main(String[] args) {
     System.out.println("\n\n\n\nWelcome to BVR Forth");
     System.out.println("Type .HELP for help");
+    System.out.println("Type BYE to exit\n\n");
 
     String input = ">";
     do {
