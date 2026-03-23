@@ -11,6 +11,7 @@ public class StringUtils {
     BufferedReader reader = new BufferedReader(isr);
 
     System.out.println(displayMessage);
+    System.out.print(">");
     String textRead = reader.readLine();
     return textRead;
   }

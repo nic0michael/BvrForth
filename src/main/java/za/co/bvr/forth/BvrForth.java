@@ -8,11 +8,13 @@ import za.co.bvr.forth.utils.StringUtils;
 public class BvrForth {
 
   public static void main(String[] args) {
+    System.out.println("\n\n\n\nWelcome to BVR Forth");
+    System.out.println("Type .HELP for help");
 
     String input = ">";
     do {
       try {
-        input = StringUtils.getStringFromUser(input);
+        input = StringUtils.getStringFromUser(input).toUpperCase();
 
         if (!input.equalsIgnoreCase("BYE")) {
             input = Forth.processInput(input);
