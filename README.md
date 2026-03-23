@@ -7,12 +7,17 @@ Prerequisites :
 You need Java 17 or 21 installed on your computer
 get it here : https://adoptium.net/
 
-To build :
+## Run these commands 
+- In GitBash
+- In the Linux terminal (remember to run chmod 775 to make each shell script executable)
+- In MAC terminal (same as Linux)
+
+**To build :** \
 ./jar-make.sh
 
-To copy the jar :
+**To copy the jar :** \
 ./jar-copy.sh
 
-To run :
+**To run :** \
 ./start.sh
 
