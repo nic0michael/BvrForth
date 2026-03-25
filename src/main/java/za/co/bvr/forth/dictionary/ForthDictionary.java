@@ -285,7 +285,7 @@ public class ForthDictionary {
         addSystemVerb("2-","Decrease stack top by 1");
         addSystemVerb(">>","ADVANCED FEATURE :  BORROWED FROM JAVA BIT SHIFT");
         addSystemVerb(">>>","ADVANCED FEATURE :  BORROWED FROM JAVA BIT SHIFT");
-        addSystemVerb("<<","ADVANCED FEATURE :  BORROWEWD FROM JAVA BIT SHIFT");
+        addSystemVerb("<<","ADVANCED FEATURE :  BORROWED FROM JAVA BIT SHIFT");
         addSystemVerb("!","STORE     TO VARIABLE");
         addSystemVerb("+!","APPEND TO VARIABLE");
         addSystemVerb("-!","APPEND TO VARIABLE");

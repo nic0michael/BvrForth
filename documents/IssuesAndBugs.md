@@ -44,9 +44,6 @@ Line 425: Description says "BASE 16" — OCTAL is base 8.
 [src/main/java/za/co/bvr/forth/dictionary/ForthDictionary.java](../src/main/java/za/co/bvr/forth/dictionary/ForthDictionary.java#L351)
 Line 351: Description says "BASE32 DECODE" for an ENCODE verb.
 
-**ISSUE** — Typo in description for <<
-[src/main/java/za/co/bvr/forth/dictionary/ForthDictionary.java](../src/main/java/za/co/bvr/forth/dictionary/ForthDictionary.java#L288)
-Line 288: "BORROWEWD" should be "BORROWED".
 
 ---
 
