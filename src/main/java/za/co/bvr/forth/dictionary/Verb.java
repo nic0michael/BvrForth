@@ -1,15 +1,11 @@
 package za.co.bvr.forth.dictionary;
 
 import java.util.UUID;
-import lombok.Data;
-import lombok.ToString;
 
 /**
  *
- * @author nickm 
+ * @author nickm
  */
-@Data
-@ToString
 public class Verb {
     private final String name;
     private final String definition;
@@ -58,6 +54,10 @@ public class Verb {
     public String getUuid() {
         return uuid;
     }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
         
     public boolean equals(Verb verb){
         return this.name.equals(verb.getName());
@@ -73,5 +73,15 @@ public class Verb {
     
     public boolean guidEquals(String uuid){
         return this.uuid.equals(uuid);
+    }
+
+    @Override
+    public int hashCode() {
+        return name == null ? 0 : name.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Verb(name=" + name + ", definition=" + definition + ", compiledDefinition=" + compiledDefinition + ", description=" + description + ", uuid=" + uuid + ")";
     }
 }

@@ -32,9 +32,9 @@ Agents reading or writing code in this project must know:
 | Concern | Detail |
 |---|---|
 | **Build tool** | Gradle |
-| **Lombok `@Data`** | Auto-generates getters, setters, `equals`, `hashCode`, `toString`. Do not write these manually. Present on `Verb`, `ExecutionPojo`. |
+| **Lombok `@Data`** | Auto-generates getters, setters, `equals`, `hashCode`, `toString`. Present on `ExecutionPojo`. `Verb` no longer uses `@Data` — all methods are written manually. |
 | **Lombok `@Log`** | Injects a `java.util.logging.Logger` named `log`. Present on most processors. |
-| **Apache Commons Lang** | `StringUtils.isEmpty()`, `StringUtils.isNotEmpty()` used throughout. |
+| **Apache Commons Lang** | `StringUtils.isNotEmpty()` still used in some processors. `Utilities.java` no longer uses `StringUtils` — it has its own `isEmpty()` and `isNumeric()` implementations. |
 | **Apache Commons Codec** | `Base64` used in `ForthStack` for `base64Encode/Decode`. |
 | **All values are String** | The stack stores everything as `String`. Type coercion (`popInt()`, `popDouble()`) happens at point of use. |
 
@@ -143,7 +143,7 @@ Key method: `storingString(String)` — extracts text between `"` quotes, pushes
 - `loadDictionary()` _(private)_ — populates all ~150 system verbs at construction time.
 - Key fields: `verbDefinitions`, `verbCompiledDefinitions`, `systemVerbDefinitions`, `systemVerbCompiledDefinitions`, `List<Verb> verbHistory`.
 
-**`za.co.bvr.forth.dictionary.Verb`** — Immutable value object for a dictionary entry. `@Data` + `@ToString` (Lombok). Fields: `name`, `definition`, `compiledDefinition`, `description`, `uuid`. Custom `equals()` overloads for name-only and full match. `guidEquals()` for history tracking.
+**`za.co.bvr.forth.dictionary.Verb`** — Value object for a dictionary entry. No Lombok annotations. Fields: `name`, `definition`, `compiledDefinition` (all `final`), `description`, `uuid`. Manually written getters for all fields; setters for `description` and `uuid`. Custom `equals()` overloads for name-only and full match. `guidEquals()` for history tracking. `hashCode()` based on `name`. `toString()` lists all fields.
 
 **`za.co.bvr.forth.stack.ForthStack`** _(singleton)_ — Global LIFO stack. All values stored as `String`; coercion on pop.
 - Push: `push(String/int/double/byte[])`.
@@ -151,7 +151,7 @@ Key method: `storingString(String)` — extracts text between `"` quotes, pushes
 - Stack ops: `dup()`, `drop()`, `swap()`, `rot()`, `over()`, `qdup()`.
 - Arithmetic (int): `add()`, `subtract()`, `multiply()`, `divide()`, `modulus()`.
 - Arithmetic (double): `addDoubles()` … `modulusDoubles()`, `squareDoubles()`.
-- Comparisons: `equals()`, `greaterThan()`, `smallerThan()`, `equalsOrGreaterThan()`, `smallerThanOrEquals()`, `not()` — push `1` (true) or `0` (false).
+- Comparisons: `equals()`, `greaterThan()`, `smallerThan()`, `equalsOrGreaterThan()`, `smallerThanOrEquals()`, `not()`, `equalsZero()`, `smallerThanZero()`, `greaterThanZeroDoubles()`, `equalsZeroDoubles()`, `smallerThanZeroDoubles()` — push `1` (true) or `0` (false).
 - Math: `sin()`, `cos()`, `tan()`, `log()`, `logBase10()`, `sqrt()`, `round()`, `floor()`, `ceil()`, `power()`, `random()`.
 - Encoding: `base64Encode()`, `base64Decode()`.
 - Base conversion: `convertToBinary()`, `convertToHex()`, `convertToOctal()`, `convertHexToDecimal()`, `convertOctalToDecimal()`, `convertBinaryToDecimal()`.
@@ -185,7 +185,7 @@ Key method: `storingString(String)` — extracts text between `"` quotes, pushes
 
 ### Utilities
 
-**`za.co.bvr.forth.utils.Utilities`** — Static helpers: `removeUnwantedSpaces()` (normalises whitespace, throws `LineIsEmptyException`), `isNumeric()`, `isEmpty()`, `isInteger()`, `isDouble()`, `getComputerName()`, `getComputerIpAddress()`, `getIpAddressOfHosst()`.
+**`za.co.bvr.forth.utils.Utilities`** — Static helpers: `removeUnwantedSpaces()` (normalises whitespace, throws `LineIsEmptyException`), `hasDecimal(String)` (returns true if value contains `"."`), `isEmpty(String)` (null or length 0 check — no longer delegates to `StringUtils`), `isNumeric(String)` (regex `-?\\d+(\\.\\d+)?`), `isInteger(String)`, `isDouble(String)`, `getComputerName()`, `getComputerIpAddress()`, `getIpAddressOfHosst()`. Does not import `StringUtils`.
 
 **`za.co.bvr.forth.utils.DateUtilities`** — Static date/time formatters called by date verbs in `VerbProcessor`: `dateY2k()`, `dateBritish()`, `dateUSA()`, `time()`, `now()`, `timeStamp()`, `day()`, `month()`, `year()`.
 
@@ -193,7 +193,7 @@ Key method: `storingString(String)` — extracts text between `"` quotes, pushes
 
 **`za.co.bvr.forth.utils.FileUtils`** — File I/O: `readFile(String)`, `lineReadFile(String)`, `writeFile(String, String)`, `appendFile(String, String)`.
 
-**`za.co.bvr.forth.utils.JsonUtilities`** — JSON utility (present in compiled output; source not fully analysed).
+**`za.co.bvr.forth.utils.JsonUtilities`** — Static JSON helpers using Gson. `toJsonString(StringListDto/MapDto)`, `toJsonPrettyPrintString(StringListDto/MapDto)`, `jsonStringToStringListDto(String)`, `jsonStringToStringMapDto(String)`, `writeJsonStringToFile(…)`, `writeJsonPrettyPrintStringToFile(…)`, `readStringListFromJsonFile(String)`, `readMapFromJsonFile(String)`.
 
 ---
 

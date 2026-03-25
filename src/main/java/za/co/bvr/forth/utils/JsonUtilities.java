@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.logging.Logger;
-import lombok.extern.java.Log;
 import za.co.bvr.forth.dtos.MapDto;
 import za.co.bvr.forth.dtos.StringListDto;
 
@@ -16,10 +15,8 @@ import za.co.bvr.forth.dtos.StringListDto;
  * @author nicm
  */
 
-@Log
-public class JsonUtilities {
-    private static final Logger log = Logger.getLogger("JsonUtilities");
-    
+
+public class JsonUtilities {    
     public static String toJsonString(StringListDto stringList){
         Gson gson = new Gson();
         String json = gson.toJson(stringList);

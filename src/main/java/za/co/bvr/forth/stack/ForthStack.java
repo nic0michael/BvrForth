@@ -5,7 +5,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import za.co.bvr.forth.exceptions.StackIsEmptyException;
 import za.co.bvr.forth.utils.Utilities;
 import org.apache.commons.codec.binary.Base64;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  *
@@ -213,25 +212,25 @@ public class ForthStack {
 
     public void square() throws StackIsEmptyException {
         int first = popInt();
-        push(first ^ 2);
+        push(first * first);
     }
 
     public void power() throws StackIsEmptyException {
         int second = popInt();
         int first = popInt();
-        push(first ^ second);
+        push(Math.pow(first, second));
     }
 
     public void max() throws StackIsEmptyException {
         int second = popInt();
         int first = popInt();
-        push(Math.max(first, first));
+        push(Math.max(first, second));
     }
 
     public void min() throws StackIsEmptyException {
         int second = popInt();
         int first = popInt();
-        push(Math.min(first, first));
+        push(Math.min(first, second));
     }
 
     public void sqrt() throws StackIsEmptyException {
@@ -404,14 +403,12 @@ public class ForthStack {
     }
 
     String convertToCurrentMode(String value) {
-        System.out.println(">" + value + "<");
         String retValue = "";
         String displayMode = currentMode.getValue();
 
         if (Utilities.isEmpty(value) || !Utilities.isNumeric(value)) {
             return value;
         }
-        System.out.println(">IS NUMERIC<");
         int numericValue = Integer.parseInt(value);
 
         switch (displayMode) {
@@ -469,6 +466,17 @@ public class ForthStack {
     }
 
     public void smallerThanZero() throws StackIsEmptyException {
+        int first = popInt();
+        if (first < 0) {
+            push(1);
+        } else {
+            push(0);
+        }
+    }
+
+    
+
+    public void greaterThanZero() throws StackIsEmptyException {
         int first = popInt();
         if (first < 0) {
             push(1);
@@ -548,6 +556,15 @@ public class ForthStack {
     public void smallerThanZeroDoubles() throws StackIsEmptyException {
         double first = popDouble();
         if (first < 0) {
+            push(1);
+        } else {
+            push(0);
+        }
+    }
+
+    public void greaterThanZeroDoubles() throws StackIsEmptyException {
+        double first = popDouble();
+        if (first > 0) {
             push(1);
         } else {
             push(0);

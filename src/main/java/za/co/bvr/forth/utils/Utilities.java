@@ -6,9 +6,7 @@ import java.util.TreeMap;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
-import org.apache.commons.lang3.StringUtils;
 import za.co.bvr.forth.exceptions.LineIsEmptyException;
 
 public class Utilities {
@@ -79,14 +77,18 @@ public class Utilities {
   }
 
 
+  public static boolean hasDecimal(String value) {
+    return value != null && value.contains(".");
+  }
+
   public static boolean isEmpty(String str){
-    return StringUtils.isEmpty(str);
+    return str == null || str.length() == 0;
   }
 
   public static boolean isNumeric(String strNum) {
     Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
-    if(StringUtils.isEmpty(strNum) || " ".equals(strNum)){
+    if(isEmpty(strNum) || " ".equals(strNum)){
       return false;
     }
 
@@ -95,7 +97,7 @@ public class Utilities {
 
   public static boolean isInteger(String val) {
     boolean retval = false;
-    if(!StringUtils.isNumeric(val)){
+    if(!isNumeric(val)){
       return false;
     }
     try {
@@ -111,7 +113,7 @@ public class Utilities {
 
   public static boolean isDouble(String val) {
     boolean retval = false;
-    if(!StringUtils.isNumeric(val)){
+    if(!isNumeric(val)){
       return false;
     }
     try {

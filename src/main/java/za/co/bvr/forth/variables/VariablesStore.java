@@ -75,16 +75,18 @@ public class VariablesStore {
  
 
     public void updateVariable(String variableName, int value) {
+        Integer iValue = value;
         if (variableNames.get(variableName.toUpperCase()) != null) {
             valueStore.remove(variableName.toUpperCase());
-            valueStore.put(variableName.toUpperCase(),new Integer(value).toString());
+            valueStore.put(variableName.toUpperCase(),iValue.toString());
         }
     }
 
     public void updateVariable(String variableName, double value) {
+        Double dValue = value;
         if (variableNames.get(variableName.toUpperCase()) != null) {
             valueStore.remove(variableName.toUpperCase());
-            valueStore.put(variableName.toUpperCase(),new Double(value).toString());
+            valueStore.put(variableName.toUpperCase(),dValue.toString());
         }
     }
     
@@ -119,16 +121,18 @@ public class VariablesStore {
     }
     
     public void setCurrentvariableValue( int value) {
+        Integer iValue = value;
         if (variableNames.get(currentvariableName) != null) {
             valueStore.remove(currentvariableName);
-            valueStore.put(currentvariableName,new Integer(value).toString());
+            valueStore.put(currentvariableName,iValue.toString());
         }
     }
     
     public void setCurrentvariableValue( double value) {
+        Double dValue = value;
         if (variableNames.get(currentvariableName) != null) {
             valueStore.remove(currentvariableName);
-            valueStore.put(currentvariableName,new Double(value).toString());
+            valueStore.put(currentvariableName,dValue.toString());
         }
     }
     

@@ -264,12 +264,12 @@ public class ForthDictionary {
         addSystemVerb("-","Subtract");
         addSystemVerb("*","Multiply");
         addSystemVerb("/","Divide");
-        addSystemVerb("D+","Floating point addition using Doubles");// Floating point addition using Doubles
-        addSystemVerb("D-","Floating point subtraction using Doubles");// floating point arithmetic using Doubles
+        addSystemVerb("D+","Floating point addition using Doubles"); // Floating point addition using Doubles
+        addSystemVerb("D-","Floating point subtraction using Doubles"); // floating point arithmetic using Doubles
         addSystemVerb("D*","Floating point multiplication using Doubles"); // floating point arithmetic using Doubles
-        addSystemVerb("D/,","Floating point divisuion using Doubles"); // floating point arithmetic using Doubles
-        addSystemVerb("D>","Floating point multiplication using Doubles");// floating point arithmetic using Doubles
-        addSystemVerb("D<","Floating point is smaller than using Doubles");// floating point arithmetic using Doubles
+        addSystemVerb("D" + "/" ,"Floating point divisuion using Doubles"); // floating point arithmetic using Doubles
+        addSystemVerb("D>","Floating point multiplication using Doubles"); // floating point arithmetic using Doubles
+        addSystemVerb("D<","Floating point is smaller than using Doubles"); // floating point arithmetic using Doubles
         addSystemVerb("D=","Floating point is equals using Doubles");// floating point arithmetic using Doubles
         addSystemVerb("D0=","Floating point is equal to zero using Doubles");
         addSystemVerb("D0<","Floating point is smaller than zero using Doubles");
@@ -413,6 +413,7 @@ public class ForthDictionary {
 //        addSystemVerbs("LOAD"); // LOAD BLOCK FROM DISK N WHERE N IS TOS
         addSystemVerb("LOG","Math LOG BASE N function");
         addSystemVerb("LOGBASE10","Math LOG BASE 10 function");
+        addSystemVerb("LOG10","Math LOG BASE 10 function");
         addSystemVerb("LOOP","Define a LOOP");
 
         addSystemVerb("MAX","KEEP THE MAXIMUN OF TWO NUMBERS ON THE STACK DROP THE OTHER");

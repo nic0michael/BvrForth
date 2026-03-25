@@ -1,6 +1,5 @@
 package za.co.bvr.forth.processor.implemented;
 
-import lombok.extern.java.Log;
 import za.co.bvr.forth.dictionary.ForthDictionary;
 import za.co.bvr.forth.processor.AbstractProcessor;
 import za.co.bvr.forth.stack.ForthStack;
@@ -11,7 +10,7 @@ import za.co.bvr.forth.variables.VariablesStore;
  *
  * @author nickm
  */
-@Log
+
 public class VerbPreProcessor extends AbstractProcessor {
 
     ForthStack stack = ForthStack.INSTANCE;

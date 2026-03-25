@@ -46,6 +46,7 @@ public class VerbProcessor extends AbstractProcessor {
 
                     case "FORGET":
                         result.append(dictionary.forget(stack.pop()));
+                        break;
                         
                     case "SPACE":
                         result.append(" ");
@@ -79,7 +80,11 @@ public class VerbProcessor extends AbstractProcessor {
                         break;
 
                     case "0<":
-                        stack.equalsZero();
+                        stack.greaterThanZero();
+                        break;
+
+                    case "0>":
+                        stack.smallerThanZero();
                         break;
 
                     case ">":
@@ -152,7 +157,11 @@ public class VerbProcessor extends AbstractProcessor {
                         break;
 
                     case "D0<":
-                        stack.equalsZeroDoubles();
+                        stack.greaterThanZeroDoubles();
+                        break;
+
+                    case "D0>":
+                        stack.smallerThanZeroDoubles();
                         break;
 
                     case "DMOD":
@@ -238,6 +247,9 @@ public class VerbProcessor extends AbstractProcessor {
                         stack.log();
                         break;
                     case "LOGBASE10":
+                        stack.logBase10();
+                        break;
+                    case "LOG10":
                         stack.logBase10();
                         break;
 

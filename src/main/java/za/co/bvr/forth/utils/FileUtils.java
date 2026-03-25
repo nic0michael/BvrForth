@@ -8,24 +8,24 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.logging.Level;
-import lombok.extern.java.Log;
+import java.util.logging.Logger;
 
 /**
  *
  * @author nicm
  */
 
-@Log
+// @Log
 public class FileUtils {
+    private static final Logger log = Logger.getLogger(FileUtils.class.getName());
       
     public StringBuffer readFile(String fileIoFileName) throws Exception {
         int eofCharacter = -1;
         char c;
-        InputStream in;
-        String st;
+        InputStream in = null;
 
         StringBuffer fileContentBuffer = new StringBuffer();
-        //boolean fileOpperationFailed=false;
+        boolean fileOpperationFailed=false;
 
         try {
             System.out.println("Reading File " + fileIoFileName);
@@ -43,6 +43,19 @@ public class FileUtils {
             log.log(Level.SEVERE, "Failed to read file:" + fileIoFileName,e);
             throw new Exception("Failed to read file:" + fileIoFileName, e);
 
+        } finally {
+            if(fileOpperationFailed){
+                throw new Exception("Failed to read file:" + fileIoFileName);
+            } else {
+                if (in != null) {
+                    try {
+                        in.close();
+                    } catch (IOException ex) {
+                        log.log(Level.SEVERE, "Failed to close file:" + fileIoFileName,ex);
+                    }
+                }
+
+            }
         }
 
         return fileContentBuffer;
