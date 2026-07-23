@@ -105,12 +105,13 @@ public class ForthStack {
         push(bottom);
     }
 
-    public void over() throws StackIsEmptyException, NumberFormatException { // 1 2     ->  1 2 1 
+    public String over() throws StackIsEmptyException, NumberFormatException { // 1 2     ->  1 2 1
         String top = pop();
         String first = pop();
         push(first);
         push(top);
         push(first);
+        return top;
     }
 
     public void dup() throws StackIsEmptyException { // 1 2     ->  1 2 2 
