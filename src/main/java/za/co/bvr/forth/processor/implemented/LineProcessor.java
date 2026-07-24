@@ -103,8 +103,12 @@ class LineProcessor extends AbstractProcessor {
                     break;                    
             }
         }
-        
-        return results.toString();
+
+        if(!results.isEmpty()) {
+            return results.toString();
+        } else {
+            return "OK";
+        }
     } 
    
     private ExecutionPojo makeExecutionPojo(String lineItem,ExecutionType executionType){

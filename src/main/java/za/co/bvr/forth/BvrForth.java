@@ -10,22 +10,21 @@ public class BvrForth {
   public static void main(String[] args) {
     System.out.println("\n\n\n\nWelcome to BVR Forth");
     System.out.println("Type .HELP for help");
-    System.out.println("Type BYE to exit\n\n");
+    System.out.println("Type BYE to exit");
 
-    String input = ">";
+    String input = "";
     do {
       try {
         input = StringUtils.getStringFromUser(input).toUpperCase();
 
         if (!input.equalsIgnoreCase("BYE")) {
             input = Forth.processInput(input);
-//            System.out.println(input);
         }
       } catch (Exception e) {
         System.out.println(e.getMessage());
         input = ">";
       }
     }while (!input.equalsIgnoreCase("BYE")) ;
-    System.out.println("OK");
+    System.out.println("BYE");
   }
 }
