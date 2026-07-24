@@ -9,7 +9,7 @@ Get it here : [https://adoptium.net/](https://adoptium.net/)
 
 ## Run these commands to run BVForth
 - In GitBash
-- In the Linux terminal (remember to run chmod 775 to make each shell script executable)
+- In the Linux terminal (remember to run **chmod 775** to make each shell script executable)
 - In MAC terminal (same as Linux)
 
 ### To build the JAR file:
