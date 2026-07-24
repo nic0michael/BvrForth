@@ -21,3 +21,8 @@ get it here : https://adoptium.net/
 **To run :** \
 ./start.sh
 
+## Run in IDE
+You need to run this class in your IDE:
+```java
+za.co.bvr.forth.BvrForth
+```
