@@ -1,13 +1,13 @@
 # BvrForth
-An Open Source Forth Compiler that will run on all platforms which was written in Java by Nico ZS6BVR
+An open-source Forth Compiler that will run on all platforms, written in Java by Nico ZS6BVR
 
 This project replaces JEE8Forth and is written using "Clean Code" and built using OpenJDK 17 or 21
 
-Prerequisites :
-You need Java 17 or 21 installed on your computer
-get it here : https://adoptium.net/
+## Prerequisites :
+You need Java 17 or 21 installed on your computer /
+Get it here : [https://adoptium.net/](https://adoptium.net/)
 
-## Run these commands 
+## Run these commands to run BVForth
 - In GitBash
 - In the Linux terminal (remember to run chmod 775 to make each shell script executable)
 - In MAC terminal (same as Linux)
@@ -28,7 +28,7 @@ You need to run this class in your IDE:
 ```java
 za.co.bvr.forth.BvrForth
 ```
-## To use the JAR file as a Fothh Compiler Java Library 
+## To use the JAR file as a Forth Compiler Java Library 
 ```java
 za.co.bvr.forth.Forth
 ```
