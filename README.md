@@ -21,8 +21,12 @@ get it here : https://adoptium.net/
 **To run :** \
 ./start.sh
 
-## Run in IDE
+## To run in an IDE
 You need to run this class in your IDE:
 ```java
 za.co.bvr.forth.BvrForth
+```
+## To use the JAR file as a Fothh Compiler Java Library 
+```java
+za.co.bvr.forth.Forth
 ```
