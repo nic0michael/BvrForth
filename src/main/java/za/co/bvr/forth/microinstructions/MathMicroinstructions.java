@@ -2,17 +2,16 @@ package za.co.bvr.forth.microinstructions;
 
 import za.co.bvr.forth.exceptions.StackIsEmptyException;
 import za.co.bvr.forth.stack.ForthStack;
-import za.co.bvr.forth.utils.MathsUtils;
 
 public class MathMicroinstructions {
 
-    private final MathsUtils mathsUtils = new MathsUtils();
+
     private final ForthStack stack = ForthStack.INSTANCE;
 
     public String sqrt() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.sqrt(value));
+            stack.push(Math.sqrt(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -25,7 +24,7 @@ public class MathMicroinstructions {
         try {
             double exponent = stack.popDouble();
             double base = stack.popDouble();
-            stack.push(mathsUtils.pow(base, exponent));
+            stack.push(Math.pow(base, exponent));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -38,7 +37,7 @@ public class MathMicroinstructions {
         try {
             double second = stack.popDouble();
             double first = stack.popDouble();
-            stack.push(mathsUtils.max(first, second));
+            stack.push(Math.max(first, second));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -51,7 +50,7 @@ public class MathMicroinstructions {
         try {
             double second = stack.popDouble();
             double first = stack.popDouble();
-            stack.push(mathsUtils.min(first, second));
+            stack.push(Math.min(first, second));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -63,7 +62,7 @@ public class MathMicroinstructions {
     public String round() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.round(value));
+            stack.push(Math.round(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -75,7 +74,7 @@ public class MathMicroinstructions {
     public String floor() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.floor(value));
+            stack.push(Math.floor(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -87,7 +86,7 @@ public class MathMicroinstructions {
     public String ceil() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.ceil(value));
+            stack.push(Math.ceil(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -99,7 +98,7 @@ public class MathMicroinstructions {
     public String sin() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.sin(value));
+            stack.push(Math.sin(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -111,7 +110,7 @@ public class MathMicroinstructions {
     public String cos() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.cos(value));
+            stack.push(Math.cos(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -123,7 +122,7 @@ public class MathMicroinstructions {
     public String tan() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.tan(value));
+            stack.push(Math.tan(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -135,7 +134,7 @@ public class MathMicroinstructions {
     public String asin() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.asin(value));
+            stack.push(Math.asin(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -147,7 +146,7 @@ public class MathMicroinstructions {
     public String acos() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.acos(value));
+            stack.push(Math.acos(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -159,7 +158,7 @@ public class MathMicroinstructions {
     public String atan() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.atan(value));
+            stack.push(Math.atan(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -172,7 +171,7 @@ public class MathMicroinstructions {
         try {
             double x = stack.popDouble();
             double y = stack.popDouble();
-            stack.push(mathsUtils.atan2(y, x));
+            stack.push(Math.atan2(y, x));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -184,7 +183,7 @@ public class MathMicroinstructions {
     public String sinh() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.sinh(value));
+            stack.push(Math.sinh(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -196,7 +195,7 @@ public class MathMicroinstructions {
     public String cosh() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.cosh(value));
+            stack.push(Math.cosh(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -208,7 +207,7 @@ public class MathMicroinstructions {
     public String tanh() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.tanh(value));
+            stack.push(Math.tanh(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -220,7 +219,7 @@ public class MathMicroinstructions {
     public String exp() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.exp(value));
+            stack.push(Math.exp(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -232,7 +231,7 @@ public class MathMicroinstructions {
     public String log() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.log(value));
+            stack.push(Math.log(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -244,7 +243,7 @@ public class MathMicroinstructions {
     public String log10() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.log10(value));
+            stack.push(Math.log10(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -256,7 +255,7 @@ public class MathMicroinstructions {
     public String degreesToRadians() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.toRadians(value));
+            stack.push(Math.toRadians(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -268,7 +267,7 @@ public class MathMicroinstructions {
     public String radiansToDegrees() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.toDegrees(value));
+            stack.push(Math.toDegrees(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -280,7 +279,7 @@ public class MathMicroinstructions {
     public String abs() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.abs(value));
+            stack.push(Math.abs(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -292,7 +291,7 @@ public class MathMicroinstructions {
     public String signum() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.signum(value));
+            stack.push(Math.signum(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -305,7 +304,7 @@ public class MathMicroinstructions {
         try {
             double y = stack.popDouble();
             double x = stack.popDouble();
-            stack.push(mathsUtils.hypot(x, y));
+            stack.push(Math.hypot(x, y));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -317,7 +316,7 @@ public class MathMicroinstructions {
     public String cbrt() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.cbrt(value));
+            stack.push(Math.cbrt(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -330,7 +329,7 @@ public class MathMicroinstructions {
         try {
             double second = stack.popDouble();
             double first = stack.popDouble();
-            stack.push(mathsUtils.remainder(first, second));
+            stack.push(Math.IEEEremainder(first, second));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -343,7 +342,7 @@ public class MathMicroinstructions {
         try {
             double sign = stack.popDouble();
             double magnitude = stack.popDouble();
-            stack.push(mathsUtils.copySign(magnitude, sign));
+            stack.push(Math.copySign(magnitude, sign));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -355,7 +354,7 @@ public class MathMicroinstructions {
     public String nextUp() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.nextUp(value));
+            stack.push(Math.nextUp(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -367,7 +366,7 @@ public class MathMicroinstructions {
     public String nextDown() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.nextDown(value));
+            stack.push(Math.nextDown(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -379,7 +378,7 @@ public class MathMicroinstructions {
     public String ulp() {
         try {
             double value = stack.popDouble();
-            stack.push(mathsUtils.ulp(value));
+            stack.push(Math.ulp(value));
             return "";
         } catch (StackIsEmptyException e) {
             return "\n\nStackIsEmpty";
@@ -389,17 +388,17 @@ public class MathMicroinstructions {
     }
 
     public String random() {
-        stack.push(mathsUtils.random());
+        stack.push(Math.random());
         return "";
     }
 
     public String pi() {
-        stack.push(mathsUtils.pi());
+        stack.push(Math.PI);
         return "";
     }
 
     public String e() {
-        stack.push(mathsUtils.e());
+        stack.push(Math.E);
         return "";
     }
 }
