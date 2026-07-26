@@ -317,6 +317,7 @@ public class ForthDictionary {
         addSystemVerb(".INETADDRESS","PRINTS THE IP ADDRESS OF A SERVER ");
 //        addSystemVerb(".LISTVARIABLES","LISTS THE NAMES OF ALL THE LIST VARIABLES");
         addSystemVerb(".L","LISTS THE NAMES OF ALL THE LIST VARIABLES");
+        addSystemVerb(".MILLISECONDS","Prints CURRENT TIME IM MS");
         addSystemVerb(".MODE","Print Mode");
         addSystemVerb(".MONTH","PRINTS THE MONTH");
         addSystemVerb(".MTH","PRINTS THE MONTH");
@@ -458,6 +459,8 @@ public class ForthDictionary {
 
         addSystemVerb("TAN","Math Tan function");
         addSystemVerb("TIME@","PUSH DATE TO STACK");
+        addSystemVerb("MILLISECONDS@","PUSH CURRENT TIME IM MS TO STACK");
+
         addSystemVerb("TIMESTAMP@","PUSH DATE TIME STAMP TO STACK");
         addSystemVerb("?TIME","PRINT DATE TO STACK");
         addSystemVerb("?TIMESTAMP","PRINT DATE TIME STAMP TO STACK");

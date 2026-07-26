@@ -7,7 +7,7 @@ import za.co.bvr.forth.utils.Utilities;
 import org.apache.commons.codec.binary.Base64;
 
 /**
- *
+ * MOVE SUM OF THE METHODS TO  StackMicroInstructions
  * @author nickm
  */
 public class ForthStack {
@@ -621,6 +621,8 @@ public class ForthStack {
             push(0);
         }
     }
+
+
 
     public enum mode {
         DECIMAL("DECIMAL"),

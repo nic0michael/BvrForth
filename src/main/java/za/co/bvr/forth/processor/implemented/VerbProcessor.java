@@ -7,27 +7,24 @@ import za.co.bvr.forth.dictionary.ForthDictionary;
 import za.co.bvr.forth.exceptions.StackIsEmptyException;
 import za.co.bvr.forth.exceptions.VerbNotInDictionaryException;
 import za.co.bvr.forth.processor.AbstractProcessor;
-import za.co.bvr.forth.stack.ForthStack;
 import za.co.bvr.forth.utils.Utilities;
-import za.co.bvr.forth.utils.DateUtilities;
 import za.co.bvr.forth.variables.VariablesStore;
+import za.co.bvr.forth.microinstructions.DateMicroinstructions;
+import za.co.bvr.forth.microinstructions.StackMicroinstructions;
 
 /**
- *
+ * WE WILL USE MICROINSTRUCTIONS HERE
  * @author nicm
  */
 @Log
 public class VerbProcessor extends AbstractProcessor {
     
-    
+    public StackMicroinstructions stackMicroinstructions =new StackMicroinstructions();
     public static final VerbProcessor INSTANCE = new VerbProcessor();
-
-    private VerbProcessor() { }
-
-    ForthStack stack = ForthStack.INSTANCE;
     ForthDictionary dictionary = ForthDictionary.INSTANCE;
     VariablesStore variables = VariablesStore.INSTANCE;
 
+    private VerbProcessor() { }
 
     public String executeVerb(String lineItem) throws VerbNotInDictionaryException, StackIsEmptyException, UnknownHostException {
         StringBuilder result = new StringBuilder();
@@ -41,11 +38,24 @@ public class VerbProcessor extends AbstractProcessor {
             try {
                 switch (lineItem) {
                     case ".":
-                        result.append(stack.pop());
+                        result .append(stackMicroinstructions.pop());
+                        break;
+
+                    case "1+": stackMicroinstructions.push(stackMicroinstructions.onePlus());
+                        break;
+                    case"1-":  stackMicroinstructions.push(stackMicroinstructions.oneMinis());
+                        break;
+                    case "2+":  stackMicroinstructions.push(stackMicroinstructions.twoPlus());
+                        break;
+                    case "2-":  stackMicroinstructions.push(stackMicroinstructions.twoMinus());
+                        break;
+                    case "2/":  stackMicroinstructions.push(stackMicroinstructions.twoDivide());
+                        break;
+                    case "2*":  stackMicroinstructions.push(stackMicroinstructions.twoTimes());
                         break;
 
                     case "FORGET":
-                        result.append(dictionary.forget(stack.pop()));
+                        result.append(dictionary.forget(stackMicroinstructions.pop()));
                         break;
                         
                     case "SPACE":
@@ -53,292 +63,300 @@ public class VerbProcessor extends AbstractProcessor {
                         break;
 
                     case "SPACES":
-                        int topValue = stack.popInt();
+                        int topValue = stackMicroinstructions.popInt();
                         for (int i = 0; i < topValue; i++) {
                             result.append(" ");
                         }
                         break;
                         
                     case "LFS":
-                        topValue = stack.popInt();
+                        topValue = stackMicroinstructions.popInt();
                         for (int i = 0; i < topValue; i++) {
                             result.append("\n");
                         }
                         break;
 
                     case "EMIT":
-                        stack.intToChar();
-                        result.append(stack.pop());
+                        stackMicroinstructions.intToChar();
+                        result.append(stackMicroinstructions.pop());
                         break;
 
                     case "=":
-                        stack.equals();
+                        stackMicroinstructions.equals();
                         break;
 
                     case "0=":
-                        stack.equalsZero();
+                        stackMicroinstructions.equalsZero();
                         break;
 
                     case "0<":
-                        stack.greaterThanZero();
+                        stackMicroinstructions.greaterThanZero();
                         break;
 
                     case "0>":
-                        stack.smallerThanZero();
+                        stackMicroinstructions.smallerThanZero();
                         break;
 
                     case ">":
-                        stack.greaterThan();
+                        stackMicroinstructions.greaterThan();
                         break;
 
                     case "<":
-                        stack.smallerThan();
+                        stackMicroinstructions.smallerThan();
                         break;
                         
                     case "=>":
-                        stack.equalsOrGreaterThan();
+                        stackMicroinstructions.equalsOrGreaterThan();
                         break;
                     case "<=":
-                        stack.smallerThanOrEquals();
+                        stackMicroinstructions.smallerThanOrEquals();
                         break;
                     case "NOT":
-                        stack.not();
+                        stackMicroinstructions.not();
                         break;
                     case "+":
-                        stack.add();
+                        stackMicroinstructions.add();
                         break;
 
                     case "-":
-                        stack.subtract();
+                        stackMicroinstructions.subtract();
                         break;
 
                     case "*":
-                        stack.multiply();
+                        stackMicroinstructions.multiply();
                         break;
 
                     case "/":
-                        stack.divide();
+                        stackMicroinstructions.divide();
                         break;
 
                     case "MOD":
-                        stack.modulus();
+                        stackMicroinstructions.modulus();
                         break;
 
                     case "D+":
-                        stack.addDoubles();
+                        stackMicroinstructions.addDoubles();
                         break;
 
                     case "D-":
-                        stack.subtractDoubles();
+                        stackMicroinstructions.subtractDoubles();
                         break;
 
                     case "D*":
-                        stack.multiplyDoubles();
+                        stackMicroinstructions.multiplyDoubles();
                         break;
 
                     case "D/":
-                        stack.divideDoubles();
+                        stackMicroinstructions.divideDoubles();
                         break;
 
                     case "D>":
-                        stack.greaterThanDoubles();
+                        stackMicroinstructions.greaterThanDoubles();
                         break;
 
                     case "D<":
-                        stack.smallerThanDoubles();
+                        stackMicroinstructions.smallerThanDoubles();
                         break;
 
                     case "D=":
-                        stack.equalsDoubles();
+                        stackMicroinstructions.equalsDoubles();
                         break;
 
                     case "D0=":
-                        stack.equalsZeroDoubles();
+                        stackMicroinstructions.equalsZeroDoubles();
                         break;
 
                     case "D0<":
-                        stack.greaterThanZeroDoubles();
+                        stackMicroinstructions.greaterThanZeroDoubles();
                         break;
 
                     case "D0>":
-                        stack.smallerThanZeroDoubles();
+                        stackMicroinstructions.smallerThanZeroDoubles();
                         break;
 
                     case "DMOD":
-                        stack.modulusDoubles();
+                        stackMicroinstructions.modulusDoubles();
                         break;
 
                     case "DSQR":
-                        stack.squareDoubles();
+                        stackMicroinstructions.squareDoubles();
                         break;
 
                     case "SQARE":
-                        stack.square();
+                        stackMicroinstructions.square();
                         break;                        
 
                     case "SQR":
-                        stack.sqrt();
+                        stackMicroinstructions.sqrt();
                         break;
 
                     case "PWR":
-                        stack.power();
+                        stackMicroinstructions.power();
                         break;
 
                     case "AND":
-                        stack.and();
+                        stackMicroinstructions.and();
                         break;
 
                     case "OR":
-                        stack.or();
+                        stackMicroinstructions.or();
                         break;
 
                     case "XOR":
-                        stack.exor();
+                        stackMicroinstructions.exor();
                         break;
 
                     case "RANDOM":
-                        stack.random();
+                        stackMicroinstructions.random();
                         break;
 
                     case "RND":
-                        stack.random();
+                        stackMicroinstructions.random();
                         break;
 
                     case "MAX":
-                        stack.max();
+                        stackMicroinstructions.max();
                         break;
                     case "MIN":
-                        stack.min();
+                        stackMicroinstructions.min();
                         break;
                     case "ROUND":
-                        stack.round();
+                        stackMicroinstructions.round();
                         break;
                     case "FLOOR":
-                        stack.floor();
+                        stackMicroinstructions.floor();
                         break;
                     case "CEIL":
-                        stack.ceil();
+                        stackMicroinstructions.ceil();
                         break;
                     case "RADTODEG":
-                        stack.radiansToDegrees();
+                        stackMicroinstructions.radiansToDegrees();
                         break;
                     case "DEGTORAD":
-                        stack.degreesToRadians();
+                        stackMicroinstructions.degreesToRadians();
                         break;
                     case "SIN":
-                        stack.degreesToRadians();
-                        stack.sin();
-                        stack.push(0.00000000000000006);
-                        stack.addDoubles();
+                        stackMicroinstructions.degreesToRadians();
+                        stackMicroinstructions.sin();
+                        stackMicroinstructions.push(0.00000000000000006);
+                        stackMicroinstructions.addDoubles();
                         break;
                     case "COS":
-                        stack.degreesToRadians();
-                        stack.cos();
-                        stack.push(0.0000000000000001);
-                        stack.subtractDoubles();
+                        stackMicroinstructions.degreesToRadians();
+                        stackMicroinstructions.cos();
+                        stackMicroinstructions.push(0.0000000000000001);
+                        stackMicroinstructions.subtractDoubles();
                         break;
                     case "TAN":
-                        stack.degreesToRadians();
-                        stack.tan();
-                        stack.push(0.0000000000000001);
-                        stack.addDoubles();
+                        stackMicroinstructions.degreesToRadians();
+                        stackMicroinstructions.tan();
+                        stackMicroinstructions.push(0.0000000000000001);
+                        stackMicroinstructions.addDoubles();
                         break;
                     case "LOG":
-                        stack.log();
+                        stackMicroinstructions.log();
                         break;
                     case "LOGBASE10":
-                        stack.logBase10();
+                        stackMicroinstructions.logBase10();
                         break;
                     case "LOG10":
-                        stack.logBase10();
+                        stackMicroinstructions.logBase10();
                         break;
 
                     case "DEC":
-                        stack.setModeToDecimal();
+                        stackMicroinstructions.setModeToDecimal();
                         break;
 
                     case "HEX":
-                        stack.setModeToHex();
+                        stackMicroinstructions.setModeToHex();
                         break;
 
                     case "BIN":
-                        stack.setModeToBinary();
+                        stackMicroinstructions.setModeToBinary();
                         break;
 
                     case "OCT":
-                        stack.setModeToOctal();
+                        stackMicroinstructions.setModeToOctal();
                         break;
 
                     case "BASE64ENCODE":
-                        stack.base64Encode();
+                        stackMicroinstructions.base64Encode();
                         break;
 
                     case "BASE64DECODE":
-                        stack.base64Decode();
+                        stackMicroinstructions.base64Decode();
                         break;
 
                     case "DECTOBINARY":
-                        stack.convertToBinary();
+                        stackMicroinstructions.convertToBinary();
                         break;
 
                     case "DECTOHEX":
-                        stack.convertToHex();
+                        stackMicroinstructions.convertToHex();
                         break;
 
                     case "DECTOOCTAL":
-                        stack.convertToOctal();
+                        stackMicroinstructions.convertToOctal();
                         break;
 
                     case "HEXTODEC":
-                        stack.convertHexToDecimal();
+                        stackMicroinstructions.convertHexToDecimal();
                         break;
 
                     case "OCTALTODEC":
-                        stack.convertOctalToDecimal();
+                        stackMicroinstructions.convertOctalToDecimal();
                         break;
 
                     case "BINARYTODEC":
-                        stack.convertBinaryToDecimal();
+                        stackMicroinstructions.convertBinaryToDecimal();
                         break;
 
                     case "DROP":
-                        stack.drop();
+                        stackMicroinstructions.drop();
                         break;
 
                     case "DUP":
-                        stack.dup();
+                        stackMicroinstructions.dup();
                         break;
 
                     case "OVER":
-                        stack.over();
+                        stackMicroinstructions.over();
                         break;
 
                     case "ROT":
-                        stack.rot();
+                        stackMicroinstructions.rot();
                         break;
 
                     case "SWAP":
-                        stack.swap();
+                        stackMicroinstructions.swap();
+                        break;
+
+                    case "MILLISECONDS@":
+                        stackMicroinstructions.push(DateMicroinstructions.milliseconds());
+                        break;
+
+                    case "DATE@":
+                        stackMicroinstructions.push(DateMicroinstructions.date());
                         break;
 
                     case "TIME@":
-                        stack.push(DateUtilities.dateY2k());
+                        stackMicroinstructions.push(DateMicroinstructions.dateY2k());
                         break;
 
                     case "TIMESTAMP@":
-                        stack.push(DateUtilities.timeStamp());
+                        stackMicroinstructions.push(DateMicroinstructions.timeStamp());
                         break;
 
                     case "?TIME":
-                        result.append(DateUtilities.dateY2k());
+                        result.append(DateMicroinstructions.dateY2k());
                         break;
 
                     case "?TIMESTAMP":
-                        result.append(DateUtilities.timeStamp());
+                        result.append(DateMicroinstructions.timeStamp());
                         break;
 
                     case ".STACK":
-                        result.append(stack.show());
+                        result.append(stackMicroinstructions.show());
                         break;
 
                     case "CR":
@@ -346,53 +364,57 @@ public class VerbProcessor extends AbstractProcessor {
                         break;
 
                     case ".DAY":
-                        result.append(DateUtilities.day());
+                        result.append(DateMicroinstructions.day());
                         break;
 
                     case ".MONTH":
-                        result.append(DateUtilities.month());
+                        result.append(DateMicroinstructions.month());
                         break;
 
                     case ".MTH":
-                        result.append(DateUtilities.month());
+                        result.append(DateMicroinstructions.month());
                         break;
 
                     case ".YEAR":
-                        result.append(DateUtilities.year());
+                        result.append(DateMicroinstructions.year());
                         break;
 
                     case ".YR":
-                        result.append(DateUtilities.year());
+                        result.append(DateMicroinstructions.year());
+                        break;
+
+                    case ".MILLISECONDS":
+                        result.append(DateMicroinstructions.milliseconds());
                         break;
 
                     case ".DATE":
-                        result.append(DateUtilities.dateY2k());
+                        result.append(DateMicroinstructions.dateY2k());
                         break;
 
                     case ".DATESF":
-                        result.append(DateUtilities.dateY2k());
+                        result.append(DateMicroinstructions.dateY2k());
                         break;
 
                     case ".DATESIMPLEFORMAT":
-                        result.append(DateUtilities.dateY2k());
+                        result.append(DateMicroinstructions.dateY2k());
                         break;
 
                     case ".DATETIME":
-                        result.append(DateUtilities.now());
+                        result.append(DateMicroinstructions.now());
                         break;
 
                     case ".DATEBRITISH":
-                        result.append(DateUtilities.dateBritish());
+                        result.append(DateMicroinstructions.dateBritish());
                         break;
                     case ".DATEUSA":
-                        result.append(DateUtilities.dateUSA());
+                        result.append(DateMicroinstructions.dateUSA());
                         break;
 
                     case ".TIME":
-                        result.append(DateUtilities.time());
+                        result.append(DateMicroinstructions.time());
                         break;
                     case ".TIMESTAMP":
-                        result.append(DateUtilities.timeStamp());
+                        result.append(DateMicroinstructions.timeStamp());
                         break;
 
                     case ".D":
@@ -408,7 +430,7 @@ public class VerbProcessor extends AbstractProcessor {
                         break;
 
                     case ".MODE":
-                        result.append(stack.getCurrentMode());
+                        result.append(stackMicroinstructions.getCurrentMode());
                         break;
 
                     case ".COMPUTERNAME":
@@ -425,17 +447,17 @@ public class VerbProcessor extends AbstractProcessor {
                         break;
 
                     case ".SERVERIP":
-                        String serverUlr = stack.pop();
+                        String serverUlr = stackMicroinstructions.pop();
                         result.append(Utilities.getIpAddressOfHosst(serverUlr));
                         break;
 
                     case ".SIP":
-                        String serverUlr2 = stack.pop();
+                        String serverUlr2 = stackMicroinstructions.pop();
                         result.append(Utilities.getIpAddressOfHosst(serverUlr2));
                         break;
 
                     case "!":
-                        String value = stack.pop();
+                        String value = stackMicroinstructions.pop();
                         variables.setCurrentvariableValue(value);
                         break;
 
@@ -453,7 +475,7 @@ public class VerbProcessor extends AbstractProcessor {
                         
                     case "@":
                         String currentvariableValue = variables.getCurrentvariableValue();
-                        stack.push(currentvariableValue);
+                        stackMicroinstructions.push(currentvariableValue);
                         break;
 
                     case ".VARIABLES":
@@ -478,7 +500,7 @@ public class VerbProcessor extends AbstractProcessor {
                         throw new VerbNotInDictionaryException(lineItem);
                 }
             } catch (StackIsEmptyException e) {
-                result.append("\nThe Stack is empty");
+                result.append("\nThe stackMicroinstructions is empty");
             }
         }
 //        log.info("VerbProcessor result : "+result);

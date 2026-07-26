@@ -9,22 +9,6 @@ public class MicroInstructions {
 
         return switch (command.toUpperCase()) {
 
-            // Stack Operations
-            case "DOT"      -> stackInstructions.dot();
-            case "OVER"     -> stackInstructions.over();
-            case "DROP"     -> stackInstructions.drop();
-            case "SWAP"     -> stackInstructions.swap();
-            case "ROT"      -> stackInstructions.rot();
-            case "DUP"      -> stackInstructions.dup();
-            case "?DUP"     -> stackInstructions.qdup();
-
-            // Integer Arithmetic
-            case "+"        -> stackInstructions.add();
-            case "-"        -> stackInstructions.subtract();
-            case "*"        -> stackInstructions.multiply();
-            case "/"        -> stackInstructions.divide();
-            case "MOD"      -> stackInstructions.modulus();
-
             // Mathematical Functions
             case "SQRT"     -> mathInstructions.sqrt();
             case "POW"      -> mathInstructions.power();
