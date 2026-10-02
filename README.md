@@ -32,3 +32,15 @@ za.co.bvr.forth.BvrForth
 ```java
 za.co.bvr.forth.Forth
 ```
+
+## Change Requests
+Add a LoopStack object for efficiently processing loops
+```java
+class LoopStack extends Stack;
+class Loop {
+ String loopData;
+ int loopPointer;
+ String loopType;
+}
+```
+We will push the current loop and the next loop here
