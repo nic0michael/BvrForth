@@ -40,6 +40,8 @@ class LoopStack extends Stack;
 class Loop {
  String loopData;
  int loopPointer;
+ int loopCount;
+ int loopCountLimit;
  String loopType;
 }
 ```
